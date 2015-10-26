@@ -19,11 +19,41 @@ using namespace std;
 // --------------------------
 
 /**
- * Tests the Darwin constructor
+ * Tests the Darwin constructor (iterators)
  * @param DarwinConstructor a fixture
- * @param board_1 test name
+ * @param iterators_1 test name
  */
-TEST(DarwinConstructor, board_1)
+TEST(DarwinConstructor, iterators_1)
 {
-	ASSERT_EQ(0, 0);
+    Darwin<10, 10> d;
+    Species* begin = d.begin();
+    int count = 0;
+
+    while(begin != d.end())
+    {
+        ++count;
+        ++begin;
+    }
+
+    ASSERT_EQ(count, 100);
+}
+
+/**
+ * Tests the Darwin constructor (iterators)
+ * @param DarwinConstructor a fixture
+ * @param iterators_2 test name
+ */
+TEST(DarwinConstructor, iterators_2)
+{
+    Darwin<1, 1> d;
+    Species* begin = d.begin();
+    int count = 0;
+
+    while(begin != d.end())
+    {
+        ++count;
+        ++begin;
+    }
+
+    ASSERT_EQ(count, 1);
 }
