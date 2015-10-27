@@ -133,7 +133,7 @@ const string Darwin::get_grid()
     output += "  ";
     for(int c = 0; c < width; ++c)
     {
-        output += to_string(c);
+        output += to_string(c % 10);
     }
     output += '\n';
 
@@ -141,7 +141,7 @@ const string Darwin::get_grid()
     for(int r = 0; r < height; ++r)
     {
         // Add row identifier
-        output += to_string(r) + " ";
+        output += to_string(r % 10) + " ";
 
         // Add contents of this row
         for(int c = 0; c < width; ++c)
