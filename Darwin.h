@@ -23,6 +23,8 @@ using namespace std;
 // ---------------------------
 class Species
 {
+    private:
+
     public:
         // -----------------------------
         // Species (default constructor)
@@ -41,38 +43,29 @@ class Creature
 {
     private:
         Species s;        // the Species of this Creature (if any)
-        bool has_species; // whether or not this Creature has a Species
+        char display;     // the representation of this Creature on the grid
 
     public:
-        // ------------------------------
-        // Creature (default constructor)
-        // ------------------------------
-
-        /**
-         * Initializes a Creature object. Default constructor, does NOT define
-         * a species and sets has_species to false.
-         */
-        Creature();
-
-        // ------------------------------
-        // Creature (species constructor)
-        // ------------------------------
+        // ----------------------
+        // Creature (constructor)
+        // ----------------------
 
         /**
          * Initializes a Creature object. Sets the passed in Species as this
-         * Creature's associated Species, and sets has_species to true.
+         * Creature's associated Species (or uses the default Species).
          * @param s a Species object
+         * @param representation a char used to display this Creature
          */
-        Creature(Species& s);
+        Creature(char representation = '.', Species s = Species());
 
-        // --------
-        // is_empty
-        // --------
+        // -----------
+        // get_display
+        // -----------
 
         /**
-         * Returns a boolean value whether or not this Creature has a Species.
+         * Returns the character representation of this Species.
          */
-        bool is_empty() const;
+        const char get_display() const;
 };
 
 // --------------------------
@@ -131,7 +124,7 @@ class Darwin
          * Returns a pointer to the Creature on the grid at the row and column
          * given to this function.
          */
-        const Creature* at(int row, int col) const;
+        Creature* const at(int row, int col);
 
         // --------
         // get_grid
@@ -141,7 +134,7 @@ class Darwin
          * Returns a string representation of the Darwin object (the grid and 
          * the current turn at the time this function is called.
          */
-        const string get_grid() const;
+        const string get_grid();
 };
 
 #endif // Darwin_h

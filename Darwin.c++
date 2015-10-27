@@ -25,47 +25,34 @@ Species::Species()
 
 }
 
-// ------------------------------
-// Creature (default constructor)
-// ------------------------------
-
-/**
- * Initializes a Creature object. Default constructor, does NOT define
- * a species and sets has_species to false.
- */
-Creature::Creature()
-{
-    has_species = false;
-}
-
-// ------------------------------
-// Creature (species constructor)
-// ------------------------------
+// ----------------------
+// Creature (constructor)
+// ----------------------
 
 /**
  * Initializes a Creature object. Sets the passed in Species as this
- * Creature's associated Species, and sets has_species to true.
+ * Creature's associated Species (or uses the default Species).
  * @param s a Species object
+ * @param representation a char used to display this Creature
  */
-Creature::Creature(Species& s)
+Creature::Creature(char representation, Species s)
 {
     this->s = s;
-    has_species = true;
+    display = representation;
+
 }
 
-
-// --------
-// is_empty
-// --------
+// -----------
+// get_display
+// -----------
 
 /**
- * Returns a boolean value whether or not this Creature has a Species.
+ * Returns the character representation of this Species.
  */
-bool Creature::is_empty() const
+const char Creature::get_display() const
 {
-    return has_species;
+    return display;
 }
-
 
 // --------------------
 // Darwin (constructor)
@@ -124,7 +111,7 @@ Creature* Darwin::end() const
  * Returns a pointer to the Creature on the grid at the row and column
  * given to this function.
  */
-const Creature* Darwin::at(int row, int col) const
+Creature* const Darwin::at(int row, int col)
 {
     return &grid[row][col];
 }
@@ -137,7 +124,7 @@ const Creature* Darwin::at(int row, int col) const
  * Returns a string representation of the Darwin object (the grid and 
  * the current turn at the time this function is called.
  */
-const string Darwin::get_grid() const
+const string Darwin::get_grid()
 {
     // Add current turn
     string output = "Turn = " + to_string(current_turn) + ".\n";
@@ -159,14 +146,7 @@ const string Darwin::get_grid() const
         // Add contents of this row
         for(int c = 0; c < width; ++c)
         {
-            if(at(r, c) -> is_empty())
-            {
-
-            }
-            else
-            {
-                output += ".";
-            }
+            output += at(r, c)->get_display();
         }
 
         output += '\n';
