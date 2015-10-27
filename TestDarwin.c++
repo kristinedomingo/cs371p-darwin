@@ -26,7 +26,7 @@ using namespace std;
 TEST(DarwinConstructor, iterators_1)
 {
     Darwin<10, 10> d;
-    Species* begin = d.begin();
+    Creature* begin = d.begin();
     int count = 0;
 
     while(begin != d.end())
@@ -46,7 +46,7 @@ TEST(DarwinConstructor, iterators_1)
 TEST(DarwinConstructor, iterators_2)
 {
     Darwin<1, 1> d;
-    Species* begin = d.begin();
+    Creature* begin = d.begin();
     int count = 0;
 
     while(begin != d.end())
@@ -56,4 +56,25 @@ TEST(DarwinConstructor, iterators_2)
     }
 
     ASSERT_EQ(count, 1);
+}
+
+// TODO: add stronger iterator tests
+
+
+// ----------------
+// get_grid() tests
+// ----------------
+
+/**
+ * Tests the get_grid() function
+ * @param DarwinConstructor a fixture
+ * @param get_grid_1 test name
+ */
+TEST(GetGrid, get_grid_1)
+{
+    Darwin<8, 8> d;
+    string grid = "Turn = 0.\n  01234567\n0 ........\n1 ........\n2 ........\n"
+                  "3 ........\n4 ........\n5 ........\n6 ........\n7 ........\n";
+
+    ASSERT_EQ(d.get_grid(), grid);
 }
