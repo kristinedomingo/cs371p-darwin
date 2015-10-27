@@ -34,12 +34,14 @@ Species::Species()
  * Creature's associated Species (or uses the default Species).
  * @param s a Species object
  * @param representation a char used to display this Creature
+ * @param dir the direction this Creature will face
  */
-Creature::Creature(char representation, Species s)
+Creature::Creature(char representation, Species s, Direction dir)
 {
     this->s = s;
+    this->dir = dir;
     display = representation;
-
+    counter = 0;
 }
 
 // -----------

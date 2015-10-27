@@ -51,6 +51,18 @@ TEST(CreatureConstructor, creature_constructor_3)
     ASSERT_EQ(c.get_display(), 'k');
 }
 
+/**
+ * Tests the Creature constructor (three parameters)
+ * @param CreatureConstructor a fixture
+ * @param creature_constructor_4 test name
+ */
+TEST(CreatureConstructor, creature_constructor_4)
+{
+    Species s;
+    Creature c('d', s, SOUTH);
+    ASSERT_EQ(c.get_display(), 'd');
+}
+
 // --------------------------
 // Darwin (constructor) tests
 // --------------------------

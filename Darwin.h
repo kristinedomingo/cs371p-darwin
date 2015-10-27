@@ -17,6 +17,10 @@
 
 using namespace std;
 
+// ----------------
+// Direction (enum)
+// ----------------
+enum Direction {NORTH, EAST, SOUTH, WEST};
 
 // ---------------------------
 // Species (Class Declaration)
@@ -43,6 +47,8 @@ class Creature
 {
     private:
         Species s;        // the Species of this Creature (if any)
+        Direction dir;    // the direction this Creature is facing
+        int counter;      // the program counter
         char display;     // the representation of this Creature on the grid
 
     public:
@@ -55,8 +61,11 @@ class Creature
          * Creature's associated Species (or uses the default Species).
          * @param s a Species object
          * @param representation a char used to display this Creature
+         * @param dir the direction this Creature will face
          */
-        Creature(char representation = '.', Species s = Species());
+        Creature(char representation = '.', 
+                 Species s = Species(),
+                 Direction dir = NORTH);
 
         // -----------
         // get_display
