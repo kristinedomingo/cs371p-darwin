@@ -18,45 +18,76 @@
 using namespace std;
 
 
-// ----------------------------
-// Creature (Class Declaration)
-// ----------------------------
-class Creature
-{
-    public:
-        // -----------
-        // has_species
-        // -----------
-
-        /**
-         * Returns a boolean value whether or not this Creature has a Species.
-         */
-        bool has_species() const
-        {
-            return false;
-        }
-};
-
 // ---------------------------
 // Species (Class Declaration)
 // ---------------------------
 class Species
 {
+    public:
+        // -----------------------------
+        // Species (default constructor)
+        // -----------------------------
 
+        /**
+         * Initializes a Species object.
+         */
+        Species();
+};
+
+// ----------------------------
+// Creature (Class Declaration)
+// ----------------------------
+class Creature
+{
+    private:
+        Species s;        // the Species of this Creature (if any)
+        bool has_species; // whether or not this Creature has a Species
+
+    public:
+        // ------------------------------
+        // Creature (default constructor)
+        // ------------------------------
+
+        /**
+         * Initializes a Creature object. Default constructor, does NOT define
+         * a species and sets has_species to false.
+         */
+        Creature();
+
+        // ------------------------------
+        // Creature (species constructor)
+        // ------------------------------
+
+        /**
+         * Initializes a Creature object. Sets the passed in Species as this
+         * Creature's associated Species, and sets has_species to true.
+         * @param s a Species object
+         */
+        Creature(Species& s);
+
+        // --------
+        // is_empty
+        // --------
+
+        /**
+         * Returns a boolean value whether or not this Creature has a Species.
+         */
+        bool is_empty() const;
 };
 
 // --------------------------
 // Darwin (Class Declaration)
 // --------------------------
-template<int height, int width>
 class Darwin
 {
     private:
-        Creature grid[height][width]; // the grid of Creatures
-        int num_turns;                // total number of turns for a Darwin run
-        int current_turn;             // the current turn of the Darwin run
-        Creature* _b;                 // "beginning" of the board (left corner)
-        Creature* _e;                 // "end" of the board (right corner)
+        vector<vector<Creature>> grid; // the grid of Creatures
+        int height;                    // the number of rows in the grid
+        int width;                     // the number of columns in the grid
+        int num_turns;                 // total number of turns for a Darwin run
+        int current_turn;              // the current turn of the Darwin run
+        Creature* _b;                  // "beginning" of the board (left corner)
+        Creature* _e;                  // "end" of the board (right corner)
 
     public:
         // --------------------
@@ -67,9 +98,10 @@ class Darwin
          * Initializes a Darwin object, consisting of an empty grid of Creatures
          * and the current_turn set to 0 (no turns have passed). Also sets the
          * beginning (_b) and end (_e) pointers.
-         * @param s, a string of space-delimited integers
+         * @param height the number of rows in the grid
+         * @param width the number of columns in the grid
          */
-        Darwin();
+        Darwin(int height, int width);
 
         // -----
         // begin
@@ -113,6 +145,3 @@ class Darwin
 };
 
 #endif // Darwin_h
-
-#include "Darwin.c++" // http://stackoverflow.com/questions/495021/why-
-                      // can-templates-only-be-implemented-in-the-header-file

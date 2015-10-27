@@ -3,9 +3,6 @@
  *         methods in "Darwin.h".
  */
 
-#ifndef Darwin_c
-#define Darwin_c
-
 // --------
 // includes
 // --------
@@ -16,18 +13,58 @@
 
 using namespace std;
 
+// -----------------------------
+// Species (default constructor)
+// -----------------------------
 
-// -----------
-// has_species
-// -----------
+/**
+ * Initializes a Species object.
+ */
+Species::Species()
+{
+
+}
+
+// ------------------------------
+// Creature (default constructor)
+// ------------------------------
+
+/**
+ * Initializes a Creature object. Default constructor, does NOT define
+ * a species and sets has_species to false.
+ */
+Creature::Creature()
+{
+    has_species = false;
+}
+
+// ------------------------------
+// Creature (species constructor)
+// ------------------------------
+
+/**
+ * Initializes a Creature object. Sets the passed in Species as this
+ * Creature's associated Species, and sets has_species to true.
+ * @param s a Species object
+ */
+Creature::Creature(Species& s)
+{
+    this->s = s;
+    has_species = true;
+}
+
+
+// --------
+// is_empty
+// --------
 
 /**
  * Returns a boolean value whether or not this Creature has a Species.
  */
-// bool Creature::has_species()
-// {
-//     return false;
-// }
+bool Creature::is_empty() const
+{
+    return has_species;
+}
 
 
 // --------------------
@@ -38,11 +75,16 @@ using namespace std;
  * Initializes a Darwin object, consisting of an empty grid of Creatures
  * and the current_turn set to 0 (no turns have passed). Also sets the
  * beginning (_b) and end (_e) pointers.
- * @param s, a string of space-delimited integers
+ * @param height the number of rows in the grid
+ * @param width the number of columns in the grid
  */
-template<int height, int width>
-Darwin<height, width>::Darwin()
+Darwin::Darwin(int height, int width)
 {
+    // Resize empty grid (which was initialized with size 0, 0)
+    grid.resize(width, vector<Creature>(height));
+
+    this->height = height;
+    this->width = width;
     num_turns = 0;
     current_turn = 0;
     _b = &grid[0][0];
@@ -57,8 +99,7 @@ Darwin<height, width>::Darwin()
  * Returns an iterator (pointer) to the beginning (left corner) of
  * the grid.
  */
-template<int height, int width>
-Creature* Darwin<height, width>::begin() const
+Creature* Darwin::begin() const
 {
     return _b;
 }
@@ -70,8 +111,7 @@ Creature* Darwin<height, width>::begin() const
 /**
  * Returns an iterator (pointer) to the end (right corner) of the grid.
  */
-template<int height, int width>
-Creature* Darwin<height, width>::end() const
+Creature* Darwin::end() const
 {
     return _e;
 }
@@ -84,8 +124,7 @@ Creature* Darwin<height, width>::end() const
  * Returns a pointer to the Creature on the grid at the row and column
  * given to this function.
  */
-template<int height, int width>
-const Creature* Darwin<height, width>::at(int row, int col) const
+const Creature* Darwin::at(int row, int col) const
 {
     return &grid[row][col];
 }
@@ -98,8 +137,7 @@ const Creature* Darwin<height, width>::at(int row, int col) const
  * Returns a string representation of the Darwin object (the grid and 
  * the current turn at the time this function is called.
  */
-template<int height, int width>
-const string Darwin<height, width>::get_grid() const
+const string Darwin::get_grid() const
 {
     // Add current turn
     string output = "Turn = " + to_string(current_turn) + ".\n";
@@ -121,7 +159,7 @@ const string Darwin<height, width>::get_grid() const
         // Add contents of this row
         for(int c = 0; c < width; ++c)
         {
-            if(at(r, c) -> has_species())
+            if(at(r, c) -> is_empty())
             {
 
             }
@@ -136,5 +174,3 @@ const string Darwin<height, width>::get_grid() const
 
     return output;
 }
-
-#endif // Darwin_c
