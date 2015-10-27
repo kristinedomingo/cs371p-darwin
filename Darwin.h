@@ -13,7 +13,6 @@
 // --------
 
 #include <string>         // string
-#include "gtest/gtest.h"  // google test (friend test)
 
 using namespace std;
 
@@ -93,8 +92,9 @@ class Darwin
          * beginning (_b) and end (_e) pointers.
          * @param height the number of rows in the grid
          * @param width the number of columns in the grid
+         * @param num_turns the total number of turns for a run
          */
-        Darwin(int height, int width);
+        Darwin(int height, int width, int num_turns);
 
         // -----
         // begin

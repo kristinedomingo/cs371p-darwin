@@ -64,15 +64,16 @@ const char Creature::get_display() const
  * beginning (_b) and end (_e) pointers.
  * @param height the number of rows in the grid
  * @param width the number of columns in the grid
+ * @param num_turns the total number of turns for a run
  */
-Darwin::Darwin(int height, int width)
+Darwin::Darwin(int height, int width, int num_turns)
 {
     // Resize empty grid (which was initialized with size 0, 0)
     grid.resize(width, vector<Creature>(height));
 
     this->height = height;
     this->width = width;
-    num_turns = 0;
+    this->num_turns = 0;
     current_turn = 0;
     _b = &grid[0][0];
     _e = _b + (height * width);
