@@ -62,7 +62,7 @@ TEST(CreatureConstructor, creature_constructor_3)
  */
 TEST(DarwinConstructor, iterators_1)
 {
-    Darwin d(10, 10);
+    Darwin d(10, 10, 0);
     Creature* begin = d.begin();
     int count = 0;
 
@@ -82,7 +82,7 @@ TEST(DarwinConstructor, iterators_1)
  */
 TEST(DarwinConstructor, iterators_2)
 {
-    Darwin d(1, 1);
+    Darwin d(1, 1, 0);
     Creature* begin = d.begin();
     int count = 0;
 
@@ -102,7 +102,7 @@ TEST(DarwinConstructor, iterators_2)
  */
 TEST(DarwinConstructor, iterators_3)
 {
-    Darwin d(9, 9);
+    Darwin d(9, 9, 0);
     Creature* c = d.begin() + 1;
 
     ASSERT_EQ(d.at(0, 1), c);
@@ -132,7 +132,7 @@ TEST(DarwinConstructor, iterators_3)
  */
 TEST(GetGrid, get_grid_1)
 {
-    Darwin d(8, 8);
+    Darwin d(8, 8, 0);
     string grid = "Turn = 0.\n"
                   "  01234567\n"
                   "0 ........\n"
@@ -154,7 +154,7 @@ TEST(GetGrid, get_grid_1)
  */
 TEST(GetGrid, get_grid_2)
 {
-    Darwin d(1, 1);
+    Darwin d(1, 1, 0);
     string grid = "Turn = 0.\n"
                   "  0\n"
                   "0 .\n";
@@ -169,7 +169,7 @@ TEST(GetGrid, get_grid_2)
  */
 TEST(GetGrid, get_grid_3)
 {
-    Darwin d(8, 8);
+    Darwin d(8, 8, 0);
 
     Creature trap('t');
     Creature rover('r');
@@ -201,7 +201,7 @@ TEST(GetGrid, get_grid_3)
  */
 TEST(GetGrid, get_grid_4)
 {
-    Darwin d(8, 8);
+    Darwin d(8, 8, 0);
 
     Creature trap('t');
     Creature* const c = d.at(0, 0);
@@ -228,7 +228,7 @@ TEST(GetGrid, get_grid_4)
  */
 TEST(GetGrid, get_grid_5)
 {
-    Darwin d(11, 11);
+    Darwin d(11, 11, 0);
     string grid = "Turn = 0.\n"
                   "  01234567890\n"
                   "0 ...........\n"
@@ -253,7 +253,7 @@ TEST(GetGrid, get_grid_5)
  */
 TEST(GetGrid, get_grid_6)
 {
-    Darwin d(11, 11);
+    Darwin d(11, 11, 0);
 
     Creature trap('t');
     Creature* const c = d.at(10, 10);

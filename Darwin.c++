@@ -73,7 +73,7 @@ Darwin::Darwin(int height, int width, int num_turns)
 
     this->height = height;
     this->width = width;
-    this->num_turns = 0;
+    this->num_turns = num_turns;
     current_turn = 0;
     _b = &grid[0][0];
     _e = _b + (height * width);

@@ -12,7 +12,8 @@
 // includes
 // --------
 
-#include <string>         // string
+#include <string> // string
+#include <vector> // vector
 
 using namespace std;
 
