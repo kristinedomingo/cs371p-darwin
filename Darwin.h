@@ -157,7 +157,6 @@ class Darwin
         vector<vector<Creature>> grid; // the grid of Creatures
         int height;                    // the number of rows in the grid
         int width;                     // the number of columns in the grid
-        int num_turns;                 // total number of turns for a Darwin run
         int current_turn;              // the current turn of the Darwin run
         Creature* _b;                  // "beginning" of the board (left corner)
         Creature* _e;                  // "end" of the board (right corner)
@@ -174,9 +173,8 @@ class Darwin
          * beginning (_b) and end (_e) pointers.
          * @param height the number of rows in the grid
          * @param width the number of columns in the grid
-         * @param num_turns the total number of turns for a run
          */
-        Darwin(int height, int width, int num_turns);
+        Darwin(int height, int width);
 
         // -----
         // begin
