@@ -75,63 +75,15 @@ TEST(CreatureConstructor, creature_constructor_4)
 TEST(DarwinConstructor, iterators_1)
 {
     Darwin d(10, 10, 0);
-    Creature* begin = d.begin();
-    int count = 0;
+    Creature trap('t');
 
-    while(begin != d.end())
-    {
-        ++count;
-        ++begin;
-    }
+    Creature* const c = d.at(1, 1);
+    *c = trap;
 
-    ASSERT_EQ(count, 100);
+    Darwin::Darwin_Iterator di = d.begin();
+
+    ASSERT_EQ(*di, c);
 }
-
-/**
- * Tests the Darwin constructor (iterators)
- * @param DarwinConstructor a fixture
- * @param iterators_2 test name
- */
-TEST(DarwinConstructor, iterators_2)
-{
-    Darwin d(1, 1, 0);
-    Creature* begin = d.begin();
-    int count = 0;
-
-    while(begin != d.end())
-    {
-        ++count;
-        ++begin;
-    }
-
-    ASSERT_EQ(count, 1);
-}
-
-/**
- * Tests the Darwin constructor (iterators)
- * @param DarwinConstructor a fixture
- * @param iterators_3 test name
- */
-TEST(DarwinConstructor, iterators_3)
-{
-    Darwin d(9, 9, 0);
-    Creature* c = d.begin() + 1;
-
-    ASSERT_EQ(d.at(0, 1), c);
-}
-
-/**
- * Tests the Darwin constructor (iterators)
- * @param DarwinConstructor a fixture
- * @param iterators_4 test name
- */
-// TEST(DarwinConstructor, iterators_4)
-// {
-//     Darwin d(8, 8);
-//     Creature* c = d.begin() + 40;
-
-//     ASSERT_EQ(d.at(1, 0), c);
-// }
 
 // ----------------
 // get_grid() tests

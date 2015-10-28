@@ -14,6 +14,7 @@
 
 #include <string> // string
 #include <vector> // vector
+#include <iostream>
 
 using namespace std;
 
@@ -82,6 +83,53 @@ class Creature
 // --------------------------
 class Darwin
 {
+    public:
+
+        // -----------------------------------
+        // Darwin_Iterator (Class Declaration)
+        // -----------------------------------
+        class Darwin_Iterator
+        {
+            friend class Darwin;
+
+            private:
+                int row;        // row this iterator is at
+                int col;        // column this iterator is at
+                Darwin& darwin; // reference to outer class
+
+            public:
+
+                // -----------------------------
+                // Darwin_Iterator (constructor)
+                // -----------------------------
+
+                /**
+                 * Initializes a Darwin_Iterator object, default row and column
+                 * set to 0.
+                 * @param d the reference to the outer class (darwin)
+                 * @param row the row this iterator is at
+                 * @param col the col this iterator is at
+                 */
+                Darwin_Iterator(Darwin& d, int row = 0, int col = 0) : darwin(d)
+                {
+                    this->row = row;
+                    this->col = col;
+                }
+
+                // ----------
+                // operator *
+                // ----------
+
+                /**
+                 * The dereference operator, returns a pointer to the Creature
+                 * at this iterator's row and column.
+                 */
+                Creature* operator * () const
+                {
+                    return darwin.at(row, col);
+                }
+        };
+
     private:
         vector<vector<Creature>> grid; // the grid of Creatures
         int height;                    // the number of rows in the grid
@@ -90,6 +138,7 @@ class Darwin
         int current_turn;              // the current turn of the Darwin run
         Creature* _b;                  // "beginning" of the board (left corner)
         Creature* _e;                  // "end" of the board (right corner)
+        Darwin_Iterator di;            // an iterator over non-empty creatures
 
     public:
         // --------------------
@@ -111,20 +160,22 @@ class Darwin
         // -----
 
         /**
-         * Returns an iterator (pointer) to the beginning (left corner) of
-         * the grid.
+         * Returns a Darwin_Iterator to the FIRST, NON-EMPTY, Creature in the
+         * grid. If all of the Creatures in the grid are empty, returns an
+         * iterator to the end.
          */
-        Creature* begin() const;
+        Darwin_Iterator begin();
 
         // ---
         // end
         // ---
 
         /**
-         * Returns an iterator (pointer) to one PAST the end (right corner) of
-         * the grid.
+         * Returns a Darwin_Iterator to the LAST, NON-EMPTY, Creature in the
+         * grid. If all of the Creatures in the grid are empty, returns an
+         * iterator to the end (one past the end of the vector).
          */
-        Creature* end() const;
+        Darwin_Iterator end();
 
         // --
         // at

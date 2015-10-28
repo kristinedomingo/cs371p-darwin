@@ -68,7 +68,7 @@ const char Creature::get_display() const
  * @param width the number of columns in the grid
  * @param num_turns the total number of turns for a run
  */
-Darwin::Darwin(int height, int width, int num_turns)
+Darwin::Darwin(int height, int width, int num_turns) : di(*this)
 {
     // Resize empty grid (which was initialized with size 0, 0)
     grid.resize(width, vector<Creature>(height));
@@ -86,12 +86,41 @@ Darwin::Darwin(int height, int width, int num_turns)
 // -----
 
 /**
- * Returns an iterator (pointer) to the beginning (left corner) of
- * the grid.
+ * Returns a Darwin_Iterator to the FIRST, NON-EMPTY, Creature in the
+ * grid. If all of the Creatures in the grid are empty, returns an
+ * iterator to the end.
  */
-Creature* Darwin::begin() const
+Darwin::Darwin_Iterator Darwin::begin()
 {
-    return _b;
+    int row = 0;
+    int col = 0;
+
+    // Set row and column to the first (left-to-right, top-down)
+    // non-empty Creature found on the board
+    while(grid[row][col].get_display() == '.' && row != height)
+    {
+        // If the end of the column is reached, goto next row
+        if(col == width - 1)
+        {
+            col = 0;
+            ++row;
+        }
+        else
+        {
+            ++col;
+        }
+    }
+
+    // If reaches one row past the end, return the end iterator
+    if(row == height)
+    {
+        return end();
+    }
+
+    // Set the iterator's row and col to the first non-empty creature
+    di.row = row;
+    di.col = col;
+    return di;
 }
 
 // ---
@@ -99,11 +128,46 @@ Creature* Darwin::begin() const
 // ---
 
 /**
- * Returns an iterator (pointer) to the end (right corner) of the grid.
+ * Returns a Darwin_Iterator to the LAST, NON-EMPTY, Creature in the
+ * grid. If all of the Creatures in the grid are empty, returns an
+ * iterator to the end (one past the end of the vector).
  */
-Creature* Darwin::end() const
+Darwin::Darwin_Iterator Darwin::end()
 {
-    return _e;
+    int row = height - 1;
+    int col = width - 1;
+
+    // Set row and column to the first (left-to-right, top-down)
+    // non-empty Creature found on the board
+    while(grid[row][col].get_display() == '.' && row != -1)
+    {
+        // If the end of the column is reached, goto next row
+        if(col == 0)
+        {
+            col = width - 1;
+            --row;
+        }
+        else
+        {
+            --col;
+        }
+    }
+
+    // If reaches one row past the end, set row and column to one past the
+    // right corner of the grid
+    if(row == -1)
+    {
+        di.row = height;
+        di.col = 0;
+    }
+    // Else, set the iterator's row and col to the last non-empty creature
+    else
+    {
+        di.row = row;
+        di.col = col;
+    }
+
+    return di;
 }
 
 // --
