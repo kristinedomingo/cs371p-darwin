@@ -112,6 +112,16 @@ class Darwin
                  */
                 Darwin_Iterator(Darwin& d, int row = 0, int col = 0);
 
+                // --------------------
+                // operator == (equals)
+                // --------------------
+
+                /**
+                 * The equals operator, returns true if the rhs Darwin_Iterator
+                 * points to the same space as this one.
+                 */
+                bool operator == (const Darwin_Iterator& rhs) const;
+
                 // ----------
                 // operator *
                 // ----------
@@ -121,6 +131,16 @@ class Darwin
                  * at this iterator's row and column.
                  */
                 Creature* operator * () const;
+
+                // ---------------------------
+                // operator ++ (pre-increment)
+                // ---------------------------
+
+                /**
+                 * The pre-increment operator, moves this iterator to the next
+                 * space in the grid.
+                 */
+                Darwin_Iterator& operator ++ ();
         };
 
     private:

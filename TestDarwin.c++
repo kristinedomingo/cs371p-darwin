@@ -94,18 +94,17 @@ TEST(DarwinConstructor, iterators_1)
  * @param DarwinConstructor a fixture
  * @param iterators_2 test name
  */
-// TEST(DarwinConstructor, iterators_2)
-// {
-//     Darwin d(10, 10, 0);
-//     Creature trap('t');
+TEST(DarwinConstructor, iterators_2)
+{
+    Darwin d(1, 1, 0);
 
-//     Creature* const c = d.at(9, 9);
-//     *c = trap;
+    Darwin::Darwin_Iterator di_b = d.begin();
+    Darwin::Darwin_Iterator di_e = d.end();
 
-//     Darwin::Darwin_Iterator di = d.end();
+    ++di_b;
 
-//     ASSERT_EQ(*di, c);
-// }
+    ASSERT_EQ(di_b, di_e);
+}
 
 // ----------------
 // get_grid() tests
