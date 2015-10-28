@@ -56,6 +56,36 @@ const char Creature::get_display() const
     return display;
 }
 
+// -----------------------------
+// Darwin_Iterator (constructor)
+// -----------------------------
+
+/**
+ * Initializes a Darwin_Iterator object, default row and column
+ * set to 0.
+ * @param d the reference to the outer class (darwin)
+ * @param row the row this iterator is at
+ * @param col the col this iterator is at
+ */
+Darwin::Darwin_Iterator::Darwin_Iterator(Darwin& d, int row, int col) : darwin(d)
+{
+    this->row = row;
+    this->col = col;
+}
+
+// ----------
+// operator *
+// ----------
+
+/**
+ * The dereference operator, returns a pointer to the Creature
+ * at this iterator's row and column.
+ */
+Creature* Darwin::Darwin_Iterator::operator * () const
+{
+    return darwin.at(row, col);
+}
+
 // --------------------
 // Darwin (constructor)
 // --------------------
@@ -86,40 +116,11 @@ Darwin::Darwin(int height, int width, int num_turns) : di(*this)
 // -----
 
 /**
- * Returns a Darwin_Iterator to the FIRST, NON-EMPTY, Creature in the
- * grid. If all of the Creatures in the grid are empty, returns an
- * iterator to the end.
+ * Returns a Darwin_Iterator first space (left corner) the grid.
  */
 Darwin::Darwin_Iterator Darwin::begin()
 {
-    int row = 0;
-    int col = 0;
-
-    // Set row and column to the first (left-to-right, top-down)
-    // non-empty Creature found on the board
-    while(grid[row][col].get_display() == '.' && row != height)
-    {
-        // If the end of the column is reached, goto next row
-        if(col == width - 1)
-        {
-            col = 0;
-            ++row;
-        }
-        else
-        {
-            ++col;
-        }
-    }
-
-    // If reaches one row past the end, return the end iterator
-    if(row == height)
-    {
-        return end();
-    }
-
-    // Set the iterator's row and col to the first non-empty creature
-    di.row = row;
-    di.col = col;
+    Darwin_Iterator di(*this);
     return di;
 }
 
@@ -128,45 +129,13 @@ Darwin::Darwin_Iterator Darwin::begin()
 // ---
 
 /**
- * Returns a Darwin_Iterator to the LAST, NON-EMPTY, Creature in the
- * grid. If all of the Creatures in the grid are empty, returns an
- * iterator to the end (one past the end of the vector).
+ * Returns a Darwin_Iterator to the last spaces (one past the right
+ * corner) of the grid.
  */
 Darwin::Darwin_Iterator Darwin::end()
 {
-    int row = height - 1;
-    int col = width - 1;
-
-    // Set row and column to the first (left-to-right, top-down)
-    // non-empty Creature found on the board
-    while(grid[row][col].get_display() == '.' && row != -1)
-    {
-        // If the end of the column is reached, goto next row
-        if(col == 0)
-        {
-            col = width - 1;
-            --row;
-        }
-        else
-        {
-            --col;
-        }
-    }
-
-    // If reaches one row past the end, set row and column to one past the
-    // right corner of the grid
-    if(row == -1)
-    {
-        di.row = height;
-        di.col = 0;
-    }
-    // Else, set the iterator's row and col to the last non-empty creature
-    else
-    {
-        di.row = row;
-        di.col = col;
-    }
-
+    // One past the right corner (one row below, leftmost column)
+    Darwin_Iterator di(*this, height, 0);
     return di;
 }
 

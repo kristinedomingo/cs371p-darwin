@@ -110,11 +110,7 @@ class Darwin
                  * @param row the row this iterator is at
                  * @param col the col this iterator is at
                  */
-                Darwin_Iterator(Darwin& d, int row = 0, int col = 0) : darwin(d)
-                {
-                    this->row = row;
-                    this->col = col;
-                }
+                Darwin_Iterator(Darwin& d, int row = 0, int col = 0);
 
                 // ----------
                 // operator *
@@ -124,10 +120,7 @@ class Darwin
                  * The dereference operator, returns a pointer to the Creature
                  * at this iterator's row and column.
                  */
-                Creature* operator * () const
-                {
-                    return darwin.at(row, col);
-                }
+                Creature* operator * () const;
         };
 
     private:
@@ -138,7 +131,7 @@ class Darwin
         int current_turn;              // the current turn of the Darwin run
         Creature* _b;                  // "beginning" of the board (left corner)
         Creature* _e;                  // "end" of the board (right corner)
-        Darwin_Iterator di;            // an iterator over non-empty creatures
+        Darwin_Iterator di;            // an iterator over spaces in the grid
 
     public:
         // --------------------
@@ -160,9 +153,7 @@ class Darwin
         // -----
 
         /**
-         * Returns a Darwin_Iterator to the FIRST, NON-EMPTY, Creature in the
-         * grid. If all of the Creatures in the grid are empty, returns an
-         * iterator to the end.
+         * Returns a Darwin_Iterator first space (left corner) the grid.
          */
         Darwin_Iterator begin();
 
@@ -171,9 +162,8 @@ class Darwin
         // ---
 
         /**
-         * Returns a Darwin_Iterator to the LAST, NON-EMPTY, Creature in the
-         * grid. If all of the Creatures in the grid are empty, returns an
-         * iterator to the end (one past the end of the vector).
+         * Returns a Darwin_Iterator to the last spaces (one past the right
+         * corner) of the grid.
          */
         Darwin_Iterator end();
 

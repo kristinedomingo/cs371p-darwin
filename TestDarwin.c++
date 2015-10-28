@@ -77,13 +77,35 @@ TEST(DarwinConstructor, iterators_1)
     Darwin d(10, 10, 0);
     Creature trap('t');
 
-    Creature* const c = d.at(1, 1);
+    Creature* const c = d.at(0, 0);
     *c = trap;
 
     Darwin::Darwin_Iterator di = d.begin();
 
     ASSERT_EQ(*di, c);
 }
+
+// --------------------------
+// Darwin (constructor) tests
+// --------------------------
+
+/**
+ * Tests the Darwin constructor (iterators)
+ * @param DarwinConstructor a fixture
+ * @param iterators_2 test name
+ */
+// TEST(DarwinConstructor, iterators_2)
+// {
+//     Darwin d(10, 10, 0);
+//     Creature trap('t');
+
+//     Creature* const c = d.at(9, 9);
+//     *c = trap;
+
+//     Darwin::Darwin_Iterator di = d.end();
+
+//     ASSERT_EQ(*di, c);
+// }
 
 // ----------------
 // get_grid() tests
