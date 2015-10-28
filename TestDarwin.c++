@@ -63,16 +63,16 @@ TEST(CreatureConstructor, creature_constructor_4)
     ASSERT_EQ(c.get_display(), 'd');
 }
 
-// --------------------------
-// Darwin (constructor) tests
-// --------------------------
+// ---------------------
+// Darwin_Iterator tests
+// ---------------------
 
 /**
- * Tests the Darwin constructor (iterators)
- * @param DarwinConstructor a fixture
+ * Tests the Darwin_Iterator
+ * @param DarwinIterator a fixture
  * @param iterators_1 test name
  */
-TEST(DarwinConstructor, iterators_1)
+TEST(DarwinIterator, iterators_1)
 {
     Darwin d(10, 10, 0);
     Creature trap('t');
@@ -85,16 +85,12 @@ TEST(DarwinConstructor, iterators_1)
     ASSERT_EQ(*di, c);
 }
 
-// --------------------------
-// Darwin (constructor) tests
-// --------------------------
-
 /**
- * Tests the Darwin constructor (iterators)
- * @param DarwinConstructor a fixture
+ * Tests the Darwin_Iterator
+ * @param DarwinIterator a fixture
  * @param iterators_2 test name
  */
-TEST(DarwinConstructor, iterators_2)
+TEST(DarwinIterator, iterators_2)
 {
     Darwin d(1, 1, 0);
 
@@ -104,6 +100,45 @@ TEST(DarwinConstructor, iterators_2)
     ++di_b;
 
     ASSERT_EQ(di_b, di_e);
+}
+
+/**
+ * Tests the Darwin_Iterator
+ * @param DarwinIterator a fixture
+ * @param iterators_3 test name
+ */
+TEST(DarwinIterator, iterators_3)
+{
+    Darwin d(4, 4, 0);
+
+    Darwin::Darwin_Iterator di_b = d.begin();
+    Darwin::Darwin_Iterator di_e = d.end();
+
+    for(int i = 0; i < 16; ++i)
+    {
+      ++di_b;
+    }
+
+    ASSERT_EQ(di_b, di_e);
+}
+
+/**
+ * Tests the Darwin_Iterator
+ * @param DarwinIterator a fixture
+ * @param iterators_4 test name
+ */
+TEST(DarwinIterator, iterators_4)
+{
+    Darwin d(5, 5, 0);
+
+    Darwin::Darwin_Iterator di_b = d.begin();
+    Darwin::Darwin_Iterator di_e = d.end();
+
+    while(di_b != di_e)
+    {
+        ASSERT_EQ((*di_b)->get_display(), '.');
+        ++di_b;
+    }
 }
 
 // ----------------

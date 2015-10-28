@@ -122,6 +122,16 @@ class Darwin
                  */
                 bool operator == (const Darwin_Iterator& rhs) const;
 
+                // -----------------------
+                // operator != (not equal)
+                // -----------------------
+
+                /**
+                 * The not equals operator, returns true if the rhs 
+                 * Darwin_Iterator does not point to the same space as this one.
+                 */
+                bool operator != (const Darwin_Iterator& rhs) const;
+
                 // ----------
                 // operator *
                 // ----------

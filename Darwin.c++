@@ -86,6 +86,19 @@ bool Darwin::Darwin_Iterator::operator == (const Darwin::Darwin_Iterator& rhs) c
     return (this->row == rhs.row) && (this->col == rhs.col);
 }
 
+// -----------------------
+// operator != (not equal)
+// -----------------------
+
+/**
+ * The not equals operator, returns true if the rhs 
+ * Darwin_Iterator does not point to the same space as this one.
+ */
+bool Darwin::Darwin_Iterator::operator != (const Darwin::Darwin_Iterator& rhs) const
+{
+    return !(*this == rhs);
+}
+
 // ----------
 // operator *
 // ----------
