@@ -140,8 +140,7 @@ Darwin::Darwin_Iterator& Darwin::Darwin_Iterator::operator ++ ()
 
 /**
  * Initializes a Darwin object, consisting of an empty grid of Creatures
- * and the current_turn set to 0 (no turns have passed). Also sets the
- * beginning (_b) and end (_e) pointers.
+ * and the current_turn set to 0 (no turns have passed).
  * @param height the number of rows in the grid
  * @param width the number of columns in the grid
  */
@@ -153,8 +152,6 @@ Darwin::Darwin(int height, int width) : di(*this)
     this->height = height;
     this->width = width;
     current_turn = 0;
-    _b = &grid[0][0];
-    _e = _b + (height * width);
 }
 
 // -----

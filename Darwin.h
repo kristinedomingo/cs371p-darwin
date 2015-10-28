@@ -158,8 +158,6 @@ class Darwin
         int height;                    // the number of rows in the grid
         int width;                     // the number of columns in the grid
         int current_turn;              // the current turn of the Darwin run
-        Creature* _b;                  // "beginning" of the board (left corner)
-        Creature* _e;                  // "end" of the board (right corner)
         Darwin_Iterator di;            // an iterator over spaces in the grid
 
     public:
@@ -169,8 +167,7 @@ class Darwin
 
         /**
          * Initializes a Darwin object, consisting of an empty grid of Creatures
-         * and the current_turn set to 0 (no turns have passed). Also sets the
-         * beginning (_b) and end (_e) pointers.
+         * and the current_turn set to 0 (no turns have passed).
          * @param height the number of rows in the grid
          * @param width the number of columns in the grid
          */

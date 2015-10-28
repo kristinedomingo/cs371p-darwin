@@ -74,7 +74,7 @@ TEST(CreatureConstructor, creature_constructor_4)
  */
 TEST(DarwinIterator, iterators_1)
 {
-    Darwin d(10, 10, 0);
+    Darwin d(10, 10);
     Creature trap('t');
 
     Creature* const c = d.at(0, 0);
@@ -92,7 +92,7 @@ TEST(DarwinIterator, iterators_1)
  */
 TEST(DarwinIterator, iterators_2)
 {
-    Darwin d(1, 1, 0);
+    Darwin d(1, 1);
 
     Darwin::Darwin_Iterator di_b = d.begin();
     Darwin::Darwin_Iterator di_e = d.end();
@@ -109,7 +109,7 @@ TEST(DarwinIterator, iterators_2)
  */
 TEST(DarwinIterator, iterators_3)
 {
-    Darwin d(4, 4, 0);
+    Darwin d(4, 4);
 
     Darwin::Darwin_Iterator di_b = d.begin();
     Darwin::Darwin_Iterator di_e = d.end();
@@ -129,7 +129,7 @@ TEST(DarwinIterator, iterators_3)
  */
 TEST(DarwinIterator, iterators_4)
 {
-    Darwin d(5, 5, 0);
+    Darwin d(5, 5);
 
     Darwin::Darwin_Iterator di_b = d.begin();
     Darwin::Darwin_Iterator di_e = d.end();
@@ -152,7 +152,7 @@ TEST(DarwinIterator, iterators_4)
  */
 TEST(GetGrid, get_grid_1)
 {
-    Darwin d(8, 8, 0);
+    Darwin d(8, 8);
     string grid = "Turn = 0.\n"
                   "  01234567\n"
                   "0 ........\n"
@@ -174,7 +174,7 @@ TEST(GetGrid, get_grid_1)
  */
 TEST(GetGrid, get_grid_2)
 {
-    Darwin d(1, 1, 0);
+    Darwin d(1, 1);
     string grid = "Turn = 0.\n"
                   "  0\n"
                   "0 .\n";
@@ -189,7 +189,7 @@ TEST(GetGrid, get_grid_2)
  */
 TEST(GetGrid, get_grid_3)
 {
-    Darwin d(8, 8, 0);
+    Darwin d(8, 8);
 
     Creature trap('t');
     Creature rover('r');
@@ -221,7 +221,7 @@ TEST(GetGrid, get_grid_3)
  */
 TEST(GetGrid, get_grid_4)
 {
-    Darwin d(8, 8, 0);
+    Darwin d(8, 8);
 
     Creature trap('t');
     Creature* const c = d.at(0, 0);
@@ -248,7 +248,7 @@ TEST(GetGrid, get_grid_4)
  */
 TEST(GetGrid, get_grid_5)
 {
-    Darwin d(11, 11, 0);
+    Darwin d(11, 11);
     string grid = "Turn = 0.\n"
                   "  01234567890\n"
                   "0 ...........\n"
@@ -273,7 +273,7 @@ TEST(GetGrid, get_grid_5)
  */
 TEST(GetGrid, get_grid_6)
 {
-    Darwin d(11, 11, 0);
+    Darwin d(11, 11);
 
     Creature trap('t');
     Creature* const c = d.at(10, 10);
