@@ -18,11 +18,52 @@ using namespace std;
 // -----------------------------
 
 /**
- * Initializes a Species object.
+ * Initializes a Species object. The "default" Species is represented
+ * by a '.', meaning, when the Darwin board is initially constructed,
+ * it creates a grid of Creatures that all have the default Species.
+ * @param representation a char used to display this Species
  */
-Species::Species()
+Species::Species(char representation)
 {
+    display = representation;
+}
 
+// --------------------
+// operator == (equals)
+// --------------------
+
+/**
+ * Returns true if the rhs Species is of the same species.
+ * @param rhs the Species to compare to
+ */
+bool Species::operator == (const Species& rhs) const
+{
+    return this->display == rhs.display;
+}
+
+// ------------------------
+// operator != (not equals)
+// ------------------------
+
+/**
+ * Returns true if the rhs Species is NOT of the same species.
+ * @param rhs the Species to compare to
+ */
+bool Species::operator != (const Species& rhs) const
+{
+    return !(*this == rhs);
+}
+
+// -----------
+// get_display
+// -----------
+
+/**
+ * Returns this Species' character representation.
+ */
+char Species::get_display() const
+{
+    return display;
 }
 
 // ----------------------
@@ -33,27 +74,38 @@ Species::Species()
  * Initializes a Creature object. Sets the passed in Species as this
  * Creature's associated Species (or uses the default Species).
  * @param s a Species object
- * @param representation a char used to display this Creature
  * @param dir the direction this Creature will face
  */
-Creature::Creature(char representation, Species s, Direction dir)
+Creature::Creature(Species s, Direction dir)
 {
     this->s = s;
     this->dir = dir;
-    display = representation;
     counter = 0;
 }
 
-// -----------
-// get_display
-// -----------
+// --------
+// is_enemy
+// --------
 
 /**
- * Returns the character representation of this Species.
+ * Returns true if rhs is not of the same species.
+ * @param rhs another Creature object
  */
-const char Creature::get_display() const
+bool Creature::is_enemy(const Creature& rhs) const
 {
-    return display;
+    return this->s != rhs.s;
+}
+
+// -------------------
+// get_species_display
+// -------------------
+
+/**
+ * Returns this Creature's Species character representation.
+ */
+char Creature::get_species_display() const
+{
+    return s.get_display();
 }
 
 // -----------------------------
@@ -80,6 +132,7 @@ Darwin::Darwin_Iterator::Darwin_Iterator(Darwin& d, int row, int col) : darwin(d
 /**
  * The equals operator, returns true if the rhs Darwin_Iterator
  * points to the same space as this one.
+ * @param rhs the Darwin_Iterator to compare to
  */
 bool Darwin::Darwin_Iterator::operator == (const Darwin::Darwin_Iterator& rhs) const
 {
@@ -93,6 +146,7 @@ bool Darwin::Darwin_Iterator::operator == (const Darwin::Darwin_Iterator& rhs) c
 /**
  * The not equals operator, returns true if the rhs 
  * Darwin_Iterator does not point to the same space as this one.
+ * @param rhs the Darwin_Iterator to compare to
  */
 bool Darwin::Darwin_Iterator::operator != (const Darwin::Darwin_Iterator& rhs) const
 {
@@ -172,7 +226,7 @@ Darwin::Darwin_Iterator Darwin::begin()
 // ---
 
 /**
- * Returns a Darwin_Iterator to the last spaces (one past the right
+ * Returns a Darwin_Iterator to the last space (one past the right
  * corner) of the grid.
  */
 Darwin::Darwin_Iterator Darwin::end()
@@ -189,6 +243,8 @@ Darwin::Darwin_Iterator Darwin::end()
 /**
  * Returns a pointer to the Creature on the grid at the row and column
  * given to this function.
+ * @param row the row to look at
+ * @param the column to look at
  */
 Creature* const Darwin::at(int row, int col)
 {
@@ -225,7 +281,7 @@ const string Darwin::get_grid()
         // Add contents of this row
         for(int c = 0; c < width; ++c)
         {
-            output += at(r, c)->get_display();
+            output += at(r, c)->get_species_display();
         }
 
         output += '\n';

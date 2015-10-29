@@ -13,6 +13,33 @@
 
 using namespace std;
 
+// ---------------------------
+// Species (constructor) tests
+// ---------------------------
+
+/**
+ * Tests the Species constructor (no parameters)
+ * @param SpeciesConstructor a fixture
+ * @param species_constructor_1 test name
+ */
+TEST(SpeciesConstructor, species_constructor_1)
+{
+    Species s;
+    ASSERT_EQ(s.get_display(), '.');
+}
+
+
+/**
+ * Tests the Species constructor (one parameter)
+ * @param SpeciesConstructor a fixture
+ * @param species_constructor_2 test name
+ */
+TEST(SpeciesConstructor, species_constructor_2)
+{
+    Species s('k');
+    ASSERT_EQ(s.get_display(), 'k');
+}
+
 // ----------------------------
 // Creature (constructor) tests
 // ----------------------------
@@ -25,7 +52,7 @@ using namespace std;
 TEST(CreatureConstructor, creature_constructor_1)
 {
     Creature c;
-    ASSERT_EQ(c.get_display(), '.');
+    ASSERT_EQ(c.get_species_display(), '.');
 }
 
 /**
@@ -35,32 +62,33 @@ TEST(CreatureConstructor, creature_constructor_1)
  */
 TEST(CreatureConstructor, creature_constructor_2)
 {
-    Creature c('b');
-    ASSERT_EQ(c.get_display(), 'b');
+    Species s;
+    Creature c(s);
+    ASSERT_EQ(c.get_species_display(), '.');
 }
 
 /**
  * Tests the Creature constructor (two parameters)
- * @param CreatureConstructor a fixture
- * @param creature_constructor_3 test name
- */
-TEST(CreatureConstructor, creature_constructor_3)
-{
-    Species s;
-    Creature c('k', s);
-    ASSERT_EQ(c.get_display(), 'k');
-}
-
-/**
- * Tests the Creature constructor (three parameters)
  * @param CreatureConstructor a fixture
  * @param creature_constructor_4 test name
  */
 TEST(CreatureConstructor, creature_constructor_4)
 {
     Species s;
-    Creature c('d', s, SOUTH);
-    ASSERT_EQ(c.get_display(), 'd');
+    Creature c(s, SOUTH);
+    ASSERT_EQ(c.get_species_display(), '.');
+}
+
+/**
+ * Tests the Creature constructor (non-default Species)
+ * @param CreatureConstructor a fixture
+ * @param creature_constructor_5 test name
+ */
+TEST(CreatureConstructor, creature_constructor_5)
+{
+    Species s('r');
+    Creature c(s, SOUTH);
+    ASSERT_EQ(c.get_species_display(), 'r');
 }
 
 // ---------------------
@@ -136,7 +164,7 @@ TEST(DarwinIterator, iterators_4)
 
     while(di_b != di_e)
     {
-        ASSERT_EQ((*di_b)->get_display(), '.');
+        ASSERT_EQ((*di_b)->get_species_display(), '.');
         ++di_b;
     }
 }
@@ -309,4 +337,36 @@ TEST(GetGrid, get_grid_6)
                   "0 ..........t\n";
 
     ASSERT_EQ(d.get_grid(), grid);
+}
+
+// --------------------
+// add_creature() tests
+// --------------------
+
+/**
+ * Tests the add_creature() function
+ * @param AddCreature a fixture
+ * @param add_creature_1 test name
+ */
+TEST(AddCreature, add_creature_1)
+{
+    Darwin d(8, 8);
+    Creature kristine('k');
+    Creature downing('d');
+
+    d.add_creature(kristine, 0, 0);
+    d.add_creature(kristine, 1, 1);
+    d.add_creature(kristine, 2, 2);
+
+    d.add_creature(downing, 3, 3);
+    d.add_creature(downing, 4, 4);
+    d.add_creature(downing, 5, 5);
+
+    ASSERT_FALSE(d.at(0, 0)->is_enemy(kristine));
+    ASSERT_FALSE(d.at(1, 1)->is_enemy(kristine));
+    ASSERT_FALSE(d.at(2, 2)->is_enemy(kristine));
+
+    ASSERT_FALSE(d.at(3, 3)->is_enemy(downing));
+    ASSERT_FALSE(d.at(4, 4)->is_enemy(downing));
+    ASSERT_FALSE(d.at(5, 5)->is_enemy(downing));
 }

@@ -29,6 +29,7 @@ enum Direction {NORTH, EAST, SOUTH, WEST};
 class Species
 {
     private:
+        char display;     // the representation of this Species on the grid
 
     public:
         // -----------------------------
@@ -36,9 +37,41 @@ class Species
         // -----------------------------
 
         /**
-         * Initializes a Species object.
+         * Initializes a Species object. The "default" Species is represented
+         * by a '.', meaning, when the Darwin board is initially constructed,
+         * it creates a grid of Creatures that all have the default Species.
+         * @param representation a char used to display this Species
          */
-        Species();
+        Species(char representation = '.');
+
+        // --------------------
+        // operator == (equals)
+        // --------------------
+
+        /**
+         * Returns true if the rhs Species is of the same species.
+         * @param rhs the Species to compare to
+         */
+        bool operator == (const Species& rhs) const;
+
+        // ------------------------
+        // operator != (not equals)
+        // ------------------------
+
+        /**
+         * Returns true if the rhs Species is NOT of the same species.
+         * @param rhs the Species to compare to
+         */
+        bool operator != (const Species& rhs) const;
+
+        // -----------
+        // get_display
+        // -----------
+
+        /**
+         * Returns this Species' character representation.
+         */
+        char get_display() const;
 };
 
 // ----------------------------
@@ -50,7 +83,6 @@ class Creature
         Species s;        // the Species of this Creature (if any)
         Direction dir;    // the direction this Creature is facing
         int counter;      // the program counter
-        char display;     // the representation of this Creature on the grid
 
     public:
         // ----------------------
@@ -61,21 +93,28 @@ class Creature
          * Initializes a Creature object. Sets the passed in Species as this
          * Creature's associated Species (or uses the default Species).
          * @param s a Species object
-         * @param representation a char used to display this Creature
          * @param dir the direction this Creature will face
          */
-        Creature(char representation = '.', 
-                 Species s = Species(),
-                 Direction dir = NORTH);
+        Creature(Species s = Species(), Direction dir = NORTH);
 
-        // -----------
-        // get_display
-        // -----------
+        // --------
+        // is_enemy
+        // --------
 
         /**
-         * Returns the character representation of this Species.
+         * Returns true if the rhs Creature is not of the same species.
+         * @param rhs another Creature object
          */
-        const char get_display() const;
+        bool is_enemy(const Creature& rhs) const;
+
+        // -------------------
+        // get_species_display
+        // -------------------
+
+        /**
+         * Returns this Creature's Species character representation.
+         */
+        char get_species_display() const;
 };
 
 // --------------------------
@@ -84,7 +123,6 @@ class Creature
 class Darwin
 {
     public:
-
         // -----------------------------------
         // Darwin_Iterator (Class Declaration)
         // -----------------------------------
@@ -98,7 +136,6 @@ class Darwin
                 Darwin& darwin; // reference to outer class
 
             public:
-
                 // -----------------------------
                 // Darwin_Iterator (constructor)
                 // -----------------------------
@@ -119,6 +156,7 @@ class Darwin
                 /**
                  * The equals operator, returns true if the rhs Darwin_Iterator
                  * points to the same space as this one.
+                 * @param rhs the Darwin_Iterator to compare to
                  */
                 bool operator == (const Darwin_Iterator& rhs) const;
 
@@ -129,6 +167,7 @@ class Darwin
                 /**
                  * The not equals operator, returns true if the rhs 
                  * Darwin_Iterator does not point to the same space as this one.
+                 * @param rhs the Darwin_Iterator to compare to
                  */
                 bool operator != (const Darwin_Iterator& rhs) const;
 
@@ -187,7 +226,7 @@ class Darwin
         // ---
 
         /**
-         * Returns a Darwin_Iterator to the last spaces (one past the right
+         * Returns a Darwin_Iterator to the last space (one past the right
          * corner) of the grid.
          */
         Darwin_Iterator end();
@@ -199,6 +238,8 @@ class Darwin
         /**
          * Returns a pointer to the Creature on the grid at the row and column
          * given to this function.
+         * @param row the row to look at
+         * @param the column to look at
          */
         Creature* const at(int row, int col);
 
@@ -208,7 +249,7 @@ class Darwin
 
         /**
          * Returns a string representation of the Darwin object (the grid and 
-         * the current turn at the time this function is called.
+         * the current turn) at the time this function is called.
          */
         const string get_grid();
 
