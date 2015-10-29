@@ -96,6 +96,19 @@ bool Creature::is_enemy(const Creature& rhs) const
     return this->s != rhs.s;
 }
 
+// --------
+// is_empty
+// --------
+
+/**
+ * Returns true if this Creature's Species is the default Species,
+ * in other words, this Creature is an "empty" space on the grid.
+ */
+bool Creature::is_empty() const
+{
+    return get_species_display() == '.';
+}
+
 // -------------------
 // get_species_display
 // -------------------
@@ -242,12 +255,17 @@ Darwin::Darwin_Iterator Darwin::end()
 
 /**
  * Returns a pointer to the Creature on the grid at the row and column
- * given to this function.
+ * given to this function. If the row or column is out of bounds,
+ * returns a nullptr.
  * @param row the row to look at
  * @param the column to look at
  */
 Creature* const Darwin::at(int row, int col)
 {
+    if(row >= height || col >= width)
+    {
+        return nullptr;
+    }
     return &grid[row][col];
 }
 

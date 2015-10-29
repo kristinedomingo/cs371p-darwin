@@ -91,6 +91,45 @@ TEST(CreatureConstructor, creature_constructor_5)
     ASSERT_EQ(c.get_species_display(), 'r');
 }
 
+// ----------------
+// is_empty() tests
+// ----------------
+
+/**
+ * Tests the is_empty() function
+ * @param IsEmpty a fixture
+ * @param is_empty_1 test name
+ */
+TEST(IsEmpty, is_empty_1)
+{
+    Creature c;
+    ASSERT_TRUE(c.is_empty());
+}
+
+/**
+ * Tests the is_empty() function
+ * @param IsEmpty a fixture
+ * @param is_empty_2 test name
+ */
+TEST(IsEmpty, is_empty_2)
+{
+    Species s;
+    Creature c(s);
+    ASSERT_TRUE(c.is_empty());
+}
+
+/**
+ * Tests the is_empty() function
+ * @param IsEmpty a fixture
+ * @param is_empty_3 test name
+ */
+TEST(IsEmpty, is_empty_3)
+{
+    Species s('k');
+    Creature c(s);
+    ASSERT_FALSE(c.is_empty());
+}
+
 // ---------------------
 // Darwin_Iterator tests
 // ---------------------
@@ -187,6 +226,37 @@ TEST(DarwinIterator, iterators_5)
     }
 
     ASSERT_EQ(di_b, di_e);
+}
+
+// ----------
+// at() tests
+// ----------
+
+/**
+ * Tests the at() function
+ * @param At a fixture
+ * @param at_1 test name
+ */
+TEST(At, at_1)
+{
+    Darwin d(8, 8);
+
+    Species s('k');
+    Creature c(s);
+    d.add_creature(c, 1, 1);
+
+    ASSERT_FALSE(d.at(1, 1)->is_enemy(c));
+}
+
+/**
+ * Tests the at() function
+ * @param At a fixture
+ * @param at_2 test name
+ */
+TEST(At, at_2)
+{
+    Darwin d(8, 8);
+    ASSERT_EQ(d.at(9, 9), nullptr);
 }
 
 // ----------------
