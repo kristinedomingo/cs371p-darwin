@@ -15,6 +15,7 @@
 #include <string> // string
 #include <vector> // vector
 #include <iostream>
+#include <sstream>   // stringstream
 
 using namespace std;
 
@@ -72,6 +73,15 @@ class Species
          * Returns this Species' character representation.
          */
         char get_display() const;
+
+        // ------
+        // render
+        // ------
+
+        /**
+         * Returns this Species' rendering on the Darwin grid.
+         */
+        char render() const;
 };
 
 // ----------------------------
@@ -79,7 +89,8 @@ class Species
 // ----------------------------
 class Creature
 {
-    private:
+    public:
+        friend ostream& operator << (ostream&, const Creature&);
         Species s;        // the Species of this Creature (if any)
         Direction dir;    // the direction this Creature is facing
         int counter;      // the program counter
@@ -127,6 +138,11 @@ class Creature
          */
         char get_species_display() const;
 };
+
+ostream& operator << (ostream& os, const Creature &c)
+{
+    return os << c.s.render();
+}
 
 // --------------------------
 // Darwin (Class Declaration)

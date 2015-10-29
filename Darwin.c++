@@ -66,6 +66,18 @@ char Species::get_display() const
     return display;
 }
 
+// ------
+// render
+// ------
+
+/**
+ * Returns this Species' rendering on the Darwin grid.
+ */
+char Species::render() const
+{
+    return display;
+}
+
 // ----------------------
 // Creature (constructor)
 // ----------------------
@@ -280,32 +292,33 @@ Creature* const Darwin::at(int row, int col)
 const string Darwin::get_grid()
 {
     // Add current turn
-    string output = "Turn = " + to_string(current_turn) + ".\n";
+    stringstream output;
+    output << "Turn = " << to_string(current_turn) << ".\n";
 
     // Add column identifiers
-    output += "  ";
+    output << "  ";
     for(int c = 0; c < width; ++c)
     {
-        output += to_string(c % 10);
+        output << to_string(c % 10);
     }
-    output += '\n';
+    output << '\n';
 
     // Add row displays
     for(int r = 0; r < height; ++r)
     {
         // Add row identifier
-        output += to_string(r % 10) + " ";
+        output << to_string(r % 10) << " ";
 
         // Add contents of this row
         for(int c = 0; c < width; ++c)
         {
-            output += at(r, c)->get_species_display();
+            output << *(at(r, c));
         }
 
-        output += '\n';
+        output << '\n';
     }
 
-    return output;
+    return output.str();
 }
 
 // ------------
