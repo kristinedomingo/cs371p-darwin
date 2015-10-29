@@ -214,11 +214,8 @@ TEST(GetGrid, get_grid_3)
     Creature trap('t');
     Creature rover('r');
 
-    Creature* const c = d.at(1, 1);
-    *c = trap;
-
-    Creature* const c2 = d.at(5, 6);
-    *c2 = rover;
+    d.add_creature(trap, 1, 1);
+    d.add_creature(rover, 5, 6);
 
     const string grid = "Turn = 0.\n"
                   "  01234567\n"
@@ -244,8 +241,7 @@ TEST(GetGrid, get_grid_4)
     Darwin d(8, 8);
 
     Creature trap('t');
-    Creature* const c = d.at(0, 0);
-    *c = trap;
+    d.add_creature(trap, 0, 0);
 
     const string grid = "Turn = 0.\n"
                   "  01234567\n"
@@ -296,8 +292,7 @@ TEST(GetGrid, get_grid_6)
     Darwin d(11, 11);
 
     Creature trap('t');
-    Creature* const c = d.at(10, 10);
-    *c = trap;
+    d.add_creature(trap, 10, 10);
 
     string grid = "Turn = 0.\n"
                   "  01234567890\n"

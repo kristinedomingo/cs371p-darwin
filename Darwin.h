@@ -211,6 +211,18 @@ class Darwin
          * the current turn at the time this function is called.
          */
         const string get_grid();
+
+        // ------------
+        // add_creature
+        // ------------
+
+        /**
+         * Places a creature on the grid at a specified point.
+         * @param c a Creature to place on the grid
+         * @param row the row to place this creature in
+         * @param col the col to place this creature in
+         */
+        void add_creature(Creature& c, int row, int col);
 };
 
 #endif // Darwin_h

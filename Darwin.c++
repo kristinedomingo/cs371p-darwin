@@ -233,3 +233,19 @@ const string Darwin::get_grid()
 
     return output;
 }
+
+// ------------
+// add_creature
+// ------------
+
+/**
+ * Places a creature on the grid at a specified point.
+ * @param c a Creature to place on the grid
+ * @param row the row to place this creature in
+ * @param col the col to place this creature in
+ */
+void Darwin::add_creature(Creature& c, int row, int col)
+{
+    Creature* const creature_pointer = at(row, col);
+    *creature_pointer = c;
+}
