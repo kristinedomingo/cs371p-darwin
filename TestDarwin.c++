@@ -28,13 +28,78 @@ TEST(SpeciesConstructor, species_constructor_1)
     ASSERT_EQ(s.render(), '.');
 }
 
-
 /**
  * Tests the Species constructor (one parameter)
  * @param SpeciesConstructor a fixture
  * @param species_constructor_2 test name
  */
 TEST(SpeciesConstructor, species_constructor_2)
+{
+    Species s('k');
+    ASSERT_EQ(s.render(), 'k');
+}
+
+// ------------------------------
+// Species operator ==, !=, tests
+// ------------------------------
+
+/**
+ * Tests the Species operator ==
+ * @param SpeciesEquals a fixture
+ * @param species_equals_1 test name
+ */
+TEST(SpeciesEquals, species_equals_1)
+{
+    Species s;
+    Species s2;
+    ASSERT_EQ(s, s2);
+}
+
+/**
+ * Tests the Species operator ==
+ * @param SpeciesEquals a fixture
+ * @param species_equals_2 test name
+ */
+TEST(SpeciesEquals, species_equals_2)
+{
+    Species s;
+    Species s2('k');
+    ASSERT_NE(s, s2);
+}
+
+/**
+ * Tests the Species operator ==
+ * @param SpeciesEquals a fixture
+ * @param species_equals_3 test name
+ */
+TEST(SpeciesEquals, species_equals_3)
+{
+    Species s('k');
+    Species s2('k');
+    ASSERT_EQ(s, s2);
+}
+
+// --------------
+// render() tests
+// --------------
+
+/**
+ * Tests the Species render() function
+ * @param SpeciesRender a fixture
+ * @param species_render_1 test name
+ */
+TEST(SpeciesRender, species_render_1)
+{
+    Species s;
+    ASSERT_EQ(s.render(), '.');
+}
+
+/**
+ * Tests the Species render() function
+ * @param SpeciesRender a fixture
+ * @param species_render_2 test name
+ */
+TEST(SpeciesRender, species_render_2)
 {
     Species s('k');
     ASSERT_EQ(s.render(), 'k');
@@ -109,47 +174,6 @@ TEST(CreatureConstructor, creature_constructor_5)
     stringstream ss;
     ss << c;
     ASSERT_EQ(ss.str(), "r");
-}
-
-// ----------------
-// is_empty() tests
-// ----------------
-
-/**
- * Tests the is_empty() function
- * @param IsEmpty a fixture
- * @param is_empty_1 test name
- */
-TEST(IsEmpty, is_empty_1)
-{
-    Creature c;
-    ASSERT_TRUE(c.is_empty());
-}
-
-/**
- * Tests the is_empty() function
- * @param IsEmpty a fixture
- * @param is_empty_2 test name
- */
-TEST(IsEmpty, is_empty_2)
-{
-    Species s;
-    Creature c(s);
-
-    ASSERT_TRUE(c.is_empty());
-}
-
-/**
- * Tests the is_empty() function
- * @param IsEmpty a fixture
- * @param is_empty_3 test name
- */
-TEST(IsEmpty, is_empty_3)
-{
-    Species s('k');
-    Creature c(s);
-
-    ASSERT_FALSE(c.is_empty());
 }
 
 // ----------------
@@ -228,6 +252,47 @@ TEST(IsEnemy, is_enemy_5)
     Creature c2(s);
 
     ASSERT_FALSE(c.is_enemy(c2));
+}
+
+// ----------------
+// is_empty() tests
+// ----------------
+
+/**
+ * Tests the is_empty() function
+ * @param IsEmpty a fixture
+ * @param is_empty_1 test name
+ */
+TEST(IsEmpty, is_empty_1)
+{
+    Creature c;
+    ASSERT_TRUE(c.is_empty());
+}
+
+/**
+ * Tests the is_empty() function
+ * @param IsEmpty a fixture
+ * @param is_empty_2 test name
+ */
+TEST(IsEmpty, is_empty_2)
+{
+    Species s;
+    Creature c(s);
+
+    ASSERT_TRUE(c.is_empty());
+}
+
+/**
+ * Tests the is_empty() function
+ * @param IsEmpty a fixture
+ * @param is_empty_3 test name
+ */
+TEST(IsEmpty, is_empty_3)
+{
+    Species s('k');
+    Creature c(s);
+
+    ASSERT_FALSE(c.is_empty());
 }
 
 // ---------------------
