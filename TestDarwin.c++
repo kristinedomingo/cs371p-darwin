@@ -114,7 +114,7 @@ TEST(DarwinIterator, iterators_3)
     Darwin::Darwin_Iterator di_b = d.begin();
     Darwin::Darwin_Iterator di_e = d.end();
 
-    for(int i = 0; i < 16; ++i)
+    for(int i = 0; i < (4 * 4); ++i)
     {
       ++di_b;
     }
@@ -139,6 +139,26 @@ TEST(DarwinIterator, iterators_4)
         ASSERT_EQ((*di_b)->get_display(), '.');
         ++di_b;
     }
+}
+
+/**
+ * Tests the Darwin_Iterator
+ * @param DarwinIterator a fixture
+ * @param iterators_5 test name
+ */
+TEST(DarwinIterator, iterators_5)
+{
+    Darwin d(30, 30);
+
+    Darwin::Darwin_Iterator di_b = d.begin();
+    Darwin::Darwin_Iterator di_e = d.end();
+
+    for(int i = 0; i < (30 * 30); ++i)
+    {
+      ++di_b;
+    }
+
+    ASSERT_EQ(di_b, di_e);
 }
 
 // ----------------
