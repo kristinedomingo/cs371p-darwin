@@ -368,7 +368,12 @@ TEST(DarwinIterator, iterators_4)
 
     while(di_b != di_e)
     {
-        ASSERT_EQ((*di_b)->s.render(), '.');
+        stringstream ss;
+        ss << *(*di_b);
+
+        ASSERT_EQ(ss.str(), ".");
+
+        ss.clear();
         ++di_b;
     }
 }
