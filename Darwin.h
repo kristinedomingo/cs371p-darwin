@@ -65,15 +65,6 @@ class Species
          */
         bool operator != (const Species& rhs) const;
 
-        // -----------
-        // get_display
-        // -----------
-
-        /**
-         * Returns this Species' character representation.
-         */
-        char get_display() const;
-
         // ------
         // render
         // ------
@@ -90,10 +81,11 @@ class Species
 class Creature
 {
     public:
-        friend ostream& operator << (ostream&, const Creature&);
         Species s;        // the Species of this Creature (if any)
         Direction dir;    // the direction this Creature is facing
         int counter;      // the program counter
+
+        friend ostream& operator << (ostream&, const Creature&);
 
     public:
         // ----------------------
@@ -128,21 +120,18 @@ class Creature
          * in other words, this Creature is an "empty" space on the grid.
          */
         bool is_empty() const;
-
-        // -------------------
-        // get_species_display
-        // -------------------
-
-        /**
-         * Returns this Creature's Species character representation.
-         */
-        char get_species_display() const;
 };
 
-ostream& operator << (ostream& os, const Creature &c)
-{
-    return os << c.s.render();
-}
+// -------------------------------
+// operator << (Creature overload)
+// -------------------------------
+
+/**
+ * Overloads the << operator for the Creature class.
+ * @param os an ostream to output the Creature's Species' render
+ * @param c the Creature
+ */
+ostream& operator << (ostream& os, const Creature &c);
 
 // --------------------------
 // Darwin (Class Declaration)

@@ -54,18 +54,6 @@ bool Species::operator != (const Species& rhs) const
     return !(*this == rhs);
 }
 
-// -----------
-// get_display
-// -----------
-
-/**
- * Returns this Species' character representation.
- */
-char Species::get_display() const
-{
-    return display;
-}
-
 // ------
 // render
 // ------
@@ -118,19 +106,21 @@ bool Creature::is_enemy(const Creature& rhs) const
  */
 bool Creature::is_empty() const
 {
-    return get_species_display() == '.';
+    return s.render() == '.';
 }
 
-// -------------------
-// get_species_display
-// -------------------
+// -------------------------------
+// operator << (Creature overload)
+// -------------------------------
 
 /**
- * Returns this Creature's Species character representation.
+ * Overloads the << operator for the Creature class.
+ * @param os an ostream to output the Creature's Species' render
+ * @param c the Creature
  */
-char Creature::get_species_display() const
+ostream& operator << (ostream& os, const Creature &c)
 {
-    return s.get_display();
+    return os << c.s.render();
 }
 
 // -----------------------------

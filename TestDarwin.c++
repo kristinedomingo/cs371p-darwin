@@ -25,7 +25,7 @@ using namespace std;
 TEST(SpeciesConstructor, species_constructor_1)
 {
     Species s;
-    ASSERT_EQ(s.get_display(), '.');
+    ASSERT_EQ(s.render(), '.');
 }
 
 
@@ -37,7 +37,7 @@ TEST(SpeciesConstructor, species_constructor_1)
 TEST(SpeciesConstructor, species_constructor_2)
 {
     Species s('k');
-    ASSERT_EQ(s.get_display(), 'k');
+    ASSERT_EQ(s.render(), 'k');
 }
 
 // ----------------------------
@@ -52,7 +52,12 @@ TEST(SpeciesConstructor, species_constructor_2)
 TEST(CreatureConstructor, creature_constructor_1)
 {
     Creature c;
-    ASSERT_EQ(c.get_species_display(), '.');
+
+    ASSERT_TRUE(c.is_empty());
+
+    stringstream ss;
+    ss << c;
+    ASSERT_EQ(ss.str(), ".");
 }
 
 /**
@@ -64,7 +69,12 @@ TEST(CreatureConstructor, creature_constructor_2)
 {
     Species s;
     Creature c(s);
-    ASSERT_EQ(c.get_species_display(), '.');
+
+    ASSERT_TRUE(c.is_empty());
+
+    stringstream ss;
+    ss << c;
+    ASSERT_EQ(ss.str(), ".");
 }
 
 /**
@@ -76,7 +86,12 @@ TEST(CreatureConstructor, creature_constructor_4)
 {
     Species s;
     Creature c(s, SOUTH);
-    ASSERT_EQ(c.get_species_display(), '.');
+
+    ASSERT_TRUE(c.is_empty());
+
+    stringstream ss;
+    ss << c;
+    ASSERT_EQ(ss.str(), ".");
 }
 
 /**
@@ -88,7 +103,12 @@ TEST(CreatureConstructor, creature_constructor_5)
 {
     Species s('r');
     Creature c(s, SOUTH);
-    ASSERT_EQ(c.get_species_display(), 'r');
+
+    ASSERT_FALSE(c.is_empty());
+
+    stringstream ss;
+    ss << c;
+    ASSERT_EQ(ss.str(), "r");
 }
 
 // ----------------
@@ -283,7 +303,7 @@ TEST(DarwinIterator, iterators_4)
 
     while(di_b != di_e)
     {
-        ASSERT_EQ((*di_b)->get_species_display(), '.');
+        ASSERT_EQ((*di_b)->s.render(), '.');
         ++di_b;
     }
 }
