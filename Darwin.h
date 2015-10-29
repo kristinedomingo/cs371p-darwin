@@ -102,7 +102,8 @@ class Creature
         // --------
 
         /**
-         * Returns true if the rhs Creature is not of the same species.
+         * Returns true if the rhs Creature is not of the same species, AND 
+         * either side isn't empty.
          * @param rhs another Creature object
          */
         bool is_enemy(const Creature& rhs) const;

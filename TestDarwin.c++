@@ -115,6 +115,7 @@ TEST(IsEmpty, is_empty_2)
 {
     Species s;
     Creature c(s);
+
     ASSERT_TRUE(c.is_empty());
 }
 
@@ -127,7 +128,86 @@ TEST(IsEmpty, is_empty_3)
 {
     Species s('k');
     Creature c(s);
+
     ASSERT_FALSE(c.is_empty());
+}
+
+// ----------------
+// is_enemy() tests
+// ----------------
+
+/**
+ * Tests the is_enemy() function
+ * @param IsEnemy a fixture
+ * @param is_enemy_1 test name
+ */
+TEST(IsEnemy, is_enemy_1)
+{
+    Creature c;
+    Creature c2;
+
+    ASSERT_FALSE(c.is_enemy(c2));
+}
+
+/**
+ * Tests the is_enemy() function
+ * @param IsEnemy a fixture
+ * @param is_enemy_2 test name
+ */
+TEST(IsEnemy, is_enemy_2)
+{
+    Species s;
+    Creature c(s);
+    Creature c2;
+
+    ASSERT_FALSE(c.is_enemy(c2));
+}
+
+/**
+ * Tests the is_enemy() function
+ * @param IsEnemy a fixture
+ * @param is_enemy_3 test name
+ */
+TEST(IsEnemy, is_enemy_3)
+{
+    Species s('k');
+    Creature c(s);
+
+    Species s2('l');
+    Creature c2(s2);
+
+    ASSERT_TRUE(c.is_enemy(c2));
+}
+
+/**
+ * Tests the is_enemy() function
+ * @param IsEnemy a fixture
+ * @param is_enemy_4 test name
+ */
+TEST(IsEnemy, is_enemy_4)
+{
+    Species s('k');
+    Creature c(s);
+
+    Species s2;
+    Creature c2(s2);
+
+    ASSERT_FALSE(c.is_enemy(c2));
+}
+
+/**
+ * Tests the is_enemy() function
+ * @param IsEnemy a fixture
+ * @param is_enemy_5 test name
+ */
+TEST(IsEnemy, is_enemy_5)
+{
+    Creature c;
+
+    Species s('k');
+    Creature c2(s);
+
+    ASSERT_FALSE(c.is_enemy(c2));
 }
 
 // ---------------------

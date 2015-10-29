@@ -88,12 +88,12 @@ Creature::Creature(Species s, Direction dir)
 // --------
 
 /**
- * Returns true if rhs is not of the same species.
+ * Returns true if rhs is not of the same species, AND either side isn't empty.
  * @param rhs another Creature object
  */
 bool Creature::is_enemy(const Creature& rhs) const
 {
-    return this->s != rhs.s;
+    return (this->s != rhs.s) && (!rhs.is_empty()) && (!this->is_empty());
 }
 
 // --------
