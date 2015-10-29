@@ -24,13 +24,23 @@ using namespace std;
 // ----------------
 enum Direction {NORTH, EAST, SOUTH, WEST};
 
+// ------------------
+// Instruction (enum)
+// ------------------
+enum Instruction {HOP, LEFT, RIGHT, INFECT,
+                  IF_EMPTY, IF_WALL, IF_RANDOM, IF_ENEMY, GO};
+
+// Forward declaration for use in Species and Creature
+class Darwin;
+
 // ---------------------------
 // Species (Class Declaration)
 // ---------------------------
 class Species
 {
     private:
-        char display;     // the representation of this Species on the grid
+        char display;                      // render of this Species on the grid
+        vector<Instruction> instructions;  // this Species' instructions
 
     public:
         // -----------------------------
@@ -73,6 +83,17 @@ class Species
          * Returns this Species' rendering on the Darwin grid.
          */
         char render() const;
+
+        // -------
+        // execute
+        // -------
+
+        /**
+         * Executes this Species counterth instruction.
+         * @param d the Darwin grid
+         * @param counter the instruction to execute
+         */
+        void execute(Darwin& d, int counter) const;
 };
 
 // ----------------------------
@@ -80,7 +101,7 @@ class Species
 // ----------------------------
 class Creature
 {
-    public:
+    private:
         Species s;        // the Species of this Creature (if any)
         Direction dir;    // the direction this Creature is facing
         int counter;      // the program counter
