@@ -540,3 +540,27 @@ TEST(AddCreature, add_creature_1)
     ASSERT_FALSE(d.at(4, 4)->is_enemy(downing));
     ASSERT_FALSE(d.at(5, 5)->is_enemy(downing));
 }
+
+/**
+ * Tests the add_creature() function
+ * @param AddCreature a fixture
+ * @param add_creature_2 test name
+ */
+TEST(AddCreature, add_creature_2)
+{
+    Darwin d(8, 8);
+    string empty_board = d.get_grid();
+
+    Creature kristine('k');
+    Creature downing('d');
+
+    // Placing a Creature in an invalid spot should leave the grid unchanged
+    d.add_creature(kristine, 9, 9);
+    string new_board = d.get_grid();
+    ASSERT_EQ(empty_board, new_board);
+
+    d.add_creature(downing, 5, 5);
+    new_board = d.get_grid();
+    ASSERT_NE(empty_board, new_board);
+    ASSERT_FALSE(d.at(5, 5)->is_enemy(downing));
+}

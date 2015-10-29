@@ -324,5 +324,8 @@ const string Darwin::get_grid()
 void Darwin::add_creature(Creature& c, int row, int col)
 {
     Creature* const creature_pointer = at(row, col);
-    *creature_pointer = c;
+    if(creature_pointer != nullptr)
+    {
+        *creature_pointer = c;
+    }
 }

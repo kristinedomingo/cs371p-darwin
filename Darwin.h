@@ -85,6 +85,7 @@ class Creature
         Direction dir;    // the direction this Creature is facing
         int counter;      // the program counter
 
+        // Overload of the << operator to allow use with Creature
         friend ostream& operator << (ostream&, const Creature&);
 
     public:
