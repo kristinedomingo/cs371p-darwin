@@ -14,6 +14,86 @@
 using namespace std;
 
 // -----------------------------
+// Darwin_Iterator (constructor)
+// -----------------------------
+
+/**
+ * Initializes a Darwin_Iterator object, default row and column
+ * set to 0.
+ * @param d the reference to the outer class (darwin)
+ * @param row the row this iterator is at
+ * @param col the col this iterator is at
+ */
+Darwin_Iterator::Darwin_Iterator(Darwin& d, int row, int col) : darwin(d)
+{
+    this->row = row;
+    this->col = col;
+}
+
+// --------------------
+// operator == (equals)
+// --------------------
+
+/**
+ * The equals operator, returns true if the rhs Darwin_Iterator
+ * points to the same space as this one.
+ * @param rhs the Darwin_Iterator to compare to
+ */
+bool Darwin_Iterator::operator == (const Darwin_Iterator& rhs) const
+{
+    return (this->row == rhs.row) && (this->col == rhs.col);
+}
+
+// -----------------------
+// operator != (not equal)
+// -----------------------
+
+/**
+ * The not equals operator, returns true if the rhs
+ * Darwin_Iterator does not point to the same space as this one.
+ * @param rhs the Darwin_Iterator to compare to
+ */
+bool Darwin_Iterator::operator != (const Darwin_Iterator& rhs) const
+{
+    return !(*this == rhs);
+}
+
+// ----------
+// operator *
+// ----------
+
+/**
+ * The dereference operator, returns a pointer to the Creature
+ * at this iterator's row and column.
+ */
+Creature* Darwin_Iterator::operator * () const
+{
+    return darwin.at(row, col);
+}
+
+// ---------------------------
+// operator ++ (pre-increment)
+// ---------------------------
+
+/**
+ * The pre-increment operator, moves this iterator to the next
+ * space in the grid.
+ */
+Darwin_Iterator& Darwin_Iterator::operator ++ ()
+{
+    ++col;
+
+    // Move to next row if reached end of column
+    if(col == darwin.width)
+    {
+        col = 0;
+        ++row;
+    }
+
+    return *this;
+}
+
+// -----------------------------
 // Species (default constructor)
 // -----------------------------
 
@@ -109,6 +189,19 @@ bool Creature::is_empty() const
     return s.render() == '.';
 }
 
+// --------
+// execute
+// --------
+
+/**
+ * Executes this Creature's Species' "counterth" instruction.
+ * @param di a Darwin_Iterator
+ */
+void Creature::execute(Darwin_Iterator& di) const
+{
+
+}
+
 // -------------------------------
 // operator << (Creature overload)
 // -------------------------------
@@ -121,86 +214,6 @@ bool Creature::is_empty() const
 ostream& operator << (ostream& os, const Creature &c)
 {
     return os << c.s.render();
-}
-
-// -----------------------------
-// Darwin_Iterator (constructor)
-// -----------------------------
-
-/**
- * Initializes a Darwin_Iterator object, default row and column
- * set to 0.
- * @param d the reference to the outer class (darwin)
- * @param row the row this iterator is at
- * @param col the col this iterator is at
- */
-Darwin::Darwin_Iterator::Darwin_Iterator(Darwin& d, int row, int col) : darwin(d)
-{
-    this->row = row;
-    this->col = col;
-}
-
-// --------------------
-// operator == (equals)
-// --------------------
-
-/**
- * The equals operator, returns true if the rhs Darwin_Iterator
- * points to the same space as this one.
- * @param rhs the Darwin_Iterator to compare to
- */
-bool Darwin::Darwin_Iterator::operator == (const Darwin::Darwin_Iterator& rhs) const
-{
-    return (this->row == rhs.row) && (this->col == rhs.col);
-}
-
-// -----------------------
-// operator != (not equal)
-// -----------------------
-
-/**
- * The not equals operator, returns true if the rhs 
- * Darwin_Iterator does not point to the same space as this one.
- * @param rhs the Darwin_Iterator to compare to
- */
-bool Darwin::Darwin_Iterator::operator != (const Darwin::Darwin_Iterator& rhs) const
-{
-    return !(*this == rhs);
-}
-
-// ----------
-// operator *
-// ----------
-
-/**
- * The dereference operator, returns a pointer to the Creature
- * at this iterator's row and column.
- */
-Creature* Darwin::Darwin_Iterator::operator * () const
-{
-    return darwin.at(row, col);
-}
-
-// ---------------------------
-// operator ++ (pre-increment)
-// ---------------------------
-
-/**
- * The pre-increment operator, moves this iterator to the next
- * space in the grid.
- */
-Darwin::Darwin_Iterator& Darwin::Darwin_Iterator::operator ++ ()
-{
-    ++col;
-
-    // Move to next row if reached end of column
-    if(col == darwin.width)
-    {
-        col = 0;
-        ++row;
-    }
-
-    return *this;
 }
 
 // --------------------
@@ -230,7 +243,7 @@ Darwin::Darwin(int height, int width) : di(*this)
 /**
  * Returns a Darwin_Iterator first space (left corner) the grid.
  */
-Darwin::Darwin_Iterator Darwin::begin()
+Darwin_Iterator Darwin::begin()
 {
     Darwin_Iterator di(*this);
     return di;
@@ -244,7 +257,7 @@ Darwin::Darwin_Iterator Darwin::begin()
  * Returns a Darwin_Iterator to the last space (one past the right
  * corner) of the grid.
  */
-Darwin::Darwin_Iterator Darwin::end()
+Darwin_Iterator Darwin::end()
 {
     // One past the right corner (one row below, leftmost column)
     Darwin_Iterator di(*this, height, 0);
@@ -327,5 +340,31 @@ void Darwin::add_creature(Creature& c, int row, int col)
     if(creature_pointer != nullptr)
     {
         *creature_pointer = c;
+    }
+}
+
+// -------
+// do_turn
+// -------
+
+/**
+ * Simulates a turn on a Darwin grid.
+ * @param d a Darwin object to simulate a turn on
+ */
+void do_turn(Darwin& d)
+{
+    Darwin_Iterator b = d.begin();
+    Darwin_Iterator e = d.end();
+
+    while(b != e)
+    {
+        Creature* c = *b;
+
+        if(!c->is_empty())
+        {
+            c->execute(b);
+        }
+
+        ++b;
     }
 }

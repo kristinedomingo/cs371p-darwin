@@ -312,7 +312,7 @@ TEST(DarwinIterator, iterators_1)
     Creature* const c = d.at(0, 0);
     *c = trap;
 
-    Darwin::Darwin_Iterator di = d.begin();
+    Darwin_Iterator di = d.begin();
 
     ASSERT_EQ(*di, c);
 }
@@ -326,8 +326,8 @@ TEST(DarwinIterator, iterators_2)
 {
     Darwin d(1, 1);
 
-    Darwin::Darwin_Iterator di_b = d.begin();
-    Darwin::Darwin_Iterator di_e = d.end();
+    Darwin_Iterator di_b = d.begin();
+    Darwin_Iterator di_e = d.end();
 
     ++di_b;
 
@@ -343,8 +343,8 @@ TEST(DarwinIterator, iterators_3)
 {
     Darwin d(4, 4);
 
-    Darwin::Darwin_Iterator di_b = d.begin();
-    Darwin::Darwin_Iterator di_e = d.end();
+    Darwin_Iterator di_b = d.begin();
+    Darwin_Iterator di_e = d.end();
 
     for(int i = 0; i < (4 * 4); ++i)
     {
@@ -363,8 +363,8 @@ TEST(DarwinIterator, iterators_4)
 {
     Darwin d(5, 5);
 
-    Darwin::Darwin_Iterator di_b = d.begin();
-    Darwin::Darwin_Iterator di_e = d.end();
+    Darwin_Iterator di_b = d.begin();
+    Darwin_Iterator di_e = d.end();
 
     while(di_b != di_e)
     {
@@ -387,8 +387,8 @@ TEST(DarwinIterator, iterators_5)
 {
     Darwin d(30, 30);
 
-    Darwin::Darwin_Iterator di_b = d.begin();
-    Darwin::Darwin_Iterator di_e = d.end();
+    Darwin_Iterator di_b = d.begin();
+    Darwin_Iterator di_e = d.end();
 
     for(int i = 0; i < (30 * 30); ++i)
     {

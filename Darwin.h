@@ -30,8 +30,76 @@ enum Direction {NORTH, EAST, SOUTH, WEST};
 enum Instruction {HOP, LEFT, RIGHT, INFECT,
                   IF_EMPTY, IF_WALL, IF_RANDOM, IF_ENEMY, GO};
 
-// Forward declaration for use in Species and Creature
+// Forward declarations
 class Darwin;
+class Creature;
+
+// -----------------------------------
+// Darwin_Iterator (Class Declaration)
+// -----------------------------------
+class Darwin_Iterator
+{
+    private:
+        int row;        // row this iterator is at
+        int col;        // column this iterator is at
+        Darwin& darwin; // reference to outer class
+
+    public:
+        // -----------------------------
+        // Darwin_Iterator (constructor)
+        // -----------------------------
+
+        /**
+         * Initializes a Darwin_Iterator object, default row and column
+         * set to 0.
+         * @param d the reference to the outer class (darwin)
+         * @param row the row this iterator is at
+         * @param col the col this iterator is at
+         */
+        Darwin_Iterator(Darwin& d, int row = 0, int col = 0);
+
+        // --------------------
+        // operator == (equals)
+        // --------------------
+
+        /**
+         * The equals operator, returns true if the rhs Darwin_Iterator
+         * points to the same space as this one.
+         * @param rhs the Darwin_Iterator to compare to
+         */
+        bool operator == (const Darwin_Iterator& rhs) const;
+
+        // -----------------------
+        // operator != (not equal)
+        // -----------------------
+
+        /**
+         * The not equals operator, returns true if the rhs
+         * Darwin_Iterator does not point to the same space as this one.
+         * @param rhs the Darwin_Iterator to compare to
+         */
+        bool operator != (const Darwin_Iterator& rhs) const;
+
+        // ----------
+        // operator *
+        // ----------
+
+        /**
+         * The dereference operator, returns a pointer to the Creature
+         * at this iterator's row and column.
+         */
+        Creature* operator * () const;
+
+        // ---------------------------
+        // operator ++ (pre-increment)
+        // ---------------------------
+
+        /**
+         * The pre-increment operator, moves this iterator to the next
+         * space in the grid.
+         */
+        Darwin_Iterator& operator ++ ();
+};
 
 // ---------------------------
 // Species (Class Declaration)
@@ -142,6 +210,16 @@ class Creature
          * in other words, this Creature is an "empty" space on the grid.
          */
         bool is_empty() const;
+
+        // --------
+        // execute
+        // --------
+
+        /**
+         * Executes this Creature's Species' "counterth" instruction.
+         * @param di a Darwin_Iterator
+         */
+        void execute(Darwin_Iterator& di) const;
 };
 
 // -------------------------------
@@ -160,82 +238,14 @@ ostream& operator << (ostream& os, const Creature &c);
 // --------------------------
 class Darwin
 {
-    public:
-        // -----------------------------------
-        // Darwin_Iterator (Class Declaration)
-        // -----------------------------------
-        class Darwin_Iterator
-        {
-            friend class Darwin;
-
-            private:
-                int row;        // row this iterator is at
-                int col;        // column this iterator is at
-                Darwin& darwin; // reference to outer class
-
-            public:
-                // -----------------------------
-                // Darwin_Iterator (constructor)
-                // -----------------------------
-
-                /**
-                 * Initializes a Darwin_Iterator object, default row and column
-                 * set to 0.
-                 * @param d the reference to the outer class (darwin)
-                 * @param row the row this iterator is at
-                 * @param col the col this iterator is at
-                 */
-                Darwin_Iterator(Darwin& d, int row = 0, int col = 0);
-
-                // --------------------
-                // operator == (equals)
-                // --------------------
-
-                /**
-                 * The equals operator, returns true if the rhs Darwin_Iterator
-                 * points to the same space as this one.
-                 * @param rhs the Darwin_Iterator to compare to
-                 */
-                bool operator == (const Darwin_Iterator& rhs) const;
-
-                // -----------------------
-                // operator != (not equal)
-                // -----------------------
-
-                /**
-                 * The not equals operator, returns true if the rhs 
-                 * Darwin_Iterator does not point to the same space as this one.
-                 * @param rhs the Darwin_Iterator to compare to
-                 */
-                bool operator != (const Darwin_Iterator& rhs) const;
-
-                // ----------
-                // operator *
-                // ----------
-
-                /**
-                 * The dereference operator, returns a pointer to the Creature
-                 * at this iterator's row and column.
-                 */
-                Creature* operator * () const;
-
-                // ---------------------------
-                // operator ++ (pre-increment)
-                // ---------------------------
-
-                /**
-                 * The pre-increment operator, moves this iterator to the next
-                 * space in the grid.
-                 */
-                Darwin_Iterator& operator ++ ();
-        };
-
     private:
         vector<vector<Creature>> grid; // the grid of Creatures
         int height;                    // the number of rows in the grid
         int width;                     // the number of columns in the grid
         int current_turn;              // the current turn of the Darwin run
         Darwin_Iterator di;            // an iterator over spaces in the grid
+
+        friend class Darwin_Iterator;
 
     public:
         // --------------------
@@ -304,5 +314,15 @@ class Darwin
          */
         void add_creature(Creature& c, int row, int col);
 };
+
+// -------
+// do_turn
+// -------
+
+/**
+ * Simulates a turn on a Darwin grid.
+ * @param d a Darwin object to simulate a turn on
+ */
+void do_turn(Darwin& d);
 
 #endif // Darwin_h
