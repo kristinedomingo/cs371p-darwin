@@ -398,6 +398,36 @@ TEST(DarwinIterator, iterators_5)
     ASSERT_EQ(di_b, di_e);
 }
 
+/**
+ * Tests the Darwin_Iterator
+ * @param DarwinIterator a fixture
+ * @param iterators_6 test name
+ */
+TEST(DarwinIterator, iterators_6)
+{
+    Darwin d(30, 30);
+
+    // Add Creature 'k' to the 0, 0 spot on the grid
+    Species s('k');
+    Creature c(s);
+    d.add_creature(c, 0, 0);
+
+    string k_grid = d.get_grid();
+
+    // Replace the 0, 0 spot using an iterator
+    Species s2('j');
+    Creature c2(s2);
+
+    Darwin_Iterator b = d.begin();
+    Creature* begin = *b;
+    *begin = c2;
+
+    string k_replaced_by_j_grid = d.get_grid();
+
+    ASSERT_TRUE(begin->is_enemy(c));
+    ASSERT_NE(k_grid, k_replaced_by_j_grid);
+}
+
 // ----------
 // at() tests
 // ----------

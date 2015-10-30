@@ -99,6 +99,17 @@ class Darwin_Iterator
          * space in the grid.
          */
         Darwin_Iterator& operator ++ ();
+
+        // -----
+        // ahead
+        // -----
+
+        /**
+         * Returns an iterator to the space "ahead" of this one (ahead has
+         * different meanings depending on what "direction" is).
+         * @param dir a Direction
+         */
+        Darwin_Iterator ahead(Direction dir) const;
 };
 
 // ---------------------------
@@ -152,16 +163,19 @@ class Species
          */
         char render() const;
 
-        // -------
-        // execute
-        // -------
+        // -------------------
+        // execute_instruction
+        // -------------------
 
         /**
          * Executes this Species counterth instruction.
-         * @param d the Darwin grid
+         * @param darwin the Darwin grid
+         * @param it a Darwin_Iterator
+         * @param dir the Direction the Creature is facing
          * @param counter the instruction to execute
          */
-        void execute(Darwin& d, int counter) const;
+        void execute_instruction(Darwin& darwin, Darwin_Iterator& it, 
+                                 Direction dir, int counter) const;
 };
 
 // ----------------------------
@@ -217,9 +231,10 @@ class Creature
 
         /**
          * Executes this Creature's Species' "counterth" instruction.
-         * @param di a Darwin_Iterator
+         * @param darwin a Darwin object
+         * @param it a Darwin_Iterator
          */
-        void execute(Darwin_Iterator& di) const;
+        void execute(Darwin& darwin, Darwin_Iterator& it) const;
 };
 
 // -------------------------------
