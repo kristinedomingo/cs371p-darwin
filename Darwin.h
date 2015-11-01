@@ -12,10 +12,10 @@
 // includes
 // --------
 
-#include <string> // string
-#include <vector> // vector
-#include <iostream>
-#include <sstream>   // stringstream
+#include <string>         // string
+#include <vector>         // vector
+#include <sstream>        // stringstream
+#include "gtest/gtest.h"  // friend tests
 
 using namespace std;
 
@@ -99,6 +99,17 @@ class Darwin_Iterator
          * space in the grid.
          */
         Darwin_Iterator& operator ++ ();
+
+        // -----
+        // ahead
+        // -----
+
+        /**
+         * Returns an iterator to the space "ahead" of this one (ahead has
+         * different meanings depending on what "direction" is).
+         * @param dir a Direction
+         */
+        Darwin_Iterator ahead(Direction dir) const;
 };
 
 // ---------------------------
@@ -107,8 +118,14 @@ class Darwin_Iterator
 class Species
 {
     private:
-        char display;                      // render of this Species on the grid
-        vector<Instruction> instructions;  // this Species' instructions
+        char display;                    // render of this Species on the grid
+        vector<pair<Instruction, int>>   // this Species' instructions
+                         instructions;
+
+        FRIEND_TEST(AddInstruction, add_instruction_1);
+        FRIEND_TEST(AddInstruction, add_instruction_2);
+        FRIEND_TEST(AddInstruction, add_instruction_3);
+        FRIEND_TEST(AddInstruction, add_instruction_4);
 
     public:
         // -----------------------------
@@ -152,16 +169,31 @@ class Species
          */
         char render() const;
 
-        // -------
-        // execute
-        // -------
+        // ---------------
+        // add_instruction
+        // ---------------
+
+        /**
+         * Adds an instruction to this Species.
+         * @param instr the instruction
+         * @param n the "n" associated with control instructions, defaulted
+         *        to -1 for action instructions
+         */
+        void add_instruction(Instruction instr, int n = -1);
+
+        // -------------------
+        // execute_instruction
+        // -------------------
 
         /**
          * Executes this Species counterth instruction.
-         * @param d the Darwin grid
+         * @param darwin the Darwin grid
+         * @param it a Darwin_Iterator
+         * @param dir the Direction the Creature is facing
          * @param counter the instruction to execute
          */
-        void execute(Darwin& d, int counter) const;
+        void execute_instruction(Darwin& darwin, Darwin_Iterator& it, 
+                                 Direction dir, int counter) const;
 };
 
 // ----------------------------
@@ -217,9 +249,10 @@ class Creature
 
         /**
          * Executes this Creature's Species' "counterth" instruction.
-         * @param di a Darwin_Iterator
+         * @param darwin a Darwin object
+         * @param it a Darwin_Iterator
          */
-        void execute(Darwin_Iterator& di) const;
+        void execute(Darwin& darwin, Darwin_Iterator& it) const;
 };
 
 // -------------------------------

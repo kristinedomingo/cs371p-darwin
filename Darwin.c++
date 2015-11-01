@@ -93,6 +93,20 @@ Darwin_Iterator& Darwin_Iterator::operator ++ ()
     return *this;
 }
 
+// -----
+// ahead
+// -----
+
+/**
+ * Returns an iterator to the space "ahead" of this one (ahead has
+ * different meanings depending on what "direction" is).
+ * @param dir a Direction
+ */
+Darwin_Iterator Darwin_Iterator::ahead(Direction dir) const
+{
+    return *this;
+}
+
 // -----------------------------
 // Species (default constructor)
 // -----------------------------
@@ -146,6 +160,47 @@ char Species::render() const
     return display;
 }
 
+// ---------------
+// add_instruction
+// ---------------
+
+/**
+ * Adds an instruction to this Species.
+ * @param instr the instruction
+ * @param n the "n" associated with control instructions, defaulted
+ *        to -1 for action instructions
+ */
+void Species::add_instruction(Instruction instr, int n)
+{
+    instructions.emplace_back(instr, n);
+}
+
+// -------------------
+// execute_instruction
+// -------------------
+
+/**
+ * Executes this Species counterth instruction.
+ * @param darwin the Darwin grid
+ * @param it a Darwin_Iterator
+ * @param dir the Direction the Creature is facing
+ * @param counter the instruction to execute
+ */
+void Species::execute_instruction(Darwin& darwin, Darwin_Iterator& it, 
+                                  Direction dir, int counter) const
+{
+    // Instruction instr = instructions[counter];
+    // Darwin_Iterator space_ahead = it.ahead(dir);
+
+    // if(instr == HOP)
+    // {
+    //     if(space_ahead != nullptr && !space_ahead->is_empty())
+    //     {
+    //         *space_ahead = Creature(*this);
+    //     }
+    // }
+}
+
 // ----------------------
 // Creature (constructor)
 // ----------------------
@@ -195,11 +250,13 @@ bool Creature::is_empty() const
 
 /**
  * Executes this Creature's Species' "counterth" instruction.
- * @param di a Darwin_Iterator
+ * @param darwin a Darwin object
+ * @param it a Darwin_Iterator
  */
-void Creature::execute(Darwin_Iterator& di) const
+void Creature::execute(Darwin& darwin, Darwin_Iterator& it) const
 {
-
+    // TODO: add check to see if creature has gone already
+    s.execute_instruction(darwin, it, dir, counter);
 }
 
 // -------------------------------
@@ -356,13 +413,15 @@ void do_turn(Darwin& d)
     Darwin_Iterator b = d.begin();
     Darwin_Iterator e = d.end();
 
+    // Iterate through every SPACE on the Darwin grid
     while(b != e)
     {
         Creature* c = *b;
 
+        // If the space contains a NON-EMPTY creature, give the Creature a turn.
         if(!c->is_empty())
         {
-            c->execute(b);
+            c->execute(d, b);
         }
 
         ++b;

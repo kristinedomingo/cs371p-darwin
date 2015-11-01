@@ -105,6 +105,69 @@ TEST(SpeciesRender, species_render_2)
     ASSERT_EQ(s.render(), 'k');
 }
 
+// -----------------------
+// add_instruction() tests
+// -----------------------
+
+/**
+ * Tests the Species add_instruction() function
+ * @param AddInstruction a fixture
+ * @param add_instruction_1 test name
+ */
+TEST(AddInstruction, add_instruction_1)
+{
+    Species s;
+    ASSERT_TRUE(s.instructions.empty());
+}
+
+/**
+ * Tests the Species add_instruction() function
+ * @param AddInstruction a fixture
+ * @param add_instruction_2 test name
+ */
+TEST(AddInstruction, add_instruction_2)
+{
+    Species s;
+    s.add_instruction(HOP);
+
+    ASSERT_FALSE(s.instructions.empty());
+    ASSERT_EQ(s.instructions[0].first, HOP);
+    ASSERT_EQ(s.instructions[0].second, -1);
+}
+
+/**
+ * Tests the Species add_instruction() function
+ * @param AddInstruction a fixture
+ * @param add_instruction_3 test name
+ */
+TEST(AddInstruction, add_instruction_3)
+{
+    Species s;
+    s.add_instruction(IF_EMPTY, 3);
+
+    ASSERT_FALSE(s.instructions.empty());
+    ASSERT_EQ(s.instructions[0].first, IF_EMPTY);
+    ASSERT_EQ(s.instructions[0].second, 3);
+}
+
+/**
+ * Tests the Species add_instruction() function
+ * @param AddInstruction a fixture
+ * @param add_instruction_4 test name
+ */
+TEST(AddInstruction, add_instruction_4)
+{
+    Species s;
+    s.add_instruction(IF_EMPTY, 3);
+    s.add_instruction(LEFT);
+
+    ASSERT_FALSE(s.instructions.empty());
+    ASSERT_EQ(s.instructions[0].first, IF_EMPTY);
+    ASSERT_EQ(s.instructions[0].second, 3);
+    ASSERT_EQ(s.instructions[1].first, LEFT);
+    ASSERT_EQ(s.instructions[1].second, -1);
+}
+
 // ----------------------------
 // Creature (constructor) tests
 // ----------------------------
@@ -396,6 +459,36 @@ TEST(DarwinIterator, iterators_5)
     }
 
     ASSERT_EQ(di_b, di_e);
+}
+
+/**
+ * Tests the Darwin_Iterator
+ * @param DarwinIterator a fixture
+ * @param iterators_6 test name
+ */
+TEST(DarwinIterator, iterators_6)
+{
+    Darwin d(30, 30);
+
+    // Add Creature 'k' to the 0, 0 spot on the grid
+    Species s('k');
+    Creature c(s);
+    d.add_creature(c, 0, 0);
+
+    string k_grid = d.get_grid();
+
+    // Replace the 0, 0 spot using an iterator
+    Species s2('j');
+    Creature c2(s2);
+
+    Darwin_Iterator b = d.begin();
+    Creature* begin = *b;
+    *begin = c2;
+
+    string k_replaced_by_j_grid = d.get_grid();
+
+    ASSERT_TRUE(begin->is_enemy(c));
+    ASSERT_NE(k_grid, k_replaced_by_j_grid);
 }
 
 // ----------
