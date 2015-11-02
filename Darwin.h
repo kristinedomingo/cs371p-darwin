@@ -253,7 +253,25 @@ class Creature
          * @param darwin a Darwin object
          * @param it a Darwin_Iterator
          */
-        void execute(Darwin& darwin, Darwin_Iterator& it) const;
+        void execute(Darwin& darwin, Darwin_Iterator& it);
+
+        // ---------
+        // turn_left
+        // ---------
+
+        /**
+         * Turns this Creature left.
+         */
+        void turn_left();
+
+        // ---------
+        // turn_right
+        // ---------
+
+        /**
+         * Turns this Creature right.
+         */
+        void turn_right();
 };
 
 // -------------------------------

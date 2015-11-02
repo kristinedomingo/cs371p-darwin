@@ -209,16 +209,61 @@ void Species::execute_instruction(Darwin& darwin, Darwin_Iterator& it,
                                   Direction dir, int counter) const
 {
     pair<Instruction, int> instr = instructions[counter];
+
     Darwin_Iterator space_ahead = it.ahead(it, dir);
     Creature* creature_ahead = *space_ahead;
+    Creature* this_creature = *it;
 
-    // if(instr == HOP)
-    // {
-    //     if(space_ahead != nullptr && !space_ahead->is_empty())
-    //     {
-    //         *space_ahead = Creature(*this);
-    //     }
-    // }
+    int control_instructions_taken = 0;
+    Instruction i = instr.first;
+
+    // Follow the flow of instructions until an "action" instruction is reached
+    while(i != HOP || i != LEFT || i != RIGHT || i != INFECT)
+    {
+        // If the instruction matches the control condition, go to line "n"
+        if((i == IF_EMPTY  && creature_ahead->is_empty())               ||
+           (i == IF_WALL   && creature_ahead == nullptr)                ||
+           (i == IF_RANDOM && rand() % 2 == 1)                          ||
+           (i == IF_ENEMY  && creature_ahead->is_enemy(*this_creature)) ||
+           (i == GO))
+        {
+            counter = instr.second;
+        }
+
+        // Else, go to next line
+        else
+        {
+            ++counter;
+        }
+
+        // Update instruction, and the count of control instructions taken
+        instr = instructions[counter];
+        i = instr.first;
+        ++control_instructions_taken;
+    }
+
+    // Now, the instruction SHOULD be at an action instruction
+    assert(i == HOP || i == LEFT || i == RIGHT || i == INFECT);
+
+    if(i == HOP && creature_ahead != nullptr && creature_ahead->is_empty())
+    {
+        Creature c(*this);
+        *creature_ahead = c;
+        *this_creature = Creature();
+    }
+    else if(i == LEFT)
+    {
+        this_creature->turn_left();
+    }
+    else if(i == RIGHT)
+    {
+        this_creature->turn_right();
+    }
+    else if(i == INFECT && creature_ahead->is_enemy(*this_creature))
+    {
+        Creature c(*this);
+        *creature_ahead = c;
+    }
 }
 
 // ----------------------
@@ -273,10 +318,64 @@ bool Creature::is_empty() const
  * @param darwin a Darwin object
  * @param it a Darwin_Iterator
  */
-void Creature::execute(Darwin& darwin, Darwin_Iterator& it) const
+void Creature::execute(Darwin& darwin, Darwin_Iterator& it)
 {
     // TODO: add check to see if creature has gone already
     s.execute_instruction(darwin, it, dir, counter);
+}
+
+// ---------
+// turn_left
+// ---------
+
+/**
+ * Turns this Creature left.
+ */
+void Creature::turn_left()
+{
+    if(dir == NORTH)
+    {
+        dir = WEST;
+    }
+    else if(dir == EAST)
+    {
+        dir = NORTH;
+    }
+    else if(dir == SOUTH)
+    {
+        dir = EAST;
+    }
+    else if(dir == WEST)
+    {
+        dir = SOUTH;
+    }
+}
+
+// ---------
+// turn_right
+// ---------
+
+/**
+ * Turns this Creature right.
+ */
+void Creature::turn_right()
+{
+    if(dir == NORTH)
+    {
+        dir = EAST;
+    }
+    else if(dir == EAST)
+    {
+        dir = SOUTH;
+    }
+    else if(dir == SOUTH)
+    {
+        dir = WEST;
+    }
+    else if(dir == WEST)
+    {
+        dir = NORTH;
+    }
 }
 
 // -------------------------------
