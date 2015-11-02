@@ -215,7 +215,7 @@ TEST(DarwinIteratorDereference, darwin_iterator_dereference_4)
 // ------------------------------
 
 /**
- * Tests the Darwin_Iterator dereference operator
+ * Tests the Darwin_Iterator::ahead()
  * @param DarwinIteratorAhead a fixture
  * @param darwin_iterator_ahead_1 test name
  */
@@ -234,7 +234,7 @@ TEST(DarwinIteratorAhead, darwin_iterator_ahead_1)
 }
 
 /**
- * Tests the Darwin_Iterator dereference operator
+ * Tests the Darwin_Iterator::ahead()
  * @param DarwinIteratorAhead a fixture
  * @param darwin_iterator_ahead_2 test name
  */
@@ -260,7 +260,7 @@ TEST(DarwinIteratorAhead, darwin_iterator_ahead_2)
 }
 
 /**
- * Tests the Darwin_Iterator dereference operator
+ * Tests the Darwin_Iterator::ahead()
  * @param DarwinIteratorAhead a fixture
  * @param darwin_iterator_ahead_3 test name
  */

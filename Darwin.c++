@@ -208,7 +208,7 @@ void Species::add_instruction(Instruction instr, int n)
 void Species::execute_instruction(Darwin& darwin, Darwin_Iterator& it, 
                                   Direction dir, int counter) const
 {
-    // Instruction instr = instructions[counter];
+    pair<Instruction, int> instr = instructions[counter];
     Darwin_Iterator space_ahead = it.ahead(it, dir);
     Creature* creature_ahead = *space_ahead;
 
