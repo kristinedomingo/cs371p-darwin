@@ -13,6 +13,203 @@
 
 using namespace std;
 
+// ---------------------
+// Darwin_Iterator tests
+// ---------------------
+
+/**
+ * Tests the Darwin_Iterator
+ * @param DarwinIterator a fixture
+ * @param iterators_1 test name
+ */
+TEST(DarwinIterator, iterators_1)
+{
+    Darwin d(10, 10);
+    Creature trap('t');
+
+    Creature* const c = d.at(0, 0);
+    *c = trap;
+
+    Darwin_Iterator di = d.begin();
+
+    ASSERT_EQ(*di, c);
+}
+
+/**
+ * Tests the Darwin_Iterator
+ * @param DarwinIterator a fixture
+ * @param iterators_2 test name
+ */
+TEST(DarwinIterator, iterators_2)
+{
+    Darwin d(1, 1);
+
+    Darwin_Iterator di_b = d.begin();
+    Darwin_Iterator di_e = d.end();
+
+    ++di_b;
+
+    ASSERT_EQ(di_b, di_e);
+}
+
+/**
+ * Tests the Darwin_Iterator
+ * @param DarwinIterator a fixture
+ * @param iterators_3 test name
+ */
+TEST(DarwinIterator, iterators_3)
+{
+    Darwin d(4, 4);
+
+    Darwin_Iterator di_b = d.begin();
+    Darwin_Iterator di_e = d.end();
+
+    for(int i = 0; i < (4 * 4); ++i)
+    {
+      ++di_b;
+    }
+
+    ASSERT_EQ(di_b, di_e);
+}
+
+/**
+ * Tests the Darwin_Iterator
+ * @param DarwinIterator a fixture
+ * @param iterators_4 test name
+ */
+TEST(DarwinIterator, iterators_4)
+{
+    Darwin d(5, 5);
+
+    Darwin_Iterator di_b = d.begin();
+    Darwin_Iterator di_e = d.end();
+
+    while(di_b != di_e)
+    {
+        stringstream ss;
+        ss << *(*di_b);
+
+        ASSERT_EQ(ss.str(), ".");
+
+        ss.clear();
+        ++di_b;
+    }
+}
+
+/**
+ * Tests the Darwin_Iterator
+ * @param DarwinIterator a fixture
+ * @param iterators_5 test name
+ */
+TEST(DarwinIterator, iterators_5)
+{
+    Darwin d(30, 30);
+
+    Darwin_Iterator di_b = d.begin();
+    Darwin_Iterator di_e = d.end();
+
+    for(int i = 0; i < (30 * 30); ++i)
+    {
+      ++di_b;
+    }
+
+    ASSERT_EQ(di_b, di_e);
+}
+
+/**
+ * Tests the Darwin_Iterator
+ * @param DarwinIterator a fixture
+ * @param iterators_6 test name
+ */
+TEST(DarwinIterator, iterators_6)
+{
+    Darwin d(30, 30);
+
+    // Add Creature 'k' to the 0, 0 spot on the grid
+    Species s('k');
+    Creature c(s);
+    d.add_creature(c, 0, 0);
+
+    string k_grid = d.get_grid();
+
+    // Replace the 0, 0 spot using an iterator
+    Species s2('j');
+    Creature c2(s2);
+
+    Darwin_Iterator b = d.begin();
+    Creature* begin = *b;
+    *begin = c2;
+
+    string k_replaced_by_j_grid = d.get_grid();
+
+    ASSERT_TRUE(begin->is_enemy(c));
+    ASSERT_NE(k_grid, k_replaced_by_j_grid);
+}
+
+// ---------------------------------
+// Darwin_Iterator::operator * tests
+// ---------------------------------
+
+/**
+ * Tests the Darwin_Iterator dereference operator
+ * @param DarwinIteratorDereference a fixture
+ * @param darwin_iterator_dereference_1 test name
+ */
+TEST(DarwinIteratorDereference, darwin_iterator_dereference_1)
+{
+    Darwin d(10, 10);
+    Darwin_Iterator b = d.begin();
+    Creature* c = *b;
+
+    ASSERT_TRUE(c->is_empty());
+}
+
+/**
+ * Tests the Darwin_Iterator dereference operator
+ * @param DarwinIteratorDereference a fixture
+ * @param darwin_iterator_dereference_2 test name
+ */
+TEST(DarwinIteratorDereference, darwin_iterator_dereference_2)
+{
+    Darwin d(10, 10);
+    Species s('k');
+    Creature c(s);
+    d.add_creature(c, 0, 0);
+
+    Darwin_Iterator b = d.begin();
+    Creature* cp = *b;
+
+    ASSERT_FALSE(cp->is_empty());
+}
+
+/**
+ * Tests the Darwin_Iterator dereference operator
+ * @param DarwinIteratorDereference a fixture
+ * @param darwin_iterator_dereference_3 test name
+ */
+TEST(DarwinIteratorDereference, darwin_iterator_dereference_3)
+{
+    Darwin d(10, 10);
+    Darwin_Iterator wall(d, 10, 0);
+    Creature* cp = *wall;
+
+    ASSERT_EQ(cp, nullptr);
+}
+
+/**
+ * Tests the Darwin_Iterator dereference operator
+ * @param DarwinIteratorDereference a fixture
+ * @param darwin_iterator_dereference_4 test name
+ */
+TEST(DarwinIteratorDereference, darwin_iterator_dereference_4)
+{
+    Darwin d(10, 10);
+    Darwin_Iterator out_of_bounds(d, 20, 20);
+    Creature* cp = *out_of_bounds;
+
+    ASSERT_EQ(cp, nullptr);
+}
+
 // ---------------------------
 // Species (constructor) tests
 // ---------------------------
@@ -356,139 +553,6 @@ TEST(IsEmpty, is_empty_3)
     Creature c(s);
 
     ASSERT_FALSE(c.is_empty());
-}
-
-// ---------------------
-// Darwin_Iterator tests
-// ---------------------
-
-/**
- * Tests the Darwin_Iterator
- * @param DarwinIterator a fixture
- * @param iterators_1 test name
- */
-TEST(DarwinIterator, iterators_1)
-{
-    Darwin d(10, 10);
-    Creature trap('t');
-
-    Creature* const c = d.at(0, 0);
-    *c = trap;
-
-    Darwin_Iterator di = d.begin();
-
-    ASSERT_EQ(*di, c);
-}
-
-/**
- * Tests the Darwin_Iterator
- * @param DarwinIterator a fixture
- * @param iterators_2 test name
- */
-TEST(DarwinIterator, iterators_2)
-{
-    Darwin d(1, 1);
-
-    Darwin_Iterator di_b = d.begin();
-    Darwin_Iterator di_e = d.end();
-
-    ++di_b;
-
-    ASSERT_EQ(di_b, di_e);
-}
-
-/**
- * Tests the Darwin_Iterator
- * @param DarwinIterator a fixture
- * @param iterators_3 test name
- */
-TEST(DarwinIterator, iterators_3)
-{
-    Darwin d(4, 4);
-
-    Darwin_Iterator di_b = d.begin();
-    Darwin_Iterator di_e = d.end();
-
-    for(int i = 0; i < (4 * 4); ++i)
-    {
-      ++di_b;
-    }
-
-    ASSERT_EQ(di_b, di_e);
-}
-
-/**
- * Tests the Darwin_Iterator
- * @param DarwinIterator a fixture
- * @param iterators_4 test name
- */
-TEST(DarwinIterator, iterators_4)
-{
-    Darwin d(5, 5);
-
-    Darwin_Iterator di_b = d.begin();
-    Darwin_Iterator di_e = d.end();
-
-    while(di_b != di_e)
-    {
-        stringstream ss;
-        ss << *(*di_b);
-
-        ASSERT_EQ(ss.str(), ".");
-
-        ss.clear();
-        ++di_b;
-    }
-}
-
-/**
- * Tests the Darwin_Iterator
- * @param DarwinIterator a fixture
- * @param iterators_5 test name
- */
-TEST(DarwinIterator, iterators_5)
-{
-    Darwin d(30, 30);
-
-    Darwin_Iterator di_b = d.begin();
-    Darwin_Iterator di_e = d.end();
-
-    for(int i = 0; i < (30 * 30); ++i)
-    {
-      ++di_b;
-    }
-
-    ASSERT_EQ(di_b, di_e);
-}
-
-/**
- * Tests the Darwin_Iterator
- * @param DarwinIterator a fixture
- * @param iterators_6 test name
- */
-TEST(DarwinIterator, iterators_6)
-{
-    Darwin d(30, 30);
-
-    // Add Creature 'k' to the 0, 0 spot on the grid
-    Species s('k');
-    Creature c(s);
-    d.add_creature(c, 0, 0);
-
-    string k_grid = d.get_grid();
-
-    // Replace the 0, 0 spot using an iterator
-    Species s2('j');
-    Creature c2(s2);
-
-    Darwin_Iterator b = d.begin();
-    Creature* begin = *b;
-    *begin = c2;
-
-    string k_replaced_by_j_grid = d.get_grid();
-
-    ASSERT_TRUE(begin->is_enemy(c));
-    ASSERT_NE(k_grid, k_replaced_by_j_grid);
 }
 
 // ----------
