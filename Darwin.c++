@@ -214,7 +214,6 @@ int Species::execute_instruction(Darwin_Iterator& it, Direction dir,
     Creature* creature_ahead = *space_ahead;
     Creature* this_creature = *it;
 
-    int control_instructions_taken = 0;
     Instruction i = instr.first;
 
     // Follow the flow of instructions until an "action" instruction is reached
@@ -236,10 +235,9 @@ int Species::execute_instruction(Darwin_Iterator& it, Direction dir,
             ++counter;
         }
 
-        // Update instruction, and the count of control instructions taken
+        // Update instruction
         instr = instructions[counter];
         i = instr.first;
-        ++control_instructions_taken;
     }
 
     // Now, the instruction SHOULD be at an action instruction
@@ -271,7 +269,7 @@ int Species::execute_instruction(Darwin_Iterator& it, Direction dir,
         *creature_ahead = c;
     }
 
-    return control_instructions_taken;
+    return counter;
 }
 
 // ----------------------
@@ -289,7 +287,7 @@ Creature::Creature(Species s, Direction dir)
     this->s = s;
     this->dir = dir;
     counter = 0;
-    flag = 0;
+    flag = -1;
 }
 
 // --------
@@ -329,14 +327,13 @@ bool Creature::is_empty() const
  */
 void Creature::execute(Darwin& d, Darwin_Iterator& it)
 {
+    ++flag;
     if(!d.creature_has_gone(flag))
     {
-        ++flag;
-
         // Species::execute_instruction returns the number of control instructions
         // that the function had to go through to reach an "action" instruction, so
         // have to increment "counter" accordingly
-        counter += s.execute_instruction(it, dir, counter);
+        counter = s.execute_instruction(it, dir, counter);
 
         // Set counter to next instruction
         ++counter;

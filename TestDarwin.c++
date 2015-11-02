@@ -949,3 +949,51 @@ TEST(DoTurn, do_turn_2)
                          "7 ........\n";
     ASSERT_EQ(grid1, grid3);
 }
+
+/**
+ * Tests the Darwin::do_turn() function
+ * @param DoTurn a fixture
+ * @param do_turn_3 test name
+ */
+TEST(DoTurn, do_turn_3)
+{
+    Darwin d(8, 8);
+
+    Species s('k');
+    s.add_instruction(HOP);
+    s.add_instruction(GO, 0);
+
+    Creature c(s, SOUTH);
+    d.add_creature(c, 1, 1);
+
+    string grid1 = d.get_grid();
+    const string grid2 = "Turn = 0.\n"
+                        "  01234567\n"
+                        "0 ........\n"
+                        "1 .k......\n"
+                        "2 ........\n"
+                        "3 ........\n"
+                        "4 ........\n"
+                        "5 ........\n"
+                        "6 ........\n"
+                        "7 ........\n";
+    ASSERT_EQ(grid1, grid2);
+
+    for(int i = 0; i < 20; ++i)
+    {
+        d.do_turn();
+    }
+
+    grid1 = d.get_grid();
+    const string grid3 = "Turn = 0.\n"
+                         "  01234567\n"
+                         "0 ........\n"
+                         "1 ........\n"
+                         "2 ........\n"
+                         "3 ........\n"
+                         "4 ........\n"
+                         "5 ........\n"
+                         "6 ........\n"
+                         "7 .k......\n";
+    ASSERT_EQ(grid1, grid3);
+}
