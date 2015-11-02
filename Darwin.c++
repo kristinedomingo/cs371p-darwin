@@ -100,11 +100,30 @@ Darwin_Iterator& Darwin_Iterator::operator ++ ()
 /**
  * Returns an iterator to the space "ahead" of this one (ahead has
  * different meanings depending on what "direction" is).
+ * @param it the Darwin_Iterator to get the space ahead from
  * @param dir a Direction
  */
-Darwin_Iterator Darwin_Iterator::ahead(Direction dir) const
+Darwin_Iterator Darwin_Iterator::ahead(Darwin_Iterator& it, Direction dir) const
 {
-    return *this;
+    Darwin_Iterator space_ahead(this->darwin, it.row, it.col);
+
+    if(dir == NORTH)
+    {
+        --space_ahead.row;
+    }
+    else if(dir == EAST)
+    {
+        ++space_ahead.col;
+    }
+    else if(dir == SOUTH)
+    {
+        ++space_ahead.row;
+    }
+    else if(dir == WEST)
+    {
+        --space_ahead.col;
+    }
+    return space_ahead;
 }
 
 // -----------------------------
@@ -190,7 +209,8 @@ void Species::execute_instruction(Darwin& darwin, Darwin_Iterator& it,
                                   Direction dir, int counter) const
 {
     // Instruction instr = instructions[counter];
-    // Darwin_Iterator space_ahead = it.ahead(dir);
+    Darwin_Iterator space_ahead = it.ahead(it, dir);
+    Creature* creature_ahead = *space_ahead;
 
     // if(instr == HOP)
     // {
@@ -334,7 +354,7 @@ Darwin_Iterator Darwin::end()
  */
 Creature* const Darwin::at(int row, int col)
 {
-    if(row >= height || col >= width)
+    if(row >= height || col >= width || row < 0 || col < 0)
     {
         return nullptr;
     }

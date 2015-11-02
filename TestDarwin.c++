@@ -210,6 +210,74 @@ TEST(DarwinIteratorDereference, darwin_iterator_dereference_4)
     ASSERT_EQ(cp, nullptr);
 }
 
+// ------------------------------
+// Darwin_Iterator::ahead() tests
+// ------------------------------
+
+/**
+ * Tests the Darwin_Iterator dereference operator
+ * @param DarwinIteratorAhead a fixture
+ * @param darwin_iterator_ahead_1 test name
+ */
+TEST(DarwinIteratorAhead, darwin_iterator_ahead_1)
+{
+    Darwin d(10, 10);
+    Species s('k');
+    Creature c(s, SOUTH);
+    d.add_creature(c, 0, 0);
+
+    Darwin_Iterator b = d.begin();
+    Darwin_Iterator space_ahead = b.ahead(b, SOUTH);
+    Creature* creature_ahead = *space_ahead;
+
+    ASSERT_TRUE(creature_ahead->is_empty());
+}
+
+/**
+ * Tests the Darwin_Iterator dereference operator
+ * @param DarwinIteratorAhead a fixture
+ * @param darwin_iterator_ahead_2 test name
+ */
+TEST(DarwinIteratorAhead, darwin_iterator_ahead_2)
+{
+    Darwin d(10, 10);
+    Species s('k');
+    Creature c(s, SOUTH);
+    d.add_creature(c, 0, 0);
+
+    Species s2('j');
+    Creature c2(s2);
+    d.add_creature(c2, 1, 0);
+
+    Darwin_Iterator b = d.begin();
+    Darwin_Iterator space_ahead = b.ahead(b, SOUTH);
+    Creature* creature_ahead = *space_ahead;
+
+    stringstream ss;
+    ss << c2;
+    ASSERT_FALSE(creature_ahead->is_empty());
+    ASSERT_EQ(ss.str(), "j");
+}
+
+/**
+ * Tests the Darwin_Iterator dereference operator
+ * @param DarwinIteratorAhead a fixture
+ * @param darwin_iterator_ahead_3 test name
+ */
+TEST(DarwinIteratorAhead, darwin_iterator_ahead_3)
+{
+    Darwin d(10, 10);
+    Species s('k');
+    Creature c(s, NORTH);
+    d.add_creature(c, 0, 0);
+
+    Darwin_Iterator b = d.begin();
+    Darwin_Iterator space_ahead = b.ahead(b, NORTH);
+    Creature* creature_ahead = *space_ahead;
+
+    ASSERT_EQ(creature_ahead, nullptr);
+}
+
 // ---------------------------
 // Species (constructor) tests
 // ---------------------------

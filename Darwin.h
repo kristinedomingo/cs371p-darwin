@@ -107,9 +107,10 @@ class Darwin_Iterator
         /**
          * Returns an iterator to the space "ahead" of this one (ahead has
          * different meanings depending on what "direction" is).
+         * @param it the Darwin_Iterator to get the space ahead from
          * @param dir a Direction
          */
-        Darwin_Iterator ahead(Direction dir) const;
+        Darwin_Iterator ahead(Darwin_Iterator& it, Direction dir) const;
 };
 
 // ---------------------------
