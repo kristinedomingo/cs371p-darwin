@@ -188,13 +188,13 @@ class Species
 
         /**
          * Executes this Species counterth instruction.
-         * @param darwin the Darwin grid
          * @param it a Darwin_Iterator
          * @param dir the Direction the Creature is facing
          * @param counter the instruction to execute
+         * @return the number of control instructions this function had to do
          */
-        void execute_instruction(Darwin& darwin, Darwin_Iterator& it, 
-                                 Direction dir, int counter) const;
+        int execute_instruction(Darwin_Iterator& it, Direction dir,
+                                 int counter) const;
 };
 
 // ----------------------------
@@ -203,9 +203,10 @@ class Species
 class Creature
 {
     private:
-        Species s;        // the Species of this Creature (if any)
-        Direction dir;    // the direction this Creature is facing
-        int counter;      // the program counter
+        Species s;      // the Species of this Creature (if any)
+        Direction dir;  // the direction this Creature is facing
+        int counter;    // the program counter
+        int flag;       // used to check if this Creature has gone during a turn
 
         // Overload of the << operator to allow use with Creature
         friend ostream& operator << (ostream&, const Creature&);
@@ -250,10 +251,10 @@ class Creature
 
         /**
          * Executes this Creature's Species' "counterth" instruction.
-         * @param darwin a Darwin object
+         * @param d a Darwin object this Creature is on
          * @param it a Darwin_Iterator
          */
-        void execute(Darwin& darwin, Darwin_Iterator& it);
+        void execute(Darwin& d, Darwin_Iterator& it);
 
         // ---------
         // turn_left
@@ -365,16 +366,26 @@ class Darwin
          * @param col the col to place this creature in
          */
         void add_creature(Creature& c, int row, int col);
+
+        // -----------------
+        // creature_has_gone
+        // -----------------
+
+        /**
+         * Checks to see if a Creature has gone by comparing the Creature's
+         * "flag" against the current turn.
+         * @param flag the Creature's flag
+         */
+        const bool creature_has_gone(int flag) const;
+
+        // -------
+        // do_turn
+        // -------
+
+        /**
+         * Simulates a turn on a Darwin grid.
+         */
+        void do_turn();
 };
-
-// -------
-// do_turn
-// -------
-
-/**
- * Simulates a turn on a Darwin grid.
- * @param d a Darwin object to simulate a turn on
- */
-void do_turn(Darwin& d);
 
 #endif // Darwin_h

@@ -859,3 +859,93 @@ TEST(AddCreature, add_creature_2)
     ASSERT_NE(empty_board, new_board);
     ASSERT_FALSE(d.at(5, 5)->is_enemy(downing));
 }
+
+// -----------------------
+// Darwin::do_turn() tests
+// -----------------------
+
+/**
+ * Tests the Darwin::do_turn() function
+ * @param DoTurn a fixture
+ * @param do_turn_1 test name
+ */
+TEST(DoTurn, do_turn_1)
+{
+    Darwin d(8, 8);
+
+    Species s('k');
+    s.add_instruction(HOP);
+
+    Creature c(s, WEST);
+    d.add_creature(c, 1, 1);
+
+    string grid1 = d.get_grid();
+    const string grid2 = "Turn = 0.\n"
+                        "  01234567\n"
+                        "0 ........\n"
+                        "1 .k......\n"
+                        "2 ........\n"
+                        "3 ........\n"
+                        "4 ........\n"
+                        "5 ........\n"
+                        "6 ........\n"
+                        "7 ........\n";
+    ASSERT_EQ(grid1, grid2);
+
+    d.do_turn();
+    grid1 = d.get_grid();
+    const string grid3 = "Turn = 0.\n"
+                         "  01234567\n"
+                         "0 ........\n"
+                         "1 k.......\n"
+                         "2 ........\n"
+                         "3 ........\n"
+                         "4 ........\n"
+                         "5 ........\n"
+                         "6 ........\n"
+                         "7 ........\n";
+    ASSERT_EQ(grid1, grid3);
+}
+
+/**
+ * Tests the Darwin::do_turn() function
+ * @param DoTurn a fixture
+ * @param do_turn_2 test name
+ */
+TEST(DoTurn, do_turn_2)
+{
+    Darwin d(8, 8);
+
+    Species s('k');
+    s.add_instruction(HOP);
+
+    Creature c(s, SOUTH);
+    d.add_creature(c, 1, 1);
+
+    string grid1 = d.get_grid();
+    const string grid2 = "Turn = 0.\n"
+                        "  01234567\n"
+                        "0 ........\n"
+                        "1 .k......\n"
+                        "2 ........\n"
+                        "3 ........\n"
+                        "4 ........\n"
+                        "5 ........\n"
+                        "6 ........\n"
+                        "7 ........\n";
+    ASSERT_EQ(grid1, grid2);
+
+    d.do_turn();
+    grid1 = d.get_grid();
+    const string grid3 = "Turn = 0.\n"
+                         "  01234567\n"
+                         "0 ........\n"
+                         "1 ........\n"
+                         "2 .k......\n"
+                         "3 ........\n"
+                         "4 ........\n"
+                         "5 ........\n"
+                         "6 ........\n"
+                         "7 ........\n";
+    ASSERT_EQ(grid1, grid3);
+}

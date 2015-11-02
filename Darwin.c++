@@ -200,13 +200,13 @@ void Species::add_instruction(Instruction instr, int n)
 
 /**
  * Executes this Species counterth instruction.
- * @param darwin the Darwin grid
  * @param it a Darwin_Iterator
  * @param dir the Direction the Creature is facing
  * @param counter the instruction to execute
+ * @return the number of control instructions this function had to do
  */
-void Species::execute_instruction(Darwin& darwin, Darwin_Iterator& it, 
-                                  Direction dir, int counter) const
+int Species::execute_instruction(Darwin_Iterator& it, Direction dir,
+                                 int counter) const
 {
     pair<Instruction, int> instr = instructions[counter];
 
@@ -218,7 +218,7 @@ void Species::execute_instruction(Darwin& darwin, Darwin_Iterator& it,
     Instruction i = instr.first;
 
     // Follow the flow of instructions until an "action" instruction is reached
-    while(i != HOP || i != LEFT || i != RIGHT || i != INFECT)
+    while(i != HOP && i != LEFT && i != RIGHT && i != INFECT)
     {
         // If the instruction matches the control condition, go to line "n"
         if((i == IF_EMPTY  && creature_ahead->is_empty())               ||
@@ -245,25 +245,33 @@ void Species::execute_instruction(Darwin& darwin, Darwin_Iterator& it,
     // Now, the instruction SHOULD be at an action instruction
     assert(i == HOP || i == LEFT || i == RIGHT || i == INFECT);
 
+    // If the space ahead is empty (and not a wall), move forward
     if(i == HOP && creature_ahead != nullptr && creature_ahead->is_empty())
     {
-        Creature c(*this);
-        *creature_ahead = c;
+        *creature_ahead = Creature(*this_creature);
         *this_creature = Creature();
     }
+
+    // Turn the Creature left
     else if(i == LEFT)
     {
         this_creature->turn_left();
     }
+
+    // Turn the Creature right
     else if(i == RIGHT)
     {
         this_creature->turn_right();
     }
+
+    // If the space ahead is an enemy, change that to be THIS Species
     else if(i == INFECT && creature_ahead->is_enemy(*this_creature))
     {
         Creature c(*this);
         *creature_ahead = c;
     }
+
+    return control_instructions_taken;
 }
 
 // ----------------------
@@ -281,6 +289,7 @@ Creature::Creature(Species s, Direction dir)
     this->s = s;
     this->dir = dir;
     counter = 0;
+    flag = 0;
 }
 
 // --------
@@ -315,13 +324,23 @@ bool Creature::is_empty() const
 
 /**
  * Executes this Creature's Species' "counterth" instruction.
- * @param darwin a Darwin object
+ * @param d a Darwin object this Creature is on
  * @param it a Darwin_Iterator
  */
-void Creature::execute(Darwin& darwin, Darwin_Iterator& it)
+void Creature::execute(Darwin& d, Darwin_Iterator& it)
 {
-    // TODO: add check to see if creature has gone already
-    s.execute_instruction(darwin, it, dir, counter);
+    if(!d.creature_has_gone(flag))
+    {
+        ++flag;
+
+        // Species::execute_instruction returns the number of control instructions
+        // that the function had to go through to reach an "action" instruction, so
+        // have to increment "counter" accordingly
+        counter += s.execute_instruction(it, dir, counter);
+
+        // Set counter to next instruction
+        ++counter;
+    }
 }
 
 // ---------
@@ -519,28 +538,41 @@ void Darwin::add_creature(Creature& c, int row, int col)
     }
 }
 
+// -----------------
+// creature_has_gone
+// -----------------
+
+/**
+ * Checks to see if a Creature has gone by comparing the Creature's
+ * "flag" against the current turn.
+ * @param flag the Creature's flag
+ */
+const bool Darwin::creature_has_gone(int flag) const
+{
+    return flag % 2 != current_turn % 2;
+}
+
 // -------
 // do_turn
 // -------
 
 /**
  * Simulates a turn on a Darwin grid.
- * @param d a Darwin object to simulate a turn on
  */
-void do_turn(Darwin& d)
+void Darwin::do_turn()
 {
-    Darwin_Iterator b = d.begin();
-    Darwin_Iterator e = d.end();
+    Darwin_Iterator b = begin();
+    Darwin_Iterator e = end();
 
     // Iterate through every SPACE on the Darwin grid
     while(b != e)
     {
         Creature* c = *b;
 
-        // If the space contains a NON-EMPTY creature, give the Creature a turn.
+        // If the space contains a NON-EMPTY creature, give the Creature a turn
         if(!c->is_empty())
         {
-            c->execute(d, b);
+            c->execute(*this, b);
         }
 
         ++b;

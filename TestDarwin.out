@@ -1,10 +1,10 @@
-==30061== Memcheck, a memory error detector
-==30061== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==30061== Using Valgrind-3.10.0.SVN and LibVEX; rerun with -h for copyright info
-==30061== Command: ./TestDarwin
-==30061== 
+==31682== Memcheck, a memory error detector
+==31682== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==31682== Using Valgrind-3.10.0.SVN and LibVEX; rerun with -h for copyright info
+==31682== Command: ./TestDarwin
+==31682== 
 Running main() from gtest_main.cc
-[==========] Running 46 tests from 13 test cases.
+[==========] Running 48 tests from 14 test cases.
 [----------] Global test environment set-up.
 [----------] 6 tests from DarwinIterator
 [ RUN      ] DarwinIterator.iterators_1
@@ -18,8 +18,8 @@ Running main() from gtest_main.cc
 [ RUN      ] DarwinIterator.iterators_5
 [       OK ] DarwinIterator.iterators_5 (13 ms)
 [ RUN      ] DarwinIterator.iterators_6
-[       OK ] DarwinIterator.iterators_6 (36 ms)
-[----------] 6 tests from DarwinIterator (126 ms total)
+[       OK ] DarwinIterator.iterators_6 (35 ms)
+[----------] 6 tests from DarwinIterator (124 ms total)
 
 [----------] 4 tests from DarwinIteratorDereference
 [ RUN      ] DarwinIteratorDereference.darwin_iterator_dereference_1
@@ -30,7 +30,7 @@ Running main() from gtest_main.cc
 [       OK ] DarwinIteratorDereference.darwin_iterator_dereference_3 (4 ms)
 [ RUN      ] DarwinIteratorDereference.darwin_iterator_dereference_4
 [       OK ] DarwinIteratorDereference.darwin_iterator_dereference_4 (3 ms)
-[----------] 4 tests from DarwinIteratorDereference (17 ms total)
+[----------] 4 tests from DarwinIteratorDereference (18 ms total)
 
 [----------] 3 tests from DarwinIteratorAhead
 [ RUN      ] DarwinIteratorAhead.darwin_iterator_ahead_1
@@ -39,7 +39,7 @@ Running main() from gtest_main.cc
 [       OK ] DarwinIteratorAhead.darwin_iterator_ahead_2 (8 ms)
 [ RUN      ] DarwinIteratorAhead.darwin_iterator_ahead_3
 [       OK ] DarwinIteratorAhead.darwin_iterator_ahead_3 (5 ms)
-[----------] 3 tests from DarwinIteratorAhead (19 ms total)
+[----------] 3 tests from DarwinIteratorAhead (18 ms total)
 
 [----------] 2 tests from SpeciesConstructor
 [ RUN      ] SpeciesConstructor.species_constructor_1
@@ -84,11 +84,11 @@ Running main() from gtest_main.cc
 [       OK ] CreatureConstructor.creature_constructor_4 (4 ms)
 [ RUN      ] CreatureConstructor.creature_constructor_5
 [       OK ] CreatureConstructor.creature_constructor_5 (4 ms)
-[----------] 4 tests from CreatureConstructor (16 ms total)
+[----------] 4 tests from CreatureConstructor (15 ms total)
 
 [----------] 5 tests from IsEnemy
 [ RUN      ] IsEnemy.is_enemy_1
-[       OK ] IsEnemy.is_enemy_1 (3 ms)
+[       OK ] IsEnemy.is_enemy_1 (4 ms)
 [ RUN      ] IsEnemy.is_enemy_2
 [       OK ] IsEnemy.is_enemy_2 (3 ms)
 [ RUN      ] IsEnemy.is_enemy_3
@@ -96,7 +96,7 @@ Running main() from gtest_main.cc
 [ RUN      ] IsEnemy.is_enemy_4
 [       OK ] IsEnemy.is_enemy_4 (4 ms)
 [ RUN      ] IsEnemy.is_enemy_5
-[       OK ] IsEnemy.is_enemy_5 (4 ms)
+[       OK ] IsEnemy.is_enemy_5 (3 ms)
 [----------] 5 tests from IsEnemy (18 ms total)
 
 [----------] 3 tests from IsEmpty
@@ -110,25 +110,25 @@ Running main() from gtest_main.cc
 
 [----------] 2 tests from At
 [ RUN      ] At.at_1
-[       OK ] At.at_1 (5 ms)
+[       OK ] At.at_1 (4 ms)
 [ RUN      ] At.at_2
 [       OK ] At.at_2 (3 ms)
-[----------] 2 tests from At (8 ms total)
+[----------] 2 tests from At (7 ms total)
 
 [----------] 6 tests from GetGrid
 [ RUN      ] GetGrid.get_grid_1
 [       OK ] GetGrid.get_grid_1 (4 ms)
 [ RUN      ] GetGrid.get_grid_2
-[       OK ] GetGrid.get_grid_2 (2 ms)
+[       OK ] GetGrid.get_grid_2 (3 ms)
 [ RUN      ] GetGrid.get_grid_3
-[       OK ] GetGrid.get_grid_3 (6 ms)
+[       OK ] GetGrid.get_grid_3 (5 ms)
 [ RUN      ] GetGrid.get_grid_4
 [       OK ] GetGrid.get_grid_4 (5 ms)
 [ RUN      ] GetGrid.get_grid_5
 [       OK ] GetGrid.get_grid_5 (4 ms)
 [ RUN      ] GetGrid.get_grid_6
-[       OK ] GetGrid.get_grid_6 (6 ms)
-[----------] 6 tests from GetGrid (28 ms total)
+[       OK ] GetGrid.get_grid_6 (5 ms)
+[----------] 6 tests from GetGrid (27 ms total)
 
 [----------] 2 tests from AddCreature
 [ RUN      ] AddCreature.add_creature_1
@@ -137,27 +137,34 @@ Running main() from gtest_main.cc
 [       OK ] AddCreature.add_creature_2 (8 ms)
 [----------] 2 tests from AddCreature (19 ms total)
 
+[----------] 2 tests from DoTurn
+[ RUN      ] DoTurn.do_turn_1
+[       OK ] DoTurn.do_turn_1 (20 ms)
+[ RUN      ] DoTurn.do_turn_2
+[       OK ] DoTurn.do_turn_2 (7 ms)
+[----------] 2 tests from DoTurn (27 ms total)
+
 [----------] Global test environment tear-down
-[==========] 46 tests from 13 test cases ran. (334 ms total)
-[  PASSED  ] 46 tests.
-==30061== 
-==30061== HEAP SUMMARY:
-==30061==     in use at exit: 0 bytes in 0 blocks
-==30061==   total heap usage: 1,857 allocs, 1,857 frees, 345,892 bytes allocated
-==30061== 
-==30061== All heap blocks were freed -- no leaks are possible
-==30061== 
-==30061== For counts of detected and suppressed errors, rerun with: -v
-==30061== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+[==========] 48 tests from 14 test cases ran. (359 ms total)
+[  PASSED  ] 48 tests.
+==31682== 
+==31682== HEAP SUMMARY:
+==31682==     in use at exit: 0 bytes in 0 blocks
+==31682==   total heap usage: 2,021 allocs, 2,021 frees, 393,111 bytes allocated
+==31682== 
+==31682== All heap blocks were freed -- no leaks are possible
+==31682== 
+==31682== For counts of detected and suppressed errors, rerun with: -v
+==31682== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 File 'Darwin.c++'
-Lines executed:56.16% of 146
-Branches executed:42.22% of 180
-Taken at least once:27.78% of 180
-Calls executed:49.49% of 99
+Lines executed:75.50% of 151
+Branches executed:61.80% of 178
+Taken at least once:39.89% of 178
+Calls executed:73.96% of 96
 Creating 'Darwin.c++.gcov'
 File 'TestDarwin.c++'
-Lines executed:100.00% of 290
-Branches executed:69.75% of 1772
-Taken at least once:35.05% of 1772
-Calls executed:53.09% of 1908
+Lines executed:100.00% of 316
+Branches executed:70.17% of 1904
+Taken at least once:35.24% of 1904
+Calls executed:53.33% of 2042
 Creating 'TestDarwin.c++.gcov'
