@@ -200,19 +200,19 @@ void Species::add_instruction(Instruction instr, int n)
 
 /**
  * Executes this Species counterth instruction.
- * @param it a Darwin_Iterator
- * @param dir the Direction the Creature is facing
+ * @param this_space a Darwin_Iterator located at THIS Species' Creature
+ * @param space_ahead a Darwin_Iterator located at the space ahead
  * @param counter the instruction to execute
  * @return the number of control instructions this function had to do
  */
-int Species::execute_instruction(Darwin_Iterator& it, Direction dir,
+int Species::execute_instruction(Darwin_Iterator& this_space,
+                                 Darwin_Iterator& space_ahead,
                                  int counter) const
 {
     pair<Instruction, int> instr = instructions[counter];
 
-    Darwin_Iterator space_ahead = it.ahead(it, dir);
     Creature* creature_ahead = *space_ahead;
-    Creature* this_creature = *it;
+    Creature* this_creature = *this_space;
 
     Instruction i = instr.first;
 
@@ -265,6 +265,7 @@ int Species::execute_instruction(Darwin_Iterator& it, Direction dir,
     // If the space ahead is an enemy, change that to be THIS Species
     else if(i == INFECT && creature_ahead->is_enemy(*this_creature))
     {
+        // TODO
         *creature_ahead = Creature(*this_creature);
     }
 
@@ -330,10 +331,12 @@ void Creature::execute(Darwin& d, Darwin_Iterator& it)
     {
         ++flag;
 
-        // Species::execute_instruction returns the number of control instructions
-        // that the function had to go through to reach an "action" instruction, so
-        // have to increment "counter" accordingly
-        counter = s.execute_instruction(it, dir, counter);
+        Darwin_Iterator space_ahead = it.ahead(it, dir);
+
+        // Species::execute_instruction returns the number of control
+        // instructions that the function had to go through to reach an "action"
+        // instruction, so have to increment "counter" accordingly
+        counter = s.execute_instruction(it, space_ahead, counter);
 
         // Set counter to next instruction
         ++counter;
@@ -418,10 +421,10 @@ ostream& operator << (ostream& os, const Creature &c)
  * @param height the number of rows in the grid
  * @param width the number of columns in the grid
  */
-Darwin::Darwin(int height, int width) : di(*this)
+Darwin::Darwin(int height, int width)
 {
     // Resize empty grid (which was initialized with size 0, 0)
-    grid.resize(width, vector<Creature>(height));
+    grid.resize(height, vector<Creature>(width));
 
     this->height = height;
     this->width = width;

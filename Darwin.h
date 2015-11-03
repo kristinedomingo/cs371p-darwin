@@ -42,7 +42,7 @@ class Darwin_Iterator
     private:
         int row;        // row this iterator is at
         int col;        // column this iterator is at
-        Darwin& darwin; // reference to outer class
+        Darwin& darwin;  // reference to outer class
 
     public:
         // -----------------------------
@@ -188,13 +188,14 @@ class Species
 
         /**
          * Executes this Species counterth instruction.
-         * @param it a Darwin_Iterator
-         * @param dir the Direction the Creature is facing
+         * @param this_space a Darwin_Iterator located at THIS Species' Creature
+         * @param space_ahead a Darwin_Iterator located at the space ahead
          * @param counter the instruction to execute
          * @return the number of control instructions this function had to do
          */
-        int execute_instruction(Darwin_Iterator& it, Direction dir,
-                                 int counter) const;
+        int execute_instruction(Darwin_Iterator& this_space,
+                                Darwin_Iterator & space_ahead,
+                                int counter) const;
 };
 
 // ----------------------------
@@ -296,7 +297,6 @@ class Darwin
         int height;                    // the number of rows in the grid
         int width;                     // the number of columns in the grid
         int current_turn;              // the current turn of the Darwin run
-        Darwin_Iterator di;            // an iterator over spaces in the grid
 
         friend class Darwin_Iterator;
 

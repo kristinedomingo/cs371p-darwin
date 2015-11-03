@@ -106,17 +106,31 @@ int main ()
     // darwin 7x9
     // ----------
 
-    //cout << "*** Darwin 7x9 ***" << endl;
-    //srand(0);
-    /*
-    7x9 Darwin
-    Trap,   facing south, at (0, 0)
-    Hopper, facing east,  at (3, 2)
-    Rover,  facing north, at (5, 4)
-    Trap,   facing west,  at (6, 8)
-    Simulate 5 moves.
-    Print every grid.
-    */
+    cout << "*** Darwin 7x9 ***" << endl;
+    srand(0);
+
+    Darwin d2(7, 9);
+
+    Creature trap_c(trap, SOUTH);
+    d2.add_creature(trap_c, 0, 0);
+
+    Creature hopper_c5(hopper, EAST);
+    d2.add_creature(hopper_c5, 3, 2);
+
+    Creature rover_c(rover, NORTH);
+    d2.add_creature(rover_c, 5, 4);
+
+    Creature trap_c2(trap, WEST);
+    d2.add_creature(trap_c2, 6, 8);
+
+    cout << d2.get_grid();
+    d2.do_turn();
+
+    // for(int i = 0; i <= 5; ++i)
+    // {
+    //     cout << d2.get_grid();
+    //     d2.do_turn();
+    // }
 
     // ------------
     // darwin 72x72
