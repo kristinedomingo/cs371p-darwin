@@ -513,6 +513,7 @@ const string Darwin::get_grid()
         output << '\n';
     }
 
+    output << '\n';
     return output.str();
 }
 
@@ -572,6 +573,7 @@ void Darwin::do_turn()
             c->execute(*this, b);
         }
 
+        // Go to next space
         ++b;
     }
 
