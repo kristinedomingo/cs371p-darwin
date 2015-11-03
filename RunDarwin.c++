@@ -31,66 +31,76 @@ int main ()
     // food
     // ----
 
-    /*
-     0: left
-     1: go 0
-    */
+    Species food('f');
+    food.add_instruction(LEFT);
+    food.add_instruction(GO, 0);
 
     // ------
     // hopper
     // ------
 
-    /*
-     0: hop
-     1: go 0
-    */
+    Species hopper('h');
+    hopper.add_instruction(HOP);
+    hopper.add_instruction(GO, 0);
 
     // -----
     // rover
     // -----
 
-    /*
-     0: if_enemy 9
-     1: if_empty 7
-     2: if_random 5
-     3: left
-     4: go 0
-     5: right
-     6: go 0
-     7: hop
-     8: go 0
-     9: infect
-    10: go 0
-    */
+    Species rover('r');
+    rover.add_instruction(IF_ENEMY, 9);
+    rover.add_instruction(IF_EMPTY, 7);
+    rover.add_instruction(IF_RANDOM, 5);
+    rover.add_instruction(LEFT);
+    rover.add_instruction(GO, 0);
+    rover.add_instruction(RIGHT);
+    rover.add_instruction(GO, 0);
+    rover.add_instruction(HOP);
+    rover.add_instruction(GO, 0);
+    rover.add_instruction(INFECT);
+    rover.add_instruction(GO, 0);
 
     // ----
     // trap
     // ----
 
-    /*
-     0: if_enemy 3
-     1: left
-     2: go 0
-     3: infect
-     4: go 0
-    */
+    Species trap('t');
+    trap.add_instruction(IF_ENEMY, 3);
+    trap.add_instruction(LEFT);
+    trap.add_instruction(GO, 0);
+    trap.add_instruction(INFECT);
+    trap.add_instruction(GO, 0);
 
     // ----------
     // darwin 8x8
     // ----------
 
-    //cout << "*** Darwin 8x8 ***" << endl;
-    /*
-    8x8 Darwin
-    Food,   facing east,  at (0, 0)
-    Hopper, facing north, at (3, 3)
-    Hopper, facing east,  at (3, 4)
-    Hopper, facing south, at (4, 4)
-    Hopper, facing west,  at (4, 3)
-    Food,   facing north, at (7, 7)
-    Simulate 5 moves.
-    Print every grid.
-    */
+    cout << "*** Darwin 8x8 ***" << endl;
+    Darwin d(8, 8);
+
+    Creature food_c(food, EAST);
+    d.add_creature(food_c, 0, 0);
+
+    Creature hopper_c(hopper, NORTH);
+    d.add_creature(hopper_c, 3, 3);
+
+    Creature hopper_c2(hopper, EAST);
+    d.add_creature(hopper_c2, 3, 4);
+
+    Creature hopper_c3(hopper, SOUTH);
+    d.add_creature(hopper_c3, 4, 4);
+
+    Creature hopper_c4(hopper, WEST);
+    d.add_creature(hopper_c4, 4, 3);
+
+    Creature food_c2(food, NORTH);
+    d.add_creature(food_c2, 7, 7);
+
+    for(int i = 0; i <= 5; ++i)
+    {
+        cout << d.get_grid();
+        d.do_turn();
+    }
 
     // ----------
     // darwin 7x9
