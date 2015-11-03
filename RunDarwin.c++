@@ -17,6 +17,34 @@
 
 using namespace std;
 
+// ----------------
+// random_direction
+// ----------------
+
+/**
+ * Helper function for below, returns a random direction.
+ */
+Direction random_direction()
+{
+    int n = rand();
+    if(n % 4 == 0)
+    {
+        return WEST;
+    }
+    else if(n % 4 == 1)
+    {
+        return NORTH;
+    }
+    else if (n % 4 == 2)
+    {
+        return EAST;
+    }
+    else
+    {
+        return SOUTH;
+    }
+}
+
 // ----
 // main
 // ----
@@ -134,23 +162,95 @@ int main ()
     // without best
     // ------------
 
-    //cout << "*** Darwin 72x72 without Best ***" << endl;
-    //srand(0);
+    cout << "*** Darwin 72x72 without Best ***" << endl;
+    srand(0);
+
+    Darwin d3(72, 72);
+
+    // Place 10 foods
+    vector<Creature> foods;
+    vector<int> positions;
+    for(int i = 0; i < 10; ++i)
+    {
+        positions.push_back(rand() % 5184);
+        Creature food_creature(food, random_direction());
+        foods.push_back(food_creature);
+    }
+
+    for(int i = 0; i < 10; ++i)
+    {
+        d3.add_creature(foods[i], positions[i] / 72, positions[i] % 72);
+    }
+
+    // Place 10 Hoppers
+    vector<Creature> hoppers;
+    positions.clear();
+    for(int i = 0; i < 10; ++i)
+    {
+        positions.push_back(rand() % 5184);
+        Creature hopper_creature(hopper, random_direction());
+        hoppers.push_back(hopper_creature);
+    }
+
+    for(int i = 0; i < 10; ++i)
+    {
+        d3.add_creature(hoppers[i], positions[i] / 72, positions[i] % 72);
+    }
+
+    // Place 10 Rovers
+    vector<Creature> rovers;
+    positions.clear();
+    for(int i = 0; i < 10; ++i)
+    {
+        positions.push_back(rand() % 5184);
+        Creature rover_creature(rover, random_direction());
+        rovers.push_back(rover_creature);
+    }
+
+    for(int i = 0; i < 10; ++i)
+    {
+        d3.add_creature(rovers[i], positions[i] / 72, positions[i] % 72);
+    }
+
+    // Place 10 Traps
+    vector<Creature> traps;
+    positions.clear();
+    for(int i = 0; i < 10; ++i)
+    {
+        positions.push_back(rand() % 5184);
+        Creature trap_creature(trap, random_direction());
+        traps.push_back(trap_creature);
+    }
+
+    for(int i = 0; i < 10; ++i)
+    {
+        d3.add_creature(traps[i], positions[i] / 72, positions[i] % 72);
+    }
+
+    // Print first 10 grids
+    for(int i = 0; i < 10; ++i)
+    {
+        cout << d3;
+        d3.do_turn();
+    }
+
+    // Print every 100th grid after
+    for(int i = 10; i < 1000; ++i)
+    {
+        if(i % 100 == 0)
+        {
+            cout << d3;
+        }
+        d3.do_turn();
+    }
+
     /*
-    Randomly place the following creatures facing randomly.
-    Call rand(), mod it with 5184 (72x72), and use that for the position
-    in a row-major order grid.
-    Call rand() again, mod it with 4 and use that for it's direction with
-    the ordering: west, north, east, south.
-    Do that for each kind of creature.
-    10 Food
-    10 Hopper
-    10 Rover
-    10 Trap
     Simulate 1000 moves.
     Print the first 10 grids          (i.e. 0, 1, 2...9).
     Print every 100th grid after that (i.e. 100, 200, 300...1000).
     */
+
+    cout << d3;
 
     // ------------
     // darwin 72x72

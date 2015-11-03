@@ -22,7 +22,7 @@ using namespace std;
 // ----------------
 // Direction (enum)
 // ----------------
-enum Direction {NORTH, EAST, SOUTH, WEST};
+enum Direction {WEST, NORTH, EAST, SOUTH};
 
 // ------------------
 // Instruction (enum)
