@@ -922,8 +922,7 @@ TEST(DoTurn, do_turn_2)
     Creature c(s, SOUTH);
     d.add_creature(c, 1, 1);
 
-    string grid1 = d.get_grid();
-    const string grid2 = "Turn = 0.\n"
+    const string grid1 = "Turn = 0.\n"
                          "  01234567\n"
                          "0 ........\n"
                          "1 .k......\n"
@@ -933,11 +932,10 @@ TEST(DoTurn, do_turn_2)
                          "5 ........\n"
                          "6 ........\n"
                          "7 ........\n\n";
-    ASSERT_EQ(grid1, grid2);
+    ASSERT_EQ(d.get_grid(), grid1);
 
     d.do_turn();
-    grid1 = d.get_grid();
-    const string grid3 = "Turn = 1.\n"
+    const string grid2 = "Turn = 1.\n"
                          "  01234567\n"
                          "0 ........\n"
                          "1 ........\n"
@@ -947,7 +945,7 @@ TEST(DoTurn, do_turn_2)
                          "5 ........\n"
                          "6 ........\n"
                          "7 ........\n\n";
-    ASSERT_EQ(grid1, grid3);
+    ASSERT_EQ(d.get_grid(), grid2);
 }
 
 /**
@@ -1066,4 +1064,102 @@ TEST(DoTurn, do_turn_4)
 
     for(int i = 0; i < 8; ++i) {d.do_turn();}
     ASSERT_EQ(d.get_grid(), bottom_left);
+}
+
+/**
+ * Tests the Darwin::do_turn() function
+ * @param DoTurn a fixture
+ * @param do_turn_5 test name
+ */
+TEST(DoTurn, do_turn_5)
+{
+    Darwin d(8, 8);
+
+    Species s('k');
+    s.add_instruction(IF_ENEMY, 3);
+    s.add_instruction(HOP);
+    s.add_instruction(GO, 0);
+    s.add_instruction(INFECT);
+    s.add_instruction(GO, 0);
+
+    Creature c(s, SOUTH);
+    d.add_creature(c, 1, 1);
+
+    Species s2('j');
+    Creature c2(s2);
+    d.add_creature(c2, 2, 1);
+
+    const string grid1 = "Turn = 0.\n"
+                         "  01234567\n"
+                         "0 ........\n"
+                         "1 .k......\n"
+                         "2 .j......\n"
+                         "3 ........\n"
+                         "4 ........\n"
+                         "5 ........\n"
+                         "6 ........\n"
+                         "7 ........\n\n";
+    ASSERT_EQ(d.get_grid(), grid1);
+
+    d.do_turn();
+    const string grid2 = "Turn = 1.\n"
+                         "  01234567\n"
+                         "0 ........\n"
+                         "1 .k......\n"
+                         "2 .k......\n"
+                         "3 ........\n"
+                         "4 ........\n"
+                         "5 ........\n"
+                         "6 ........\n"
+                         "7 ........\n\n";
+    ASSERT_EQ(d.get_grid(), grid2);
+}
+
+/**
+ * Tests the Darwin::do_turn() function
+ * @param DoTurn a fixture
+ * @param do_turn_6 test name
+ */
+TEST(DoTurn, do_turn_6)
+{
+    Darwin d(7, 9);
+
+    Species hopper('h');
+    hopper.add_instruction(HOP);
+    hopper.add_instruction(GO, 0);
+
+    Species rover('r');
+    rover.add_instruction(IF_ENEMY, 9);
+    rover.add_instruction(IF_EMPTY, 7);
+    rover.add_instruction(IF_RANDOM, 5);
+    rover.add_instruction(LEFT);
+    rover.add_instruction(GO, 0);
+    rover.add_instruction(RIGHT);
+    rover.add_instruction(GO, 0);
+    rover.add_instruction(HOP);
+    rover.add_instruction(GO, 0);
+    rover.add_instruction(INFECT);
+    rover.add_instruction(GO, 0);
+
+    Species trap('t');
+    trap.add_instruction(IF_ENEMY, 3);
+    trap.add_instruction(LEFT);
+    trap.add_instruction(GO, 0);
+    trap.add_instruction(INFECT);
+    trap.add_instruction(GO, 0);
+
+    Creature trap_c(trap, SOUTH);
+    d.add_creature(trap_c, 0, 0);
+
+    Creature hopper_c5(hopper, EAST);
+    d.add_creature(hopper_c5, 3, 2);
+
+    Creature rover_c(rover, NORTH);
+    d.add_creature(rover_c, 5, 4);
+
+    Creature trap_c2(trap, WEST);
+    d.add_creature(trap_c2, 6, 8);
+
+    d.do_turn();
+    d.do_turn();
 }
