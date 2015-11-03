@@ -220,10 +220,10 @@ int Species::execute_instruction(Darwin_Iterator& this_space,
     while(i != HOP && i != LEFT && i != RIGHT && i != INFECT)
     {
         // If the instruction matches the control condition, go to line "n"
-        if((i == IF_EMPTY  && creature_ahead->is_empty())               ||
-           (i == IF_WALL   && creature_ahead == nullptr)                ||
-           (i == IF_RANDOM && rand() % 2 == 1)                          ||
-           (i == IF_ENEMY  && creature_ahead->is_enemy(*this_creature)) ||
+        if((i == IF_EMPTY  && creature_ahead != nullptr && creature_ahead->is_empty()) ||
+           (i == IF_WALL   && creature_ahead == nullptr) ||
+           (i == IF_RANDOM && rand() % 2 == 1) ||
+           (i == IF_ENEMY  && creature_ahead != nullptr && creature_ahead->is_enemy(*this_creature)) ||
            (i == GO))
         {
             counter = instr.second;
