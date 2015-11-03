@@ -98,7 +98,7 @@ int main ()
 
     for(int i = 0; i <= 5; ++i)
     {
-        cout << d.get_grid();
+        cout << d;
         d.do_turn();
     }
 
@@ -125,7 +125,7 @@ int main ()
 
     for(int i = 0; i <= 5; ++i)
     {
-        cout << d2.get_grid();
+        cout << d2;
         d2.do_turn();
     }
 

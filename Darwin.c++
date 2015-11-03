@@ -13,6 +13,75 @@
 
 using namespace std;
 
+// -------------------------------
+// operator << (Species overload)
+// -------------------------------
+
+/**
+ * Overloads the << operator for the Species class.
+ * @param os an ostream to output the Species' render
+ * @param s the Species
+ */
+ostream& operator << (ostream& os, const Species &s)
+{
+    return os << s.display;
+}
+
+// -------------------------------
+// operator << (Creature overload)
+// -------------------------------
+
+/**
+ * Overloads the << operator for the Creature class.
+ * @param os an ostream to output the Creature's Species' render
+ * @param c the Creature
+ */
+ostream& operator << (ostream& os, const Creature &c)
+{
+    return os << c.s;
+}
+
+// -------------------------------
+// operator << (Darwin overload)
+// -------------------------------
+
+/**
+ * Overloads the << operator for the Darwin class.
+ * @param os an ostream to output the Darwin grid and current turn
+ * @param d the Darwin object
+ */
+ostream& operator << (ostream& os, Darwin &d)
+{
+    // Add current turn
+    os << "Turn = " << to_string(d.current_turn) << ".\n";
+
+    // Add column identifiers
+    os << "  ";
+    for(int c = 0; c < d.width; ++c)
+    {
+        os << to_string(c % 10);
+    }
+    os << '\n';
+
+    // Add row displays
+    for(int r = 0; r < d.height; ++r)
+    {
+        // Add row identifier
+        os << to_string(r % 10) << " ";
+
+        // Add contents of this row
+        for(int c = 0; c < d.width; ++c)
+        {
+            os << *(d.at(r, c));
+        }
+
+        os << '\n';
+    }
+
+    os << '\n';
+    return os;
+}
+
 // -----------------------------
 // Darwin_Iterator (constructor)
 // -----------------------------
@@ -167,18 +236,6 @@ bool Species::operator != (const Species& rhs) const
     return !(*this == rhs);
 }
 
-// ------
-// render
-// ------
-
-/**
- * Returns this Species' rendering on the Darwin grid.
- */
-char Species::render() const
-{
-    return display;
-}
-
 // ---------------
 // add_instruction
 // ---------------
@@ -312,7 +369,9 @@ bool Creature::is_enemy(const Creature& rhs) const
  */
 bool Creature::is_empty() const
 {
-    return s.render() == '.';
+    stringstream ss;
+    ss << s;
+    return ss.str() == ".";
 }
 
 // --------
@@ -411,20 +470,6 @@ void Creature::get_infected(const Species& infector)
     counter = 0;
 }
 
-// -------------------------------
-// operator << (Creature overload)
-// -------------------------------
-
-/**
- * Overloads the << operator for the Creature class.
- * @param os an ostream to output the Creature's Species' render
- * @param c the Creature
- */
-ostream& operator << (ostream& os, const Creature &c)
-{
-    return os << c.s.render();
-}
-
 // --------------------
 // Darwin (constructor)
 // --------------------
@@ -491,47 +536,6 @@ Creature* const Darwin::at(int row, int col)
         return nullptr;
     }
     return &grid[row][col];
-}
-
-// --------
-// get_grid
-// --------
-
-/**
- * Returns a string representation of the Darwin object (the grid and 
- * the current turn at the time this function is called.
- */
-const string Darwin::get_grid()
-{
-    // Add current turn
-    stringstream output;
-    output << "Turn = " << to_string(current_turn) << ".\n";
-
-    // Add column identifiers
-    output << "  ";
-    for(int c = 0; c < width; ++c)
-    {
-        output << to_string(c % 10);
-    }
-    output << '\n';
-
-    // Add row displays
-    for(int r = 0; r < height; ++r)
-    {
-        // Add row identifier
-        output << to_string(r % 10) << " ";
-
-        // Add contents of this row
-        for(int c = 0; c < width; ++c)
-        {
-            output << *(at(r, c));
-        }
-
-        output << '\n';
-    }
-
-    output << '\n';
-    return output.str();
 }
 
 // ------------

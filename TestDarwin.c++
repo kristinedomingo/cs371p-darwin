@@ -91,7 +91,7 @@ TEST(DarwinIterator, iterators_4)
 
         ASSERT_EQ(ss.str(), ".");
 
-        ss.clear();
+        ss.str("");
         ++di_b;
     }
 }
@@ -124,13 +124,16 @@ TEST(DarwinIterator, iterators_5)
 TEST(DarwinIterator, iterators_6)
 {
     Darwin d(30, 30);
+    stringstream ss;
 
     // Add Creature 'k' to the 0, 0 spot on the grid
     Species s('k');
     Creature c(s);
     d.add_creature(c, 0, 0);
 
-    string k_grid = d.get_grid();
+    ss << d;
+    string k_grid = ss.str();
+    ss.str("");
 
     // Replace the 0, 0 spot using an iterator
     Species s2('j');
@@ -140,7 +143,9 @@ TEST(DarwinIterator, iterators_6)
     Creature* begin = *b;
     *begin = c2;
 
-    string k_replaced_by_j_grid = d.get_grid();
+    ss << d;
+    string k_replaced_by_j_grid = ss.str();
+    ss.str("");
 
     ASSERT_TRUE(begin->is_enemy(c));
     ASSERT_NE(k_grid, k_replaced_by_j_grid);
@@ -290,7 +295,9 @@ TEST(DarwinIteratorAhead, darwin_iterator_ahead_3)
 TEST(SpeciesConstructor, species_constructor_1)
 {
     Species s;
-    ASSERT_EQ(s.render(), '.');
+    stringstream ss;
+    ss << s;
+    ASSERT_EQ(ss.str(), ".");
 }
 
 /**
@@ -301,7 +308,9 @@ TEST(SpeciesConstructor, species_constructor_1)
 TEST(SpeciesConstructor, species_constructor_2)
 {
     Species s('k');
-    ASSERT_EQ(s.render(), 'k');
+    stringstream ss;
+    ss << s;
+    ASSERT_EQ(ss.str(), "k");
 }
 
 // ------------------------------
@@ -342,32 +351,6 @@ TEST(SpeciesEquals, species_equals_3)
     Species s('k');
     Species s2('k');
     ASSERT_EQ(s, s2);
-}
-
-// --------------
-// render() tests
-// --------------
-
-/**
- * Tests the Species render() function
- * @param SpeciesRender a fixture
- * @param species_render_1 test name
- */
-TEST(SpeciesRender, species_render_1)
-{
-    Species s;
-    ASSERT_EQ(s.render(), '.');
-}
-
-/**
- * Tests the Species render() function
- * @param SpeciesRender a fixture
- * @param species_render_2 test name
- */
-TEST(SpeciesRender, species_render_2)
-{
-    Species s('k');
-    ASSERT_EQ(s.render(), 'k');
 }
 
 // -----------------------
@@ -654,16 +637,16 @@ TEST(At, at_2)
     ASSERT_EQ(d.at(9, 9), nullptr);
 }
 
-// ----------------
-// get_grid() tests
-// ----------------
+// -------------------------
+// Darwin::operator << tests
+// -------------------------
 
 /**
- * Tests the get_grid() function
- * @param GetGrid a fixture
- * @param get_grid_1 test name
+ * Tests the Darwin operator << function
+ * @param DarwinOperatorOverload a fixture
+ * @param darwin_operator_1 test name
  */
-TEST(GetGrid, get_grid_1)
+TEST(DarwinOperatorOverload, darwin_operator_1)
 {
     Darwin d(8, 8);
     string grid = "Turn = 0.\n"
@@ -677,30 +660,36 @@ TEST(GetGrid, get_grid_1)
                   "6 ........\n"
                   "7 ........\n\n";
 
-    ASSERT_EQ(d.get_grid(), grid);
+    stringstream ss;
+    ss << d;
+
+    ASSERT_EQ(ss.str(), grid);
 }
 
 /**
- * Tests the get_grid() function
- * @param GetGrid a fixture
- * @param get_grid_2 test name
+ * Tests the Darwin operator << function
+ * @param DarwinOperatorOverload a fixture
+ * @param darwin_operator_2 test name
  */
-TEST(GetGrid, get_grid_2)
+TEST(DarwinOperatorOverload, darwin_operator_2)
 {
     Darwin d(1, 1);
     string grid = "Turn = 0.\n"
                   "  0\n"
                   "0 .\n\n";
 
-    ASSERT_EQ(d.get_grid(), grid);
+    stringstream ss;
+    ss << d;
+
+    ASSERT_EQ(ss.str(), grid);
 }
 
 /**
- * Tests the get_grid() function
- * @param GetGrid a fixture
- * @param get_grid_3 test name
+ * Tests the Darwin operator << function
+ * @param DarwinOperatorOverload a fixture
+ * @param darwin_operator_3 test name
  */
-TEST(GetGrid, get_grid_3)
+TEST(DarwinOperatorOverload, darwin_operator_3)
 {
     Darwin d(8, 8);
 
@@ -721,15 +710,17 @@ TEST(GetGrid, get_grid_3)
                   "6 ........\n"
                   "7 ........\n\n";
 
-    ASSERT_EQ(d.get_grid(), grid);
+    stringstream ss;
+    ss << d;
+    ASSERT_EQ(ss.str(), grid);
 }
 
 /**
- * Tests the get_grid() function
- * @param GetGrid a fixture
- * @param get_grid_4 test name
+ * Tests the Darwin operator << function
+ * @param DarwinOperatorOverload a fixture
+ * @param darwin_operator_4 test name
  */
-TEST(GetGrid, get_grid_4)
+TEST(DarwinOperatorOverload, darwin_operator_4)
 {
     Darwin d(8, 8);
 
@@ -747,15 +738,17 @@ TEST(GetGrid, get_grid_4)
                   "6 ........\n"
                   "7 ........\n\n";
 
-    ASSERT_EQ(d.get_grid(), grid);
+    stringstream ss;
+    ss << d;
+    ASSERT_EQ(ss.str(), grid);
 }
 
 /**
- * Tests the get_grid() function
- * @param GetGrid a fixture
- * @param get_grid_5 test name
+ * Tests the Darwin operator << function
+ * @param DarwinOperatorOverload a fixture
+ * @param darwin_operator_5 test name
  */
-TEST(GetGrid, get_grid_5)
+TEST(DarwinOperatorOverload, darwin_operator_5)
 {
     Darwin d(11, 11);
     string grid = "Turn = 0.\n"
@@ -772,15 +765,17 @@ TEST(GetGrid, get_grid_5)
                   "9 ...........\n"
                   "0 ...........\n\n";
 
-    ASSERT_EQ(d.get_grid(), grid);
+    stringstream ss;
+    ss << d;
+    ASSERT_EQ(ss.str(), grid);
 }
 
 /**
- * Tests the get_grid() function
- * @param GetGrid a fixture
- * @param get_grid_6 test name
+ * Tests the Darwin operator << function
+ * @param DarwinOperatorOverload a fixture
+ * @param darwin_operator_6 test name
  */
-TEST(GetGrid, get_grid_6)
+TEST(DarwinOperatorOverload, darwin_operator_6)
 {
     Darwin d(11, 11);
 
@@ -801,8 +796,9 @@ TEST(GetGrid, get_grid_6)
                   "9 ...........\n"
                   "0 ..........t\n\n";
 
-    ASSERT_EQ(d.get_grid(), grid);
-}
+    stringstream ss;
+    ss << d;
+    ASSERT_EQ(ss.str(), grid);}
 
 // --------------------
 // add_creature() tests
@@ -844,18 +840,30 @@ TEST(AddCreature, add_creature_1)
 TEST(AddCreature, add_creature_2)
 {
     Darwin d(8, 8);
-    string empty_board = d.get_grid();
+    stringstream ss;
+
+    ss << d;
+    string empty_board = ss.str();
+    ss.str("");
 
     Creature kristine('k');
     Creature downing('d');
 
     // Placing a Creature in an invalid spot should leave the grid unchanged
     d.add_creature(kristine, 9, 9);
-    string new_board = d.get_grid();
+
+    ss << d;
+    string new_board = ss.str();
+    ss.str("");
+
     ASSERT_EQ(empty_board, new_board);
 
     d.add_creature(downing, 5, 5);
-    new_board = d.get_grid();
+
+    ss << d;
+    new_board = ss.str();
+    ss.str("");
+
     ASSERT_NE(empty_board, new_board);
     ASSERT_FALSE(d.at(5, 5)->is_enemy(downing));
 }
@@ -872,6 +880,7 @@ TEST(AddCreature, add_creature_2)
 TEST(DoTurn, do_turn_1)
 {
     Darwin d(8, 8);
+    stringstream ss;
 
     Species s('k');
     s.add_instruction(HOP);
@@ -879,7 +888,7 @@ TEST(DoTurn, do_turn_1)
     Creature c(s, WEST);
     d.add_creature(c, 1, 1);
 
-    string grid1 = d.get_grid();
+    ss << d;
     const string grid2 = "Turn = 0.\n"
                          "  01234567\n"
                          "0 ........\n"
@@ -890,10 +899,11 @@ TEST(DoTurn, do_turn_1)
                          "5 ........\n"
                          "6 ........\n"
                          "7 ........\n\n";
-    ASSERT_EQ(grid1, grid2);
+    ASSERT_EQ(ss.str(), grid2);
+    ss.str("");
 
     d.do_turn();
-    grid1 = d.get_grid();
+    ss << d;
     const string grid3 = "Turn = 1.\n"
                          "  01234567\n"
                          "0 ........\n"
@@ -904,7 +914,7 @@ TEST(DoTurn, do_turn_1)
                          "5 ........\n"
                          "6 ........\n"
                          "7 ........\n\n";
-    ASSERT_EQ(grid1, grid3);
+    ASSERT_EQ(ss.str(), grid3);
 }
 
 /**
@@ -915,6 +925,7 @@ TEST(DoTurn, do_turn_1)
 TEST(DoTurn, do_turn_2)
 {
     Darwin d(8, 8);
+    stringstream ss;
 
     Species s('k');
     s.add_instruction(HOP);
@@ -932,7 +943,9 @@ TEST(DoTurn, do_turn_2)
                          "5 ........\n"
                          "6 ........\n"
                          "7 ........\n\n";
-    ASSERT_EQ(d.get_grid(), grid1);
+    ss << d;
+    ASSERT_EQ(ss.str(), grid1);
+    ss.str("");
 
     d.do_turn();
     const string grid2 = "Turn = 1.\n"
@@ -945,7 +958,9 @@ TEST(DoTurn, do_turn_2)
                          "5 ........\n"
                          "6 ........\n"
                          "7 ........\n\n";
-    ASSERT_EQ(d.get_grid(), grid2);
+    ss << d;
+    ASSERT_EQ(ss.str(), grid2);
+    ss.str("");
 }
 
 /**
@@ -956,6 +971,7 @@ TEST(DoTurn, do_turn_2)
 TEST(DoTurn, do_turn_3)
 {
     Darwin d(8, 8);
+    stringstream ss;
 
     Species s('k');
     s.add_instruction(HOP);
@@ -974,7 +990,9 @@ TEST(DoTurn, do_turn_3)
                         "5 ........\n"
                         "6 ........\n"
                         "7 ........\n\n";
-    ASSERT_EQ(d.get_grid(), grid1);
+    ss << d;
+    ASSERT_EQ(ss.str(), grid1);
+    ss.str("");
 
     for(int i = 0; i < 20; ++i)
     {
@@ -991,8 +1009,9 @@ TEST(DoTurn, do_turn_3)
                          "5 ........\n"
                          "6 ........\n"
                          "7 .k......\n\n";
-    ASSERT_EQ(d.get_grid(), grid2);
-}
+    ss << d;
+    ASSERT_EQ(ss.str(), grid2);
+    ss.str("");}
 
 /**
  * Tests the Darwin::do_turn() function
@@ -1002,6 +1021,7 @@ TEST(DoTurn, do_turn_3)
 TEST(DoTurn, do_turn_4)
 {
     Darwin d(8, 8);
+    stringstream ss;
 
     Species s('k');
     s.add_instruction(IF_WALL, 3);
@@ -1054,16 +1074,24 @@ TEST(DoTurn, do_turn_4)
                                "6 ........\n"
                                "7 k.......\n\n";
 
-    ASSERT_EQ(d.get_grid(), top_left);
+    ss << d;
+    ASSERT_EQ(ss.str(), top_left);
+    ss.str("");
 
     for(int i = 0; i < 8; ++i) {d.do_turn();}
-    ASSERT_EQ(d.get_grid(), top_right);
+    ss << d;
+    ASSERT_EQ(ss.str(), top_right);
+    ss.str("");
 
     for(int i = 0; i < 8; ++i) {d.do_turn();}
-    ASSERT_EQ(d.get_grid(), bottom_right);
+    ss << d;
+    ASSERT_EQ(ss.str(), bottom_right);
+    ss.str("");
 
     for(int i = 0; i < 8; ++i) {d.do_turn();}
-    ASSERT_EQ(d.get_grid(), bottom_left);
+    ss << d;
+    ASSERT_EQ(ss.str(), bottom_left);
+    ss.str("");
 }
 
 /**
@@ -1074,6 +1102,7 @@ TEST(DoTurn, do_turn_4)
 TEST(DoTurn, do_turn_5)
 {
     Darwin d(8, 8);
+    stringstream ss;
 
     Species s('k');
     s.add_instruction(IF_ENEMY, 3);
@@ -1099,7 +1128,9 @@ TEST(DoTurn, do_turn_5)
                          "5 ........\n"
                          "6 ........\n"
                          "7 ........\n\n";
-    ASSERT_EQ(d.get_grid(), grid1);
+    ss << d;
+    ASSERT_EQ(ss.str(), grid1);
+    ss.str("");
 
     d.do_turn();
     const string grid2 = "Turn = 1.\n"
@@ -1112,54 +1143,7 @@ TEST(DoTurn, do_turn_5)
                          "5 ........\n"
                          "6 ........\n"
                          "7 ........\n\n";
-    ASSERT_EQ(d.get_grid(), grid2);
-}
-
-/**
- * Tests the Darwin::do_turn() function
- * @param DoTurn a fixture
- * @param do_turn_6 test name
- */
-TEST(DoTurn, do_turn_6)
-{
-    Darwin d(7, 9);
-
-    Species hopper('h');
-    hopper.add_instruction(HOP);
-    hopper.add_instruction(GO, 0);
-
-    Species rover('r');
-    rover.add_instruction(IF_ENEMY, 9);
-    rover.add_instruction(IF_EMPTY, 7);
-    rover.add_instruction(IF_RANDOM, 5);
-    rover.add_instruction(LEFT);
-    rover.add_instruction(GO, 0);
-    rover.add_instruction(RIGHT);
-    rover.add_instruction(GO, 0);
-    rover.add_instruction(HOP);
-    rover.add_instruction(GO, 0);
-    rover.add_instruction(INFECT);
-    rover.add_instruction(GO, 0);
-
-    Species trap('t');
-    trap.add_instruction(IF_ENEMY, 3);
-    trap.add_instruction(LEFT);
-    trap.add_instruction(GO, 0);
-    trap.add_instruction(INFECT);
-    trap.add_instruction(GO, 0);
-
-    Creature trap_c(trap, SOUTH);
-    d.add_creature(trap_c, 0, 0);
-
-    Creature hopper_c5(hopper, EAST);
-    d.add_creature(hopper_c5, 3, 2);
-
-    Creature rover_c(rover, NORTH);
-    d.add_creature(rover_c, 5, 4);
-
-    Creature trap_c2(trap, WEST);
-    d.add_creature(trap_c2, 6, 8);
-
-    d.do_turn();
-    d.do_turn();
+    ss << d;
+    ASSERT_EQ(ss.str(), grid2);
+    ss.str("");
 }

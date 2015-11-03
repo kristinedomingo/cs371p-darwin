@@ -30,9 +30,43 @@ enum Direction {NORTH, EAST, SOUTH, WEST};
 enum Instruction {HOP, LEFT, RIGHT, INFECT,
                   IF_EMPTY, IF_WALL, IF_RANDOM, IF_ENEMY, GO};
 
-// Forward declarations
+// Forward declarations needed for operator <<, and other things
 class Darwin;
 class Creature;
+class Species;
+
+// -------------------------------
+// operator << (Species overload)
+// -------------------------------
+
+/**
+ * Overloads the << operator for the Species class.
+ * @param os an ostream to output the Species' render
+ * @param s the Species
+ */
+ostream& operator << (ostream& os, const Creature &s);
+
+// -------------------------------
+// operator << (Creature overload)
+// -------------------------------
+
+/**
+ * Overloads the << operator for the Creature class.
+ * @param os an ostream to output the Creature's Species' render
+ * @param c the Creature
+ */
+ostream& operator << (ostream& os, const Creature &c);
+
+// -------------------------------
+// operator << (Darwin overload)
+// -------------------------------
+
+/**
+ * Overloads the << operator for the Darwin class.
+ * @param os an ostream to output the Darwin grid and current turn
+ * @param d the Darwin object
+ */
+ostream& operator << (ostream& os, Darwin &d);
 
 // -----------------------------------
 // Darwin_Iterator (Class Declaration)
@@ -123,6 +157,8 @@ class Species
         vector<pair<Instruction, int>>   // this Species' instructions
                          instructions;
 
+        friend ostream& operator << (ostream&, const Species&);
+
         FRIEND_TEST(AddInstruction, add_instruction_1);
         FRIEND_TEST(AddInstruction, add_instruction_2);
         FRIEND_TEST(AddInstruction, add_instruction_3);
@@ -160,15 +196,6 @@ class Species
          * @param rhs the Species to compare to
          */
         bool operator != (const Species& rhs) const;
-
-        // ------
-        // render
-        // ------
-
-        /**
-         * Returns this Species' rendering on the Darwin grid.
-         */
-        char render() const;
 
         // ---------------
         // add_instruction
@@ -287,17 +314,6 @@ class Creature
         void get_infected(const Species& infector);
 };
 
-// -------------------------------
-// operator << (Creature overload)
-// -------------------------------
-
-/**
- * Overloads the << operator for the Creature class.
- * @param os an ostream to output the Creature's Species' render
- * @param c the Creature
- */
-ostream& operator << (ostream& os, const Creature &c);
-
 // --------------------------
 // Darwin (Class Declaration)
 // --------------------------
@@ -310,6 +326,7 @@ class Darwin
         int current_turn;              // the current turn of the Darwin run
 
         friend class Darwin_Iterator;
+        friend ostream& operator << (ostream&, Darwin&);
 
     public:
         // --------------------
@@ -355,16 +372,6 @@ class Darwin
          * @param the column to look at
          */
         Creature* const at(int row, int col);
-
-        // --------
-        // get_grid
-        // --------
-
-        /**
-         * Returns a string representation of the Darwin object (the grid and 
-         * the current turn) at the time this function is called.
-         */
-        const string get_grid();
 
         // ------------
         // add_creature
