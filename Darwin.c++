@@ -265,8 +265,7 @@ int Species::execute_instruction(Darwin_Iterator& it, Direction dir,
     // If the space ahead is an enemy, change that to be THIS Species
     else if(i == INFECT && creature_ahead->is_enemy(*this_creature))
     {
-        Creature c(*this);
-        *creature_ahead = c;
+        *creature_ahead = Creature(*this_creature);
     }
 
     return counter;
@@ -287,7 +286,7 @@ Creature::Creature(Species s, Direction dir)
     this->s = s;
     this->dir = dir;
     counter = 0;
-    flag = -1;
+    flag = 0;
 }
 
 // --------
@@ -327,9 +326,10 @@ bool Creature::is_empty() const
  */
 void Creature::execute(Darwin& d, Darwin_Iterator& it)
 {
-    ++flag;
     if(!d.creature_has_gone(flag))
     {
+        ++flag;
+
         // Species::execute_instruction returns the number of control instructions
         // that the function had to go through to reach an "action" instruction, so
         // have to increment "counter" accordingly
@@ -574,4 +574,6 @@ void Darwin::do_turn()
 
         ++b;
     }
+
+    ++current_turn;
 }

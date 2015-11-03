@@ -881,20 +881,20 @@ TEST(DoTurn, do_turn_1)
 
     string grid1 = d.get_grid();
     const string grid2 = "Turn = 0.\n"
-                        "  01234567\n"
-                        "0 ........\n"
-                        "1 .k......\n"
-                        "2 ........\n"
-                        "3 ........\n"
-                        "4 ........\n"
-                        "5 ........\n"
-                        "6 ........\n"
-                        "7 ........\n";
+                         "  01234567\n"
+                         "0 ........\n"
+                         "1 .k......\n"
+                         "2 ........\n"
+                         "3 ........\n"
+                         "4 ........\n"
+                         "5 ........\n"
+                         "6 ........\n"
+                         "7 ........\n";
     ASSERT_EQ(grid1, grid2);
 
     d.do_turn();
     grid1 = d.get_grid();
-    const string grid3 = "Turn = 0.\n"
+    const string grid3 = "Turn = 1.\n"
                          "  01234567\n"
                          "0 ........\n"
                          "1 k.......\n"
@@ -924,20 +924,20 @@ TEST(DoTurn, do_turn_2)
 
     string grid1 = d.get_grid();
     const string grid2 = "Turn = 0.\n"
-                        "  01234567\n"
-                        "0 ........\n"
-                        "1 .k......\n"
-                        "2 ........\n"
-                        "3 ........\n"
-                        "4 ........\n"
-                        "5 ........\n"
-                        "6 ........\n"
-                        "7 ........\n";
+                         "  01234567\n"
+                         "0 ........\n"
+                         "1 .k......\n"
+                         "2 ........\n"
+                         "3 ........\n"
+                         "4 ........\n"
+                         "5 ........\n"
+                         "6 ........\n"
+                         "7 ........\n";
     ASSERT_EQ(grid1, grid2);
 
     d.do_turn();
     grid1 = d.get_grid();
-    const string grid3 = "Turn = 0.\n"
+    const string grid3 = "Turn = 1.\n"
                          "  01234567\n"
                          "0 ........\n"
                          "1 ........\n"
@@ -966,8 +966,7 @@ TEST(DoTurn, do_turn_3)
     Creature c(s, SOUTH);
     d.add_creature(c, 1, 1);
 
-    string grid1 = d.get_grid();
-    const string grid2 = "Turn = 0.\n"
+    const string grid1 = "Turn = 0.\n"
                         "  01234567\n"
                         "0 ........\n"
                         "1 .k......\n"
@@ -977,15 +976,14 @@ TEST(DoTurn, do_turn_3)
                         "5 ........\n"
                         "6 ........\n"
                         "7 ........\n";
-    ASSERT_EQ(grid1, grid2);
+    ASSERT_EQ(d.get_grid(), grid1);
 
     for(int i = 0; i < 20; ++i)
     {
         d.do_turn();
     }
 
-    grid1 = d.get_grid();
-    const string grid3 = "Turn = 0.\n"
+    const string grid2 = "Turn = 20.\n"
                          "  01234567\n"
                          "0 ........\n"
                          "1 ........\n"
@@ -995,5 +993,77 @@ TEST(DoTurn, do_turn_3)
                          "5 ........\n"
                          "6 ........\n"
                          "7 .k......\n";
-    ASSERT_EQ(grid1, grid3);
+    ASSERT_EQ(d.get_grid(), grid2);
+}
+
+/**
+ * Tests the Darwin::do_turn() function
+ * @param DoTurn a fixture
+ * @param do_turn_4 test name
+ */
+TEST(DoTurn, do_turn_4)
+{
+    Darwin d(8, 8);
+
+    Species s('k');
+    s.add_instruction(IF_WALL, 3);
+    s.add_instruction(HOP);
+    s.add_instruction(GO, 0);
+    s.add_instruction(RIGHT);
+    s.add_instruction(GO, 0);
+
+    Creature c(s, EAST);
+    d.add_creature(c, 0, 0);
+
+    const string top_left = "Turn = 0.\n"
+                            "  01234567\n"
+                            "0 k.......\n"
+                            "1 ........\n"
+                            "2 ........\n"
+                            "3 ........\n"
+                            "4 ........\n"
+                            "5 ........\n"
+                            "6 ........\n"
+                            "7 ........\n";
+    const string top_right = "Turn = 8.\n"
+                             "  01234567\n"
+                             "0 .......k\n"
+                             "1 ........\n"
+                             "2 ........\n"
+                             "3 ........\n"
+                             "4 ........\n"
+                             "5 ........\n"
+                             "6 ........\n"
+                             "7 ........\n";
+    const string bottom_right = "Turn = 16.\n"
+                                "  01234567\n"
+                                "0 ........\n"
+                                "1 ........\n"
+                                "2 ........\n"
+                                "3 ........\n"
+                                "4 ........\n"
+                                "5 ........\n"
+                                "6 ........\n"
+                                "7 .......k\n";
+    const string bottom_left = "Turn = 24.\n"
+                               "  01234567\n"
+                               "0 ........\n"
+                               "1 ........\n"
+                               "2 ........\n"
+                               "3 ........\n"
+                               "4 ........\n"
+                               "5 ........\n"
+                               "6 ........\n"
+                               "7 k.......\n";
+
+    ASSERT_EQ(d.get_grid(), top_left);
+
+    for(int i = 0; i < 8; ++i) {d.do_turn();}
+    ASSERT_EQ(d.get_grid(), top_right);
+
+    for(int i = 0; i < 8; ++i) {d.do_turn();}
+    ASSERT_EQ(d.get_grid(), bottom_right);
+
+    for(int i = 0; i < 8; ++i) {d.do_turn();}
+    ASSERT_EQ(d.get_grid(), bottom_left);
 }
