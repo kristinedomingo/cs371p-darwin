@@ -274,6 +274,17 @@ class Creature
          * Turns this Creature right.
          */
         void turn_right();
+
+        // ------------
+        // get_infected
+        // ------------
+
+        /**
+         * Causes this Creature to become "infected" by another Species, also
+         * resetting the program counter to 0.
+         * @param infector another Species
+         */
+        void get_infected(const Species& infector);
 };
 
 // -------------------------------

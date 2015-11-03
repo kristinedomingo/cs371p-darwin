@@ -123,14 +123,11 @@ int main ()
     Creature trap_c2(trap, WEST);
     d2.add_creature(trap_c2, 6, 8);
 
-    cout << d2.get_grid();
-    d2.do_turn();
-
-    // for(int i = 0; i <= 5; ++i)
-    // {
-    //     cout << d2.get_grid();
-    //     d2.do_turn();
-    // }
+    for(int i = 0; i <= 5; ++i)
+    {
+        cout << d2.get_grid();
+        d2.do_turn();
+    }
 
     // ------------
     // darwin 72x72

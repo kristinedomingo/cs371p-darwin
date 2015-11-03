@@ -211,8 +211,8 @@ int Species::execute_instruction(Darwin_Iterator& this_space,
 {
     pair<Instruction, int> instr = instructions[counter];
 
-    Creature* creature_ahead = *space_ahead;
-    Creature* this_creature = *this_space;
+    Creature* const creature_ahead = *space_ahead;
+    Creature* const this_creature = *this_space;
 
     Instruction i = instr.first;
 
@@ -265,8 +265,7 @@ int Species::execute_instruction(Darwin_Iterator& this_space,
     // If the space ahead is an enemy, change that to be THIS Species
     else if(i == INFECT && creature_ahead->is_enemy(*this_creature))
     {
-        // TODO
-        *creature_ahead = Creature(*this_creature);
+        creature_ahead->get_infected(*this);
     }
 
     return counter;
@@ -395,6 +394,21 @@ void Creature::turn_right()
     {
         dir = NORTH;
     }
+}
+
+// ------------
+// get_infected
+// ------------
+
+/**
+ * Causes this Creature to become "infected" by another Species, also
+ * resetting the program counter to 0.
+ * @param infector another Species
+ */
+void Creature::get_infected(const Species& infector)
+{
+    s = infector;
+    counter = 0;
 }
 
 // -------------------------------
