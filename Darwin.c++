@@ -322,7 +322,7 @@ int Species::execute_instruction(Darwin_Iterator& this_space,
     // If the space ahead is an enemy, change that to be THIS Species
     else if(i == INFECT && creature_ahead->is_enemy(*this_creature))
     {
-        creature_ahead->get_infected(*this);
+        this_creature->infect(*creature_ahead);
     }
 
     return counter;
@@ -455,19 +455,19 @@ void Creature::turn_right()
     }
 }
 
-// ------------
-// get_infected
-// ------------
+// ------
+// infect
+// ------
 
 /**
- * Causes this Creature to become "infected" by another Species, also
- * resetting the program counter to 0.
- * @param infector another Species
+ * "Infects" another Creature (replaces the other Creature's Species
+ * with this one, and resets the program counter).
+ * @param victum another Creature
  */
-void Creature::get_infected(const Species& infector)
+void Creature::infect(Creature& victim)
 {
-    s = infector;
-    counter = 0;
+    victim.s = this->s;
+    victim.counter = 0;
 }
 
 // --------------------

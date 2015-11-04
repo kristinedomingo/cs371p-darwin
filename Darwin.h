@@ -302,16 +302,16 @@ class Creature
          */
         void turn_right();
 
-        // ------------
-        // get_infected
-        // ------------
+        // ------
+        // infect
+        // ------
 
         /**
-         * Causes this Creature to become "infected" by another Species, also
-         * resetting the program counter to 0.
-         * @param infector another Species
+         * "Infects" another Creature (replaces the other Creature's Species
+         * with this one, and resets the program counter).
+         * @param victum another Creature
          */
-        void get_infected(const Species& infector);
+        void infect(Creature& victim);
 };
 
 // --------------------------
