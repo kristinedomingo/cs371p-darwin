@@ -163,6 +163,8 @@ class Species
         FRIEND_TEST(AddInstruction, add_instruction_2);
         FRIEND_TEST(AddInstruction, add_instruction_3);
         FRIEND_TEST(AddInstruction, add_instruction_4);
+        FRIEND_TEST(AddInstruction, add_instruction_5);
+        FRIEND_TEST(AddInstruction, add_instruction_6);
 
     public:
         // -----------------------------

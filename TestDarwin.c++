@@ -283,6 +283,44 @@ TEST(DarwinIteratorAhead, darwin_iterator_ahead_3)
     ASSERT_EQ(creature_ahead, nullptr);
 }
 
+/**
+ * Tests the Darwin_Iterator::ahead()
+ * @param DarwinIteratorAhead a fixture
+ * @param darwin_iterator_ahead_4 test name
+ */
+TEST(DarwinIteratorAhead, darwin_iterator_ahead_4)
+{
+    Darwin d(10, 10);
+    Species s('k');
+    Creature c(s, WEST);
+    d.add_creature(c, 0, 0);
+
+    Darwin_Iterator b = d.begin();
+    Darwin_Iterator space_ahead = b.ahead(b, NORTH);
+    Creature* creature_ahead = *space_ahead;
+
+    ASSERT_EQ(creature_ahead, nullptr);
+}
+
+/**
+ * Tests the Darwin_Iterator::ahead()
+ * @param DarwinIteratorAhead a fixture
+ * @param darwin_iterator_ahead_5 test name
+ */
+TEST(DarwinIteratorAhead, darwin_iterator_ahead_5)
+{
+    Darwin d(10, 10);
+    Species s('k');
+    Creature c(s, EAST);
+    d.add_creature(c, 0, 9);
+
+    Darwin_Iterator b = d.begin();
+    Darwin_Iterator space_ahead = b.ahead(b, NORTH);
+    Creature* creature_ahead = *space_ahead;
+
+    ASSERT_EQ(creature_ahead, nullptr);
+}
+
 // ---------------------------
 // Species (constructor) tests
 // ---------------------------
@@ -312,6 +350,53 @@ TEST(SpeciesConstructor, species_constructor_2)
     ss << s;
     ASSERT_EQ(ss.str(), "k");
 }
+
+// --------------------------
+// Species::operator << tests
+// --------------------------
+
+/**
+ * Tests the Species operator << overload
+ * @param SpeciesOperatorOverload a fixture
+ * @param species_operator_1 test name
+ */
+TEST(SpeciesOperatorOverload, species_operator_1)
+{
+    Species s;
+    stringstream ss;
+    ss << s;
+
+    ASSERT_EQ(ss.str(), ".");
+}
+
+/**
+ * Tests the Species operator << overload
+ * @param SpeciesOperatorOverload a fixture
+ * @param species_operator_2 test name
+ */
+TEST(SpeciesOperatorOverload, species_operator_2)
+{
+    Species s('k');
+    stringstream ss;
+    ss << s;
+
+    ASSERT_EQ(ss.str(), "k");
+}
+
+/**
+ * Tests the Species operator << overload
+ * @param SpeciesOperatorOverload a fixture
+ * @param species_operator_3 test name
+ */
+TEST(SpeciesOperatorOverload, species_operator_3)
+{
+    Species s('.');
+    stringstream ss;
+    ss << s;
+
+    ASSERT_EQ(ss.str(), ".");
+}
+
 
 // ------------------------------
 // Species operator ==, !=, tests
@@ -351,6 +436,18 @@ TEST(SpeciesEquals, species_equals_3)
     Species s('k');
     Species s2('k');
     ASSERT_EQ(s, s2);
+}
+
+/**
+ * Tests the Species operator ==
+ * @param SpeciesEquals a fixture
+ * @param species_equals_4 test name
+ */
+TEST(SpeciesEquals, species_equals_4)
+{
+    Species s('k');
+    Species s2;
+    ASSERT_NE(s, s2);
 }
 
 // -----------------------
@@ -414,6 +511,57 @@ TEST(AddInstruction, add_instruction_4)
     ASSERT_EQ(s.instructions[0].second, 3);
     ASSERT_EQ(s.instructions[1].first, LEFT);
     ASSERT_EQ(s.instructions[1].second, -1);
+}
+
+/**
+ * Tests the Species add_instruction() function
+ * @param AddInstruction a fixture
+ * @param add_instruction_5 test name
+ */
+TEST(AddInstruction, add_instruction_5)
+{
+    Species s;
+    s.add_instruction(IF_EMPTY, 3);
+    s.add_instruction(IF_WALL, 2);
+    s.add_instruction(IF_ENEMY, 1);
+    s.add_instruction(IF_RANDOM, 0);
+    s.add_instruction(GO, 5);
+
+    ASSERT_FALSE(s.instructions.empty());
+    ASSERT_EQ(s.instructions[0].first, IF_EMPTY);
+    ASSERT_EQ(s.instructions[0].second, 3);
+    ASSERT_EQ(s.instructions[1].first, IF_WALL);
+    ASSERT_EQ(s.instructions[1].second, 2);
+    ASSERT_EQ(s.instructions[2].first, IF_ENEMY);
+    ASSERT_EQ(s.instructions[2].second, 1);
+    ASSERT_EQ(s.instructions[3].first, IF_RANDOM);
+    ASSERT_EQ(s.instructions[3].second, 0);
+    ASSERT_EQ(s.instructions[4].first, GO);
+    ASSERT_EQ(s.instructions[4].second, 5);
+}
+
+/**
+ * Tests the Species add_instruction() function
+ * @param AddInstruction a fixture
+ * @param add_instruction_6 test name
+ */
+TEST(AddInstruction, add_instruction_6)
+{
+    Species s;
+    s.add_instruction(HOP);
+    s.add_instruction(LEFT);
+    s.add_instruction(RIGHT);
+    s.add_instruction(INFECT);
+
+    ASSERT_FALSE(s.instructions.empty());
+    ASSERT_EQ(s.instructions[0].first, HOP);
+    ASSERT_EQ(s.instructions[0].second, -1);
+    ASSERT_EQ(s.instructions[1].first, LEFT);
+    ASSERT_EQ(s.instructions[1].second, -1);
+    ASSERT_EQ(s.instructions[2].first, RIGHT);
+    ASSERT_EQ(s.instructions[2].second, -1);
+    ASSERT_EQ(s.instructions[3].first, INFECT);
+    ASSERT_EQ(s.instructions[3].second, -1);
 }
 
 // ----------------------------
@@ -487,9 +635,77 @@ TEST(CreatureConstructor, creature_constructor_5)
     ASSERT_EQ(ss.str(), "r");
 }
 
-// ----------------
-// is_enemy() tests
-// ----------------
+// ---------------------------
+// Creature::operator << tests
+// ---------------------------
+
+/**
+ * Tests the Creature operator << overload
+ * @param CreatureOperatorOverload a fixture
+ * @param creature_operator_1 test name
+ */
+TEST(CreatureOperatorOverload, creature_operator_1)
+{
+    Creature c;
+    stringstream ss;
+    ss << c;
+
+    ASSERT_EQ(ss.str(), ".");
+}
+
+/**
+ * Tests the Creature operator << overload
+ * @param CreatureOperatorOverload a fixture
+ * @param creature_operator_2 test name
+ */
+TEST(CreatureOperatorOverload, creature_operator_2)
+{
+    Species s;
+    Creature c(s);
+    stringstream ss;
+    ss << c;
+
+    ASSERT_EQ(ss.str(), ".");
+}
+
+/**
+ * Tests the Creature operator << overload
+ * @param CreatureOperatorOverload a fixture
+ * @param creature_operator_3 test name
+ */
+TEST(CreatureOperatorOverload, creature_operator_3)
+{
+    Species s('k');
+    Creature c(s);
+    stringstream ss;
+    ss << c;
+
+    ASSERT_EQ(ss.str(), "k");
+}
+
+/**
+ * Tests the Creature operator << overload
+ * @param CreatureOperatorOverload a fixture
+ * @param creature_operator_4 test name
+ */
+TEST(CreatureOperatorOverload, creature_operator_4)
+{
+    Species s('k');
+    Creature c(s);
+
+    Species s2('j');
+    Creature c2(s2);
+    c2.infect(c);
+
+    stringstream ss;
+    ss << c;
+
+    ASSERT_EQ(ss.str(), "j");
+}
+
+// --------------------------
+// Creature::is_enemy() tests
+// --------------------------
 
 /**
  * Tests the is_enemy() function
@@ -565,9 +781,9 @@ TEST(IsEnemy, is_enemy_5)
     ASSERT_FALSE(c.is_enemy(c2));
 }
 
-// ----------------
-// is_empty() tests
-// ----------------
+// --------------------------
+// Creature::is_empty() tests
+// --------------------------
 
 /**
  * Tests the is_empty() function
@@ -606,9 +822,117 @@ TEST(IsEmpty, is_empty_3)
     ASSERT_FALSE(c.is_empty());
 }
 
-// ----------
-// at() tests
-// ----------
+// ------------------------
+// Creature::infect() tests
+// ------------------------
+
+/**
+ * Tests the infect() function
+ * @param Infect a fixture
+ * @param infect_1 test name
+ */
+TEST(Infect, infect_1)
+{
+    Species s('k');
+    Creature c(s);
+
+    Species s2('j');
+    Creature c2(s2);
+
+    c.infect(c2);
+
+    ASSERT_FALSE(c.is_enemy(c2));
+}
+
+/**
+ * Tests the infect() function
+ * @param Infect a fixture
+ * @param infect_2 test name
+ */
+TEST(Infect, infect_2)
+{
+    Species s('k');
+    Creature c(s);
+    Creature c2(s);
+
+    ASSERT_FALSE(c.is_enemy(c2));
+
+    c.infect(c2);
+
+    ASSERT_FALSE(c.is_enemy(c2));
+}
+
+/**
+ * Tests the infect() function
+ * @param Infect a fixture
+ * @param infect_3 test name
+ */
+TEST(Infect, infect_3)
+{
+    Species s('k');
+    Creature c(s);
+
+    Creature c2;
+
+    ASSERT_FALSE(c.is_enemy(c2));
+    ASSERT_TRUE(c2.is_empty());
+
+    c.infect(c2);
+
+    ASSERT_FALSE(c.is_enemy(c2));
+    ASSERT_TRUE(c2.is_empty());
+}
+
+/**
+ * Tests the infect() function
+ * @param Infect a fixture
+ * @param infect_4 test name
+ */
+TEST(Infect, infect_4)
+{
+    Species s('k');
+    Creature c(s);
+
+    Species s2('j');
+    Creature c2(s2);
+
+    Species s3('l');
+    Creature c3(s3);
+
+    c.infect(c2);
+    c2.infect(c3);
+
+    ASSERT_FALSE(c.is_enemy(c2));
+    ASSERT_FALSE(c2.is_enemy(c3));
+}
+
+/**
+ * Tests the infect() function
+ * @param Infect a fixture
+ * @param infect_5 test name
+ */
+TEST(Infect, infect_5)
+{
+    Species s('k');
+    Creature c(s);
+
+    Species s2('j');
+    Creature c2(s2);
+
+    Species s3('l');
+    Creature c3(s3);
+
+    c2.infect(c3);
+    c.infect(c2);
+    c2.infect(c3);
+
+    ASSERT_FALSE(c.is_enemy(c2));
+    ASSERT_FALSE(c2.is_enemy(c3));
+}
+
+// ------------------
+// Darwin::at() tests
+// ------------------
 
 /**
  * Tests the at() function
@@ -634,7 +958,51 @@ TEST(At, at_1)
 TEST(At, at_2)
 {
     Darwin d(8, 8);
-    ASSERT_EQ(d.at(9, 9), nullptr);
+    ASSERT_EQ(d.at(7, 9), nullptr);
+}
+
+/**
+ * Tests the at() function
+ * @param At a fixture
+ * @param at_3 test name
+ */
+TEST(At, at_3)
+{
+    Darwin d(8, 8);
+    ASSERT_EQ(d.at(23, 34), nullptr);
+}
+
+/**
+ * Tests the at() function
+ * @param At a fixture
+ * @param at_4 test name
+ */
+TEST(At, at_4)
+{
+    Darwin d(8, 8);
+    ASSERT_EQ(d.at(-1, -1), nullptr);
+}
+
+/**
+ * Tests the at() function
+ * @param At a fixture
+ * @param at_5 test name
+ */
+TEST(At, at_5)
+{
+    Darwin d(8, 8);
+    ASSERT_EQ(d.at(5, -1), nullptr);
+}
+
+/**
+ * Tests the at() function
+ * @param At a fixture
+ * @param at_6 test name
+ */
+TEST(At, at_6)
+{
+    Darwin d(8, 8);
+    ASSERT_EQ(d.at(-1, 5), nullptr);
 }
 
 // -------------------------
@@ -866,6 +1234,45 @@ TEST(AddCreature, add_creature_2)
 
     ASSERT_NE(empty_board, new_board);
     ASSERT_FALSE(d.at(5, 5)->is_enemy(downing));
+}
+
+/**
+ * Tests the add_creature() function
+ * @param AddCreature a fixture
+ * @param add_creature_3 test name
+ */
+TEST(AddCreature, add_creature_3)
+{
+    Darwin d(8, 8);
+
+    Species s('k');
+    Creature c(s);
+
+    d.add_creature(c, 0, 0);
+
+    ASSERT_FALSE(d.at(0, 0)->is_empty());
+    ASSERT_TRUE(!d.at(0, 0)->is_enemy(c));
+}
+
+/**
+ * Tests the add_creature() function
+ * @param AddCreature a fixture
+ * @param add_creature_4 test name
+ */
+TEST(AddCreature, add_creature_4)
+{
+    Darwin d(8, 8);
+
+    Species s('k');
+    Creature c(s);
+    d.add_creature(c, 0, 0);
+
+    Species s2('j');
+    Creature c2(s2);
+    d.add_creature(c2, 0, 0);
+
+    ASSERT_FALSE(d.at(0, 0)->is_empty());
+    ASSERT_TRUE(!d.at(0, 0)->is_enemy(c2));
 }
 
 // -----------------------
@@ -1146,4 +1553,26 @@ TEST(DoTurn, do_turn_5)
     ss << d;
     ASSERT_EQ(ss.str(), grid2);
     ss.str("");
+}
+
+/**
+ * Tests the Darwin::do_turn() function
+ * @param DoTurn a fixture
+ * @param do_turn_6 test name
+ */
+TEST(DoTurn, do_turn_6)
+{
+    Darwin d(1, 1);
+
+    Species s('k');
+    s.add_instruction(HOP);
+    s.add_instruction(GO, 0);
+
+    Creature c(s);
+    d.add_creature(c, 0, 0);
+
+    for(int i = 0; i < 10; ++i) {d.do_turn();}
+
+    ASSERT_FALSE(d.at(0, 0)->is_enemy(c));
+    ASSERT_FALSE(d.at(0, 0)->is_empty());
 }

@@ -1,24 +1,24 @@
-==3961== Memcheck, a memory error detector
-==3961== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==3961== Using Valgrind-3.10.0.SVN and LibVEX; rerun with -h for copyright info
-==3961== Command: ./TestDarwin
-==3961== 
+==4858== Memcheck, a memory error detector
+==4858== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==4858== Using Valgrind-3.10.0.SVN and LibVEX; rerun with -h for copyright info
+==4858== Command: ./TestDarwin
+==4858== 
 Running main() from gtest_main.cc
-[==========] Running 49 tests from 13 test cases.
+[==========] Running 73 tests from 16 test cases.
 [----------] Global test environment set-up.
 [----------] 6 tests from DarwinIterator
 [ RUN      ] DarwinIterator.iterators_1
-[       OK ] DarwinIterator.iterators_1 (59 ms)
+[       OK ] DarwinIterator.iterators_1 (58 ms)
 [ RUN      ] DarwinIterator.iterators_2
 [       OK ] DarwinIterator.iterators_2 (4 ms)
 [ RUN      ] DarwinIterator.iterators_3
 [       OK ] DarwinIterator.iterators_3 (3 ms)
 [ RUN      ] DarwinIterator.iterators_4
-[       OK ] DarwinIterator.iterators_4 (8 ms)
+[       OK ] DarwinIterator.iterators_4 (9 ms)
 [ RUN      ] DarwinIterator.iterators_5
-[       OK ] DarwinIterator.iterators_5 (10 ms)
+[       OK ] DarwinIterator.iterators_5 (9 ms)
 [ RUN      ] DarwinIterator.iterators_6
-[       OK ] DarwinIterator.iterators_6 (28 ms)
+[       OK ] DarwinIterator.iterators_6 (27 ms)
 [----------] 6 tests from DarwinIterator (126 ms total)
 
 [----------] 4 tests from DarwinIteratorDereference
@@ -29,35 +29,50 @@ Running main() from gtest_main.cc
 [ RUN      ] DarwinIteratorDereference.darwin_iterator_dereference_3
 [       OK ] DarwinIteratorDereference.darwin_iterator_dereference_3 (4 ms)
 [ RUN      ] DarwinIteratorDereference.darwin_iterator_dereference_4
-[       OK ] DarwinIteratorDereference.darwin_iterator_dereference_4 (3 ms)
+[       OK ] DarwinIteratorDereference.darwin_iterator_dereference_4 (4 ms)
 [----------] 4 tests from DarwinIteratorDereference (17 ms total)
 
-[----------] 3 tests from DarwinIteratorAhead
+[----------] 5 tests from DarwinIteratorAhead
 [ RUN      ] DarwinIteratorAhead.darwin_iterator_ahead_1
 [       OK ] DarwinIteratorAhead.darwin_iterator_ahead_1 (6 ms)
 [ RUN      ] DarwinIteratorAhead.darwin_iterator_ahead_2
-[       OK ] DarwinIteratorAhead.darwin_iterator_ahead_2 (8 ms)
+[       OK ] DarwinIteratorAhead.darwin_iterator_ahead_2 (7 ms)
 [ RUN      ] DarwinIteratorAhead.darwin_iterator_ahead_3
-[       OK ] DarwinIteratorAhead.darwin_iterator_ahead_3 (5 ms)
-[----------] 3 tests from DarwinIteratorAhead (19 ms total)
+[       OK ] DarwinIteratorAhead.darwin_iterator_ahead_3 (4 ms)
+[ RUN      ] DarwinIteratorAhead.darwin_iterator_ahead_4
+[       OK ] DarwinIteratorAhead.darwin_iterator_ahead_4 (4 ms)
+[ RUN      ] DarwinIteratorAhead.darwin_iterator_ahead_5
+[       OK ] DarwinIteratorAhead.darwin_iterator_ahead_5 (5 ms)
+[----------] 5 tests from DarwinIteratorAhead (28 ms total)
 
 [----------] 2 tests from SpeciesConstructor
 [ RUN      ] SpeciesConstructor.species_constructor_1
 [       OK ] SpeciesConstructor.species_constructor_1 (3 ms)
 [ RUN      ] SpeciesConstructor.species_constructor_2
-[       OK ] SpeciesConstructor.species_constructor_2 (2 ms)
+[       OK ] SpeciesConstructor.species_constructor_2 (3 ms)
 [----------] 2 tests from SpeciesConstructor (6 ms total)
 
-[----------] 3 tests from SpeciesEquals
+[----------] 3 tests from SpeciesOperatorOverload
+[ RUN      ] SpeciesOperatorOverload.species_operator_1
+[       OK ] SpeciesOperatorOverload.species_operator_1 (3 ms)
+[ RUN      ] SpeciesOperatorOverload.species_operator_2
+[       OK ] SpeciesOperatorOverload.species_operator_2 (3 ms)
+[ RUN      ] SpeciesOperatorOverload.species_operator_3
+[       OK ] SpeciesOperatorOverload.species_operator_3 (2 ms)
+[----------] 3 tests from SpeciesOperatorOverload (8 ms total)
+
+[----------] 4 tests from SpeciesEquals
 [ RUN      ] SpeciesEquals.species_equals_1
-[       OK ] SpeciesEquals.species_equals_1 (3 ms)
+[       OK ] SpeciesEquals.species_equals_1 (2 ms)
 [ RUN      ] SpeciesEquals.species_equals_2
 [       OK ] SpeciesEquals.species_equals_2 (2 ms)
 [ RUN      ] SpeciesEquals.species_equals_3
-[       OK ] SpeciesEquals.species_equals_3 (3 ms)
-[----------] 3 tests from SpeciesEquals (8 ms total)
+[       OK ] SpeciesEquals.species_equals_3 (2 ms)
+[ RUN      ] SpeciesEquals.species_equals_4
+[       OK ] SpeciesEquals.species_equals_4 (2 ms)
+[----------] 4 tests from SpeciesEquals (10 ms total)
 
-[----------] 4 tests from AddInstruction
+[----------] 6 tests from AddInstruction
 [ RUN      ] AddInstruction.add_instruction_1
 [       OK ] AddInstruction.add_instruction_1 (3 ms)
 [ RUN      ] AddInstruction.add_instruction_2
@@ -66,47 +81,83 @@ Running main() from gtest_main.cc
 [       OK ] AddInstruction.add_instruction_3 (4 ms)
 [ RUN      ] AddInstruction.add_instruction_4
 [       OK ] AddInstruction.add_instruction_4 (7 ms)
-[----------] 4 tests from AddInstruction (29 ms total)
+[ RUN      ] AddInstruction.add_instruction_5
+[       OK ] AddInstruction.add_instruction_5 (11 ms)
+[ RUN      ] AddInstruction.add_instruction_6
+[       OK ] AddInstruction.add_instruction_6 (8 ms)
+[----------] 6 tests from AddInstruction (48 ms total)
 
 [----------] 4 tests from CreatureConstructor
 [ RUN      ] CreatureConstructor.creature_constructor_1
-[       OK ] CreatureConstructor.creature_constructor_1 (4 ms)
+[       OK ] CreatureConstructor.creature_constructor_1 (3 ms)
 [ RUN      ] CreatureConstructor.creature_constructor_2
 [       OK ] CreatureConstructor.creature_constructor_2 (4 ms)
 [ RUN      ] CreatureConstructor.creature_constructor_4
 [       OK ] CreatureConstructor.creature_constructor_4 (4 ms)
 [ RUN      ] CreatureConstructor.creature_constructor_5
 [       OK ] CreatureConstructor.creature_constructor_5 (4 ms)
-[----------] 4 tests from CreatureConstructor (17 ms total)
+[----------] 4 tests from CreatureConstructor (16 ms total)
+
+[----------] 4 tests from CreatureOperatorOverload
+[ RUN      ] CreatureOperatorOverload.creature_operator_1
+[       OK ] CreatureOperatorOverload.creature_operator_1 (3 ms)
+[ RUN      ] CreatureOperatorOverload.creature_operator_2
+[       OK ] CreatureOperatorOverload.creature_operator_2 (3 ms)
+[ RUN      ] CreatureOperatorOverload.creature_operator_3
+[       OK ] CreatureOperatorOverload.creature_operator_3 (4 ms)
+[ RUN      ] CreatureOperatorOverload.creature_operator_4
+[       OK ] CreatureOperatorOverload.creature_operator_4 (5 ms)
+[----------] 4 tests from CreatureOperatorOverload (16 ms total)
 
 [----------] 5 tests from IsEnemy
 [ RUN      ] IsEnemy.is_enemy_1
-[       OK ] IsEnemy.is_enemy_1 (4 ms)
+[       OK ] IsEnemy.is_enemy_1 (3 ms)
 [ RUN      ] IsEnemy.is_enemy_2
-[       OK ] IsEnemy.is_enemy_2 (3 ms)
+[       OK ] IsEnemy.is_enemy_2 (4 ms)
 [ RUN      ] IsEnemy.is_enemy_3
 [       OK ] IsEnemy.is_enemy_3 (4 ms)
 [ RUN      ] IsEnemy.is_enemy_4
 [       OK ] IsEnemy.is_enemy_4 (4 ms)
 [ RUN      ] IsEnemy.is_enemy_5
 [       OK ] IsEnemy.is_enemy_5 (4 ms)
-[----------] 5 tests from IsEnemy (20 ms total)
+[----------] 5 tests from IsEnemy (19 ms total)
 
 [----------] 3 tests from IsEmpty
 [ RUN      ] IsEmpty.is_empty_1
-[       OK ] IsEmpty.is_empty_1 (2 ms)
+[       OK ] IsEmpty.is_empty_1 (3 ms)
 [ RUN      ] IsEmpty.is_empty_2
 [       OK ] IsEmpty.is_empty_2 (3 ms)
 [ RUN      ] IsEmpty.is_empty_3
 [       OK ] IsEmpty.is_empty_3 (3 ms)
 [----------] 3 tests from IsEmpty (9 ms total)
 
-[----------] 2 tests from At
+[----------] 5 tests from Infect
+[ RUN      ] Infect.infect_1
+[       OK ] Infect.infect_1 (5 ms)
+[ RUN      ] Infect.infect_2
+[       OK ] Infect.infect_2 (5 ms)
+[ RUN      ] Infect.infect_3
+[       OK ] Infect.infect_3 (6 ms)
+[ RUN      ] Infect.infect_4
+[       OK ] Infect.infect_4 (6 ms)
+[ RUN      ] Infect.infect_5
+[       OK ] Infect.infect_5 (7 ms)
+[----------] 5 tests from Infect (30 ms total)
+
+[----------] 6 tests from At
 [ RUN      ] At.at_1
-[       OK ] At.at_1 (4 ms)
+[       OK ] At.at_1 (5 ms)
 [ RUN      ] At.at_2
-[       OK ] At.at_2 (2 ms)
-[----------] 2 tests from At (7 ms total)
+[       OK ] At.at_2 (3 ms)
+[ RUN      ] At.at_3
+[       OK ] At.at_3 (3 ms)
+[ RUN      ] At.at_4
+[       OK ] At.at_4 (3 ms)
+[ RUN      ] At.at_5
+[       OK ] At.at_5 (3 ms)
+[ RUN      ] At.at_6
+[       OK ] At.at_6 (3 ms)
+[----------] 6 tests from At (20 ms total)
 
 [----------] 6 tests from DarwinOperatorOverload
 [ RUN      ] DarwinOperatorOverload.darwin_operator_1
@@ -123,47 +174,53 @@ Running main() from gtest_main.cc
 [       OK ] DarwinOperatorOverload.darwin_operator_6 (6 ms)
 [----------] 6 tests from DarwinOperatorOverload (30 ms total)
 
-[----------] 2 tests from AddCreature
+[----------] 4 tests from AddCreature
 [ RUN      ] AddCreature.add_creature_1
 [       OK ] AddCreature.add_creature_1 (11 ms)
 [ RUN      ] AddCreature.add_creature_2
 [       OK ] AddCreature.add_creature_2 (10 ms)
-[----------] 2 tests from AddCreature (21 ms total)
+[ RUN      ] AddCreature.add_creature_3
+[       OK ] AddCreature.add_creature_3 (5 ms)
+[ RUN      ] AddCreature.add_creature_4
+[       OK ] AddCreature.add_creature_4 (6 ms)
+[----------] 4 tests from AddCreature (33 ms total)
 
-[----------] 5 tests from DoTurn
+[----------] 6 tests from DoTurn
 [ RUN      ] DoTurn.do_turn_1
 [       OK ] DoTurn.do_turn_1 (23 ms)
 [ RUN      ] DoTurn.do_turn_2
-[       OK ] DoTurn.do_turn_2 (10 ms)
+[       OK ] DoTurn.do_turn_2 (11 ms)
 [ RUN      ] DoTurn.do_turn_3
 [       OK ] DoTurn.do_turn_3 (58 ms)
 [ RUN      ] DoTurn.do_turn_4
-[       OK ] DoTurn.do_turn_4 (75 ms)
+[       OK ] DoTurn.do_turn_4 (74 ms)
 [ RUN      ] DoTurn.do_turn_5
 [       OK ] DoTurn.do_turn_5 (14 ms)
-[----------] 5 tests from DoTurn (182 ms total)
+[ RUN      ] DoTurn.do_turn_6
+[       OK ] DoTurn.do_turn_6 (6 ms)
+[----------] 6 tests from DoTurn (186 ms total)
 
 [----------] Global test environment tear-down
-[==========] 49 tests from 13 test cases ran. (532 ms total)
-[  PASSED  ] 49 tests.
-==3961== 
-==3961== HEAP SUMMARY:
-==3961==     in use at exit: 0 bytes in 0 blocks
-==3961==   total heap usage: 9,248 allocs, 9,248 frees, 2,144,842 bytes allocated
-==3961== 
-==3961== All heap blocks were freed -- no leaks are possible
-==3961== 
-==3961== For counts of detected and suppressed errors, rerun with: -v
-==3961== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+[==========] 73 tests from 16 test cases ran. (645 ms total)
+[  PASSED  ] 73 tests.
+==4858== 
+==4858== HEAP SUMMARY:
+==4858==     in use at exit: 0 bytes in 0 blocks
+==4858==   total heap usage: 10,317 allocs, 10,317 frees, 2,261,171 bytes allocated
+==4858== 
+==4858== All heap blocks were freed -- no leaks are possible
+==4858== 
+==4858== For counts of detected and suppressed errors, rerun with: -v
+==4858== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 File 'Darwin.c++'
-Lines executed:91.61% of 155
-Branches executed:90.80% of 174
-Taken at least once:67.82% of 174
-Calls executed:83.33% of 96
+Lines executed:91.67% of 156
+Branches executed:91.11% of 180
+Taken at least once:68.33% of 180
+Calls executed:83.67% of 98
 Creating 'Darwin.c++.gcov'
 File 'TestDarwin.c++'
-Lines executed:100.00% of 414
-Branches executed:73.17% of 2296
-Taken at least once:36.89% of 2296
-Calls executed:55.41% of 2458
+Lines executed:100.00% of 595
+Branches executed:70.89% of 3518
+Taken at least once:35.67% of 3518
+Calls executed:53.50% of 3725
 Creating 'TestDarwin.c++.gcov'

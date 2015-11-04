@@ -466,8 +466,11 @@ void Creature::turn_right()
  */
 void Creature::infect(Creature& victim)
 {
-    victim.s = this->s;
-    victim.counter = 0;
+    if(victim.is_enemy(*this) && !victim.is_empty())
+    {
+        victim.s = this->s;
+        victim.counter = 0;
+    }
 }
 
 // --------------------
