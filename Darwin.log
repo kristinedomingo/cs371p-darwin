@@ -1,0 +1,384 @@
+commit ac9f2e78e670cd6ff781fd3a6ae04d5d8b81885a
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Wed Nov 4 12:41:55 2015 -0600
+
+    Added UML model, close #13
+
+commit 4ced2f1a1c7645b006beb7cde470fe4f4f51ec31
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Wed Nov 4 12:14:25 2015 -0600
+
+    Fixed makefile syntax
+
+commit a1ccfe09916e03e80eac053c3382cf1855ecfa78
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Wed Nov 4 12:11:00 2015 -0600
+
+    Uncommented test file in makefile, close #1
+
+commit 8f24e911d504c92b0a6d10fc727eb9e52aa2a943
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Wed Nov 4 12:09:43 2015 -0600
+
+    Doxygen, close #14ig
+
+commit 25b62817e8cccaa22fcf108f930ef62ade7116aa
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Wed Nov 4 12:06:16 2015 -0600
+
+    Removed output to TestDarwin.out in makefile
+
+commit f14c0ce4bfb18547a1851627de79e0ee7682b300
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Wed Nov 4 12:05:40 2015 -0600
+
+    Completed documentation, close #22
+
+commit 6bdea441affd11b296530294ac7127e2804830a5
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Wed Nov 4 11:34:16 2015 -0600
+
+    Documentation changes
+
+commit 3b843facbbab7a03ae06b6ed0dc8f80b61631b99
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Tue Nov 3 22:05:09 2015 -0600
+
+    Fixed counts for best creature
+
+commit d063dcbab65f0bfa0aee0080cfe674e6f7d6de74
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Tue Nov 3 21:32:58 2015 -0600
+
+    Fixed TurnRight test fixture name
+
+commit b687ad5dc69483c0c2e4d0d436702b6e02c867e2
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Tue Nov 3 21:28:27 2015 -0600
+
+    Added best Creature, close #3
+
+commit b513b2313a2b9365e6ed1bf5d62fcc501e64cb07
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Tue Nov 3 20:20:19 2015 -0600
+
+    Finished all unit tests, close #4
+
+commit 03d9d7e74b3e5788ad52b86fe6bb280c231ac6b3
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Tue Nov 3 19:09:17 2015 -0600
+
+    Added bunches of unit tests
+
+commit 5833f469ac231f4caf7cd41e4cf82092f503c8ea
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Tue Nov 3 18:20:01 2015 -0600
+
+    Changed get_infected to infect
+
+commit 6dfbf43aa7d1766a7bd487c1dac37a2f92e382d3
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Tue Nov 3 11:21:38 2015 -0600
+
+    Completed 72x72 grid in RunDarwin w/o best
+
+commit 0cc57fba564c4d7f16d6d7d42a34e2829b1e4730
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Tue Nov 3 10:47:07 2015 -0600
+
+    Removed render functions and overloaded << on Species, Darwin (close #18, close #19)
+
+commit 46d85ca79216dd0e697a19dd2127819461a0c217
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Tue Nov 3 10:14:54 2015 -0600
+
+    Fixed infecting, unit tests pass now
+
+commit 3ebda4c940d729b8518b13efc13446e54403ee2c
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Tue Nov 3 10:07:44 2015 -0600
+
+    Updated .out, close #2, #9, #10, #12
+
+commit 546965bcc52b92f36af1384b4e9d99801ad3362e
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Mon Nov 2 23:47:04 2015 -0600
+
+    Cleaned up unit tests
+
+commit 2021592ef042131b6c2da008571e3f630c3ab35d
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Mon Nov 2 23:46:45 2015 -0600
+
+    Fixed seg fault bug (calling method on nullptr)
+
+commit a3239606213eba933164e883b729c6a69fa2e313
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Mon Nov 2 22:11:06 2015 -0600
+
+    Fixed vector resizing bug
+
+commit 01cdb30baf3b200d15746cf7173e1ec23f6a4f55
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Mon Nov 2 20:25:16 2015 -0600
+
+    Fixed grid output (added newline to end)
+
+commit 112e16cc398e5d454928810d54f2fc7bc409c9fe
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Mon Nov 2 20:24:44 2015 -0600
+
+    First section of acceptance tests pass
+
+commit c68840c3c761fcb3d89136098fcfd10a6f0da9c5
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Mon Nov 2 20:06:33 2015 -0600
+
+    Hopping around the board works!
+
+commit fe3d142818a533dd5b6878ccb6a175dfa38a3ff8
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Mon Nov 2 15:55:55 2015 -0600
+
+    More bug fixing, now GO works
+
+commit d0ef3704ec8aaa468cf9e78f415a190b42c19a35
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Mon Nov 2 15:47:42 2015 -0600
+
+    Bug fixing - unit test for one HOP pass
+
+commit 3e66cb6ed2ac82bfdeff653fa0d1c137c7f3003c
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Mon Nov 2 15:01:08 2015 -0600
+
+    Implemented Species::execute_instruction, closes #11, #12
+
+commit c9bd0d5fe64c8d95b4a140112f217fc11eb0b5c8
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Mon Nov 2 12:46:50 2015 -0600
+
+    Comment fixes on unit tests
+
+commit 7cccb3657be8bcdf9a150b5cffa7166b1e187cec
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Mon Nov 2 12:33:07 2015 -0600
+
+    Implemented Darwin_Iterator::ahead(), added unit tests for it
+
+commit beeadc785868109837dfb4d84cd3d5520dfa119a
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Mon Nov 2 12:17:06 2015 -0600
+
+    Added unit tests for Darwin_Iterator dereference
+
+commit a6c047ba1e732d6632d590e7728eabf943601b2d
+Merge: 40ae848 e401740
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Sun Nov 1 17:00:08 2015 -0600
+
+    Fixing merge conflicts
+
+commit 40ae84848728fe4e3410f8ac9b95eb46e463df21
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Sun Nov 1 16:58:05 2015 -0600
+
+    Added Species::add_instruction
+
+commit e4017404a5238a06bd04c1e1ba55b0afd7df894f
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Fri Oct 30 12:46:30 2015 -0500
+
+    Fixed flow of Creature execute calls, added ahead() to Darwin_Iterator
+
+commit aff3104d4f68073e7f72abac69f84d433f6ded7b
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Fri Oct 30 12:10:38 2015 -0500
+
+    Moved Darwin_Iterator OUTSIDE of Darwin
+
+commit fbffed0da9b28c8f4a1a7571229e8bfbdaf1cb69
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Thu Oct 29 16:45:14 2015 -0500
+
+    Fixed iterators_4 unit test
+
+commit ef1408bd3cb9721c08cb0dc7ac96256be8a41de0
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Thu Oct 29 16:37:34 2015 -0500
+
+    Added Instruction enum
+
+commit be258c7df21b78ea4f00420a31e7d91c585880ad
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Thu Oct 29 15:12:55 2015 -0500
+
+    Updated makefile to output to TestDarwin.out
+
+commit 13744f568ddfeb901e7c6976ff5aa38b8a7d26c9
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Thu Oct 29 15:12:31 2015 -0500
+
+    Added more unit tests
+
+commit 1126fd4475637d1d0137fbc15e5e950637f8a823
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Thu Oct 29 14:33:51 2015 -0500
+
+    Added error checking to add_creature, unit test for it
+
+commit f3a3ca98597996e88ddf5c7a2390ee396803c64a
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Thu Oct 29 14:21:53 2015 -0500
+
+    Fixed operator << overload unit tests
+
+commit 0e82083cff88c22516fbc219edaf4d861d5ab98f
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Thu Oct 29 14:14:18 2015 -0500
+
+    Implemented Creature operator <<
+
+commit e8347e921e498e8ad96b738d182768b24bf4c07f
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Wed Oct 28 22:24:04 2015 -0500
+
+    Made is_enemy stronger, added unit tests for it
+
+commit 5af59b5ba9cbd4dfe3526d5843aab853bf3cf676
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Wed Oct 28 22:14:17 2015 -0500
+
+    Added Creature::is_empty()
+
+commit 8d889eb19fb375d46ebe9d96969bb3e1f59b0a0c
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Wed Oct 28 21:48:42 2015 -0500
+
+    Moved char representation to Species, added == and != to Species
+
+commit 681904d45337d9470e399e6f8d2f1a2c03c7ad90
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Wed Oct 28 20:02:30 2015 -0500
+
+    Created add_creature()
+
+commit 16b915ce61f6f61ebd941a6c1271ee09cb229f3a
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Wed Oct 28 19:56:02 2015 -0500
+
+    Added more iterator unit tests, close #8, #6, #16, #17
+
+commit 5f6697dca686e220b740100fd0681e6d2d5570fb
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Wed Oct 28 14:45:51 2015 -0500
+
+    Removed _b and _e Creature* from Darwin
+
+commit 9d44225e3f26ee7385b0a5f539001bd228b3f8c6
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Wed Oct 28 14:43:28 2015 -0500
+
+    Removed num_turns from Darwin
+
+commit a9c9e9caef82588718ac870594723cb97dbc4c41
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Wed Oct 28 14:41:55 2015 -0500
+
+    Added != and unit tests to Darwin_Iterator
+
+commit 8034f46cf906dd4806e250bc7a45c016bf7f4f53
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Wed Oct 28 14:31:51 2015 -0500
+
+    Added == and ++ in Darwin_Iterator
+
+commit efc7049672fef8b07ef982f75896a1cb900d12f7
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Wed Oct 28 14:23:36 2015 -0500
+
+    Made Darwin_Iterator over spaces, not creatures
+
+commit 42ef8a68c55a16ee43ae906255513b944fd500ed
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Tue Oct 27 22:48:00 2015 -0500
+
+    Added a Darwin_Iterator class
+
+commit 88f16145239c55a07ce0fcbfc2c8ce1ec805569e
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Tue Oct 27 14:55:17 2015 -0500
+
+    Added direction, program counter
+
+commit 62b781f3afc28b607b40ac4438c93956968b373f
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Tue Oct 27 14:45:36 2015 -0500
+
+    Fixed unit tests for updated Darwin constructor
+
+commit 00230f3dbc8fbc0e1e4fa6790c2853617107ccc3
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Tue Oct 27 14:41:17 2015 -0500
+
+    Added num_turns parameter in Darwin constructor
+
+commit 5afedcb132ebe8e140fed2f0a58d0932e5bff5a0
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Tue Oct 27 14:28:16 2015 -0500
+
+    Fixed get_grid() to accomodate double-digit rows/cols
+
+commit bc6bbfcd6551ed5c3012ce07f671132abd95dc16
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Tue Oct 27 13:44:30 2015 -0500
+
+    Added more get_grid() unit tests
+
+commit bc72509c4f808546687bf5f03a1e63bbeef3fa39
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Tue Oct 27 13:44:12 2015 -0500
+
+    Fixed consts, better Creature constructor w/ default values
+
+commit fcf3a325cf01636533916e5a922726b3eeb2b860
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Tue Oct 27 13:08:29 2015 -0500
+
+    Updated unit tests w/ new Darwin constructor
+
+commit 86b396d4ca7c162c4fe2c7654c83b46acdec7c33
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Tue Oct 27 13:02:00 2015 -0500
+
+    Changed 2d array to 2d vector, began constructors for Species/Creature
+
+commit 4fc1b8e2dce0ba9978e0430a2dbf8d7c60cd2596
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Tue Oct 27 12:27:52 2015 -0500
+
+    Added get_grid(), to get grid string
+
+commit 8dfb18a9013e44da563b3b983a5c55a2ae3374b0
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Mon Oct 26 17:01:03 2015 -0500
+
+    Added 2 iterator tests
+
+commit bd37b20d1dd601c37a261addebdcfb441df74ade
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Mon Oct 26 17:00:02 2015 -0500
+
+    Implemented begin() and end() in Darwin (close #7)
+
+commit 46abfcb9076fd5beb75f625a97167a78581ec7fa
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Mon Oct 26 15:51:40 2015 -0500
+
+    Added doxygen comments and file templates
+
+commit 0672c8301fad8735df30d79174d0dfac50f17245
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Mon Oct 26 14:33:56 2015 -0500
+
+    Init required (blank) files
