@@ -18,8 +18,9 @@ using namespace std;
 // -------------------------------
 
 /**
- * Overloads the << operator for the Species class.
- * @param os an ostream to output the Species' render
+ * Overloads the << operator for the Species class. Outputs this Species'
+ * character representation on the Darwin board to an ostream.
+ * @param os an ostream to output the Species' render character
  * @param s the Species
  */
 ostream& operator << (ostream& os, const Species &s)
@@ -32,7 +33,8 @@ ostream& operator << (ostream& os, const Species &s)
 // -------------------------------
 
 /**
- * Overloads the << operator for the Creature class.
+ * Overloads the << operator for the Creature class. Outputs this Creature's
+ * Species' character representation on the Darwin board to an ostream.
  * @param os an ostream to output the Creature's Species' render
  * @param c the Creature
  */
@@ -46,7 +48,8 @@ ostream& operator << (ostream& os, const Creature &c)
 // -------------------------------
 
 /**
- * Overloads the << operator for the Darwin class.
+ * Overloads the << operator for the Darwin class. Outputs the state of the
+ * Darwin board (Creatures and current turn) to an ostream.
  * @param os an ostream to output the Darwin grid and current turn
  * @param d the Darwin object
  */

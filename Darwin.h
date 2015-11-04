@@ -30,7 +30,7 @@ enum Direction {WEST, NORTH, EAST, SOUTH};
 enum Instruction {HOP, LEFT, RIGHT, INFECT,
                   IF_EMPTY, IF_WALL, IF_RANDOM, IF_ENEMY, GO};
 
-// Forward declarations needed for operator <<, and other things
+// Forward declarations needed for operator <<, as well as other things
 class Darwin;
 class Creature;
 class Species;
@@ -40,8 +40,9 @@ class Species;
 // -------------------------------
 
 /**
- * Overloads the << operator for the Species class.
- * @param os an ostream to output the Species' render
+ * Overloads the << operator for the Species class. Outputs this Species'
+ * character representation on the Darwin board to an ostream.
+ * @param os an ostream to output the Species' render character
  * @param s the Species
  */
 ostream& operator << (ostream& os, const Creature &s);
@@ -51,7 +52,8 @@ ostream& operator << (ostream& os, const Creature &s);
 // -------------------------------
 
 /**
- * Overloads the << operator for the Creature class.
+ * Overloads the << operator for the Creature class. Outputs this Creature's
+ * Species' character representation on the Darwin board to an ostream.
  * @param os an ostream to output the Creature's Species' render
  * @param c the Creature
  */
@@ -62,7 +64,8 @@ ostream& operator << (ostream& os, const Creature &c);
 // -------------------------------
 
 /**
- * Overloads the << operator for the Darwin class.
+ * Overloads the << operator for the Darwin class. Outputs the state of the
+ * Darwin board (Creatures and current turn) to an ostream.
  * @param os an ostream to output the Darwin grid and current turn
  * @param d the Darwin object
  */
@@ -74,9 +77,9 @@ ostream& operator << (ostream& os, Darwin &d);
 class Darwin_Iterator
 {
     private:
-        int row;        // row this iterator is at
-        int col;        // column this iterator is at
-        Darwin& darwin;  // reference to outer class
+        int row;         // row this iterator is at
+        int col;         // column this iterator is at
+        Darwin& darwin;  // reference to a Darwin board
 
     public:
         // -----------------------------
@@ -86,7 +89,7 @@ class Darwin_Iterator
         /**
          * Initializes a Darwin_Iterator object, default row and column
          * set to 0.
-         * @param d the reference to the outer class (darwin)
+         * @param d the reference to a Darwin object to iterate over
          * @param row the row this iterator is at
          * @param col the col this iterator is at
          */
