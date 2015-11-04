@@ -241,6 +241,15 @@ class Creature
         // Overload of the << operator to allow use with Creature
         friend ostream& operator << (ostream&, const Creature&);
 
+        FRIEND_TEST(TurnLeft, turn_left_1);
+        FRIEND_TEST(TurnLeft, turn_left_2);
+        FRIEND_TEST(TurnLeft, turn_left_3);
+        FRIEND_TEST(TurnLeft, turn_left_4);
+        FRIEND_TEST(TurnLeft, turn_right_1);
+        FRIEND_TEST(TurnLeft, turn_right_2);
+        FRIEND_TEST(TurnLeft, turn_right_3);
+        FRIEND_TEST(TurnLeft, turn_right_4);
+
     public:
         // ----------------------
         // Creature (constructor)

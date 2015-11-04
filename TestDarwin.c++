@@ -822,6 +822,126 @@ TEST(IsEmpty, is_empty_3)
     ASSERT_FALSE(c.is_empty());
 }
 
+// ---------------------------
+// Creature::turn_left() tests
+// ---------------------------
+
+/**
+ * Tests the turn_left() function
+ * @param TurnLeft a fixture
+ * @param turn_left_1 test name
+ */
+TEST(TurnLeft, turn_left_1)
+{
+    Species s;
+    Creature c(s);
+    c.turn_left();
+
+    ASSERT_EQ(c.dir, WEST);
+}
+
+/**
+ * Tests the turn_left() function
+ * @param TurnLeft a fixture
+ * @param turn_left_2 test name
+ */
+TEST(TurnLeft, turn_left_2)
+{
+    Species s;
+    Creature c(s, EAST);
+    c.turn_left();
+
+    ASSERT_EQ(c.dir, NORTH);
+}
+
+/**
+ * Tests the turn_left() function
+ * @param TurnLeft a fixture
+ * @param turn_left_3 test name
+ */
+TEST(TurnLeft, turn_left_3)
+{
+    Species s;
+    Creature c(s, SOUTH);
+    c.turn_left();
+
+    ASSERT_EQ(c.dir, EAST);
+}
+
+/**
+ * Tests the turn_left() function
+ * @param TurnLeft a fixture
+ * @param turn_left_4 test name
+ */
+TEST(TurnLeft, turn_left_4)
+{
+    Species s;
+    Creature c(s, WEST);
+    c.turn_left();
+
+    ASSERT_EQ(c.dir, SOUTH);
+}
+
+// ---------------------------
+// Creature::turn_right() tests
+// ---------------------------
+
+/**
+ * Tests the turn_right() function
+ * @param TurnReft a fixture
+ * @param turn_right_1 test name
+ */
+TEST(TurnLeft, turn_right_1)
+{
+    Species s;
+    Creature c(s, NORTH);
+    c.turn_right();
+
+    ASSERT_EQ(c.dir, EAST);
+}
+
+/**
+ * Tests the turn_right() function
+ * @param TurnReft a fixture
+ * @param turn_right_2 test name
+ */
+TEST(TurnLeft, turn_right_2)
+{
+    Species s;
+    Creature c(s, WEST);
+    c.turn_right();
+
+    ASSERT_EQ(c.dir, NORTH);
+}
+
+/**
+ * Tests the turn_right() function
+ * @param TurnReft a fixture
+ * @param turn_right_3 test name
+ */
+TEST(TurnLeft, turn_right_3)
+{
+    Species s;
+    Creature c(s, SOUTH);
+    c.turn_right();
+
+    ASSERT_EQ(c.dir, WEST);
+}
+
+/**
+ * Tests the turn_right() function
+ * @param TurnReft a fixture
+ * @param turn_right_4 test name
+ */
+TEST(TurnLeft, turn_right_4)
+{
+    Species s;
+    Creature c(s, EAST);
+    c.turn_right();
+
+    ASSERT_EQ(c.dir, SOUTH);
+}
+
 // ------------------------
 // Creature::infect() tests
 // ------------------------
@@ -1273,6 +1393,25 @@ TEST(AddCreature, add_creature_4)
 
     ASSERT_FALSE(d.at(0, 0)->is_empty());
     ASSERT_TRUE(!d.at(0, 0)->is_enemy(c2));
+}
+
+/**
+ * Tests the add_creature() function
+ * @param AddCreature a fixture
+ * @param add_creature_5 test name
+ */
+TEST(AddCreature, add_creature_5)
+{
+    Darwin d(8, 8);
+
+    Species s('k');
+    Creature c(s);
+    d.add_creature(c, 0, 0);
+
+    Creature c2;
+    d.add_creature(c2, 0, 0);
+
+    ASSERT_TRUE(d.at(0, 0)->is_empty());
 }
 
 // -----------------------
