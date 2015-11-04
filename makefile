@@ -7,11 +7,11 @@ FILES :=                               \
     RunDarwin.out                      \
     TestDarwin.c++                     \
     TestDarwin.out                     \
-    #html                               \
+    html                               \
     Darwin.log
-    #darwin-tests/kd9844-RunDarwin.out  \
-    #darwin-tests/kd9844-TestDarwin.c++ \
-    #darwin-tests/kd9844-TestDarwin.out
+    darwin-tests/kd9844-RunDarwin.out  \
+    darwin-tests/kd9844-TestDarwin.c++ \
+    darwin-tests/kd9844-TestDarwin.out
 
 CXX        := g++-4.8
 CXXFLAGS   := -pedantic -std=c++11 -Wall
