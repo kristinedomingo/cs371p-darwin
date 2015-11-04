@@ -379,17 +379,8 @@ int main ()
         string creature_character = ss.str();
         ss.str("");
 
-        // If it doesn't already exist in the map, add it
-        if(counts.count(creature_character) == 0)
-        {
-            counts.insert(pair<string, int>(creature_character, 0));
-        }
-
-        // Else, increment the Creature's counter
-        else
-        {
-            ++counts.at(creature_character);
-        }
+        // Update count
+        counts[creature_character] = counts[creature_character] + 1;
 
         ++begin;
     }
