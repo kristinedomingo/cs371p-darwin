@@ -891,7 +891,7 @@ TEST(TurnLeft, turn_left_4)
  * @param TurnReft a fixture
  * @param turn_right_1 test name
  */
-TEST(TurnLeft, turn_right_1)
+TEST(TurnRight, turn_right_1)
 {
     Species s;
     Creature c(s, NORTH);
@@ -905,7 +905,7 @@ TEST(TurnLeft, turn_right_1)
  * @param TurnReft a fixture
  * @param turn_right_2 test name
  */
-TEST(TurnLeft, turn_right_2)
+TEST(TurnRight, turn_right_2)
 {
     Species s;
     Creature c(s, WEST);
@@ -919,7 +919,7 @@ TEST(TurnLeft, turn_right_2)
  * @param TurnReft a fixture
  * @param turn_right_3 test name
  */
-TEST(TurnLeft, turn_right_3)
+TEST(TurnRight, turn_right_3)
 {
     Species s;
     Creature c(s, SOUTH);
@@ -933,7 +933,7 @@ TEST(TurnLeft, turn_right_3)
  * @param TurnReft a fixture
  * @param turn_right_4 test name
  */
-TEST(TurnLeft, turn_right_4)
+TEST(TurnRight, turn_right_4)
 {
     Species s;
     Creature c(s, EAST);
