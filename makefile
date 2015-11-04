@@ -8,7 +8,7 @@ FILES :=                               \
     TestDarwin.c++                     \
     TestDarwin.out                     \
     html                               \
-    Darwin.log
+    Darwin.log                         \
     darwin-tests/kd9844-RunDarwin.out  \
     darwin-tests/kd9844-TestDarwin.c++ \
     darwin-tests/kd9844-TestDarwin.out
