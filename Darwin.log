@@ -1,3 +1,15 @@
+commit c8f35e9fd3a8c19fcd6173e791caa0649eeeb22d
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Wed Nov 4 14:05:50 2015 -0600
+
+    Updated UML
+
+commit 3154891aeff82573eed0963ac0c92582cf20ce26
+Author: Kristine Domingo <kristine@cs.utexas.edu>
+Date:   Wed Nov 4 12:43:21 2015 -0600
+
+    Added log, close #5
+
 commit ac9f2e78e670cd6ff781fd3a6ae04d5d8b81885a
 Author: Kristine Domingo <kristine@cs.utexas.edu>
 Date:   Wed Nov 4 12:41:55 2015 -0600
