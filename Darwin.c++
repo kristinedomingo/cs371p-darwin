@@ -22,6 +22,7 @@ using namespace std;
  * character representation on the Darwin board to an ostream.
  * @param os an ostream to output the Species' render character
  * @param s the Species
+ * @return an ostream with this Species' output
  */
 ostream& operator << (ostream& os, const Species &s)
 {
@@ -37,6 +38,7 @@ ostream& operator << (ostream& os, const Species &s)
  * Species' character representation on the Darwin board to an ostream.
  * @param os an ostream to output the Creature's Species' render
  * @param c the Creature
+ * @return an ostream with this Creature's output
  */
 ostream& operator << (ostream& os, const Creature &c)
 {
@@ -52,6 +54,7 @@ ostream& operator << (ostream& os, const Creature &c)
  * Darwin board (Creatures and current turn) to an ostream.
  * @param os an ostream to output the Darwin grid and current turn
  * @param d the Darwin object
+ * @return an ostream with this Darwin's output
  */
 ostream& operator << (ostream& os, Darwin &d)
 {
@@ -92,7 +95,7 @@ ostream& operator << (ostream& os, Darwin &d)
 /**
  * Initializes a Darwin_Iterator object, default row and column
  * set to 0.
- * @param d the reference to the outer class (darwin)
+ * @param d the reference to a Darwin object to iterate over
  * @param row the row this iterator is at
  * @param col the col this iterator is at
  */
@@ -110,6 +113,7 @@ Darwin_Iterator::Darwin_Iterator(Darwin& d, int row, int col) : darwin(d)
  * The equals operator, returns true if the rhs Darwin_Iterator
  * points to the same space as this one.
  * @param rhs the Darwin_Iterator to compare to
+ * @return true if rhs points to the same space as this iterator
  */
 bool Darwin_Iterator::operator == (const Darwin_Iterator& rhs) const
 {
@@ -124,6 +128,7 @@ bool Darwin_Iterator::operator == (const Darwin_Iterator& rhs) const
  * The not equals operator, returns true if the rhs
  * Darwin_Iterator does not point to the same space as this one.
  * @param rhs the Darwin_Iterator to compare to
+ * @return true if rhs does not point to the same space as this iterator
  */
 bool Darwin_Iterator::operator != (const Darwin_Iterator& rhs) const
 {
@@ -137,6 +142,7 @@ bool Darwin_Iterator::operator != (const Darwin_Iterator& rhs) const
 /**
  * The dereference operator, returns a pointer to the Creature
  * at this iterator's row and column.
+ * @param a pointer to a Creature object
  */
 Creature* Darwin_Iterator::operator * () const
 {
@@ -150,6 +156,7 @@ Creature* Darwin_Iterator::operator * () const
 /**
  * The pre-increment operator, moves this iterator to the next
  * space in the grid.
+ * @return this iterator, moved to the next space in the grid
  */
 Darwin_Iterator& Darwin_Iterator::operator ++ ()
 {
@@ -174,6 +181,7 @@ Darwin_Iterator& Darwin_Iterator::operator ++ ()
  * different meanings depending on what "direction" is).
  * @param it the Darwin_Iterator to get the space ahead from
  * @param dir a Direction
+ * @return another Darwin_Iterator at the space ahead of this one
  */
 Darwin_Iterator Darwin_Iterator::ahead(Darwin_Iterator& it, Direction dir) const
 {
@@ -220,6 +228,7 @@ Species::Species(char representation)
 /**
  * Returns true if the rhs Species is of the same species.
  * @param rhs the Species to compare to
+ * @return true if rhs is of the same Species
  */
 bool Species::operator == (const Species& rhs) const
 {
@@ -233,6 +242,7 @@ bool Species::operator == (const Species& rhs) const
 /**
  * Returns true if the rhs Species is NOT of the same species.
  * @param rhs the Species to compare to
+ * @return true if rhs is NOT of the same Species
  */
 bool Species::operator != (const Species& rhs) const
 {
@@ -263,28 +273,29 @@ void Species::add_instruction(Instruction instr, int n)
  * @param this_space a Darwin_Iterator located at THIS Species' Creature
  * @param space_ahead a Darwin_Iterator located at the space ahead
  * @param counter the instruction to execute
- * @return the number of control instructions this function had to do
+ * @return the instruction that this Species executed
  */
 int Species::execute_instruction(Darwin_Iterator& this_space,
                                  Darwin_Iterator& space_ahead,
                                  int counter) const
 {
+    // Get the instruction at counter
     pair<Instruction, int> instr = instructions[counter];
+    Instruction i = instr.first;
 
     Creature* const creature_ahead = *space_ahead;
     Creature* const this_creature = *this_space;
 
-    Instruction i = instr.first;
-
-    // Follow the flow of instructions until an "action" instruction is reached
+    // If the counterth instruction is NOT an action instruction, follow the
+    // "flow" of instructions until an action instruction is reached
     while(i != HOP && i != LEFT && i != RIGHT && i != INFECT)
     {
         // If the instruction matches the control condition, go to line "n"
-        if((i == IF_EMPTY  && creature_ahead != nullptr && creature_ahead->is_empty()) ||
-           (i == IF_WALL   && creature_ahead == nullptr) ||
-           (i == IF_RANDOM && rand() % 2 == 1) ||
-           (i == IF_ENEMY  && creature_ahead != nullptr && creature_ahead->is_enemy(*this_creature)) ||
-           (i == GO))
+        if((i == GO)                                                                                
+           || (i == IF_RANDOM && rand() % 2 == 1)                                                      
+           || (i == IF_WALL   && creature_ahead == nullptr)                                            
+           || (i == IF_ENEMY  && creature_ahead != nullptr && creature_ahead->is_enemy(*this_creature))
+           || (i == IF_EMPTY  && creature_ahead != nullptr && creature_ahead->is_empty()))
         {
             counter = instr.second;
         }
@@ -337,7 +348,9 @@ int Species::execute_instruction(Darwin_Iterator& this_space,
 
 /**
  * Initializes a Creature object. Sets the passed in Species as this
- * Creature's associated Species (or uses the default Species).
+ * Creature's associated Species (or uses the default Species). The
+ * default Species is an "empty" Species, represented by a "." on the
+ * Darwin grid.
  * @param s a Species object
  * @param dir the direction this Creature will face
  */
@@ -356,6 +369,7 @@ Creature::Creature(Species s, Direction dir)
 /**
  * Returns true if rhs is not of the same species, AND either side isn't empty.
  * @param rhs another Creature object
+ * @return true is rhs is an enemy Creature
  */
 bool Creature::is_enemy(const Creature& rhs) const
 {
@@ -369,6 +383,7 @@ bool Creature::is_enemy(const Creature& rhs) const
 /**
  * Returns true if this Creature's Species is the default Species,
  * in other words, this Creature is an "empty" space on the grid.
+ * @return true if this Creature is an empty spot on the grid
  */
 bool Creature::is_empty() const
 {
@@ -382,7 +397,9 @@ bool Creature::is_empty() const
 // --------
 
 /**
- * Executes this Creature's Species' "counterth" instruction.
+ * Executes this Creature's Species' "counterth" instruction. Also
+ * modifies the counter, depending on what instruction the Species
+ * ended up taking.
  * @param d a Darwin object this Creature is on
  * @param it a Darwin_Iterator
  */
@@ -469,6 +486,7 @@ void Creature::turn_right()
  */
 void Creature::infect(Creature& victim)
 {
+    // Victim cannot be an empty space, and victim has to be an enemy
     if(victim.is_enemy(*this) && !victim.is_empty())
     {
         victim.s = this->s;
@@ -502,6 +520,7 @@ Darwin::Darwin(int height, int width)
 
 /**
  * Returns a Darwin_Iterator first space (left corner) the grid.
+ * @return a Darwin_Iterator
  */
 Darwin_Iterator Darwin::begin()
 {
@@ -516,6 +535,7 @@ Darwin_Iterator Darwin::begin()
 /**
  * Returns a Darwin_Iterator to the last space (one past the right
  * corner) of the grid.
+ * @return a Darwin_Iterator
  */
 Darwin_Iterator Darwin::end()
 {
@@ -534,6 +554,7 @@ Darwin_Iterator Darwin::end()
  * returns a nullptr.
  * @param row the row to look at
  * @param the column to look at
+ * @return a pointer to a Creature object
  */
 Creature* const Darwin::at(int row, int col)
 {
@@ -557,6 +578,8 @@ Creature* const Darwin::at(int row, int col)
 void Darwin::add_creature(Creature& c, int row, int col)
 {
     Creature* const creature_pointer = at(row, col);
+
+    // Make sure the row and col is a valid point to place a Creature
     if(creature_pointer != nullptr)
     {
         *creature_pointer = c;
@@ -569,8 +592,13 @@ void Darwin::add_creature(Creature& c, int row, int col)
 
 /**
  * Checks to see if a Creature has gone by comparing the Creature's
- * "flag" against the current turn.
+ * "flag" against the current turn. Each Creature has an integer "flag",
+ * that begins at 0 and is incremented after it has done a turn. This
+ * way, the current turn and each Creature's "flag" (turn) can be
+ * compared by this function, which will determine whether or not this
+ * Creature has already gone during a Darwin turn.
  * @param flag the Creature's flag
+ * @return true if the Creature has already executed an instr this turn
  */
 const bool Darwin::creature_has_gone(int flag) const
 {

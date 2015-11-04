@@ -44,6 +44,7 @@ class Species;
  * character representation on the Darwin board to an ostream.
  * @param os an ostream to output the Species' render character
  * @param s the Species
+ * @return an ostream with this Species' output
  */
 ostream& operator << (ostream& os, const Creature &s);
 
@@ -56,6 +57,7 @@ ostream& operator << (ostream& os, const Creature &s);
  * Species' character representation on the Darwin board to an ostream.
  * @param os an ostream to output the Creature's Species' render
  * @param c the Creature
+ * @return an ostream with this Creature's output
  */
 ostream& operator << (ostream& os, const Creature &c);
 
@@ -68,6 +70,7 @@ ostream& operator << (ostream& os, const Creature &c);
  * Darwin board (Creatures and current turn) to an ostream.
  * @param os an ostream to output the Darwin grid and current turn
  * @param d the Darwin object
+ * @return an ostream with this Darwin's output
  */
 ostream& operator << (ostream& os, Darwin &d);
 
@@ -103,6 +106,7 @@ class Darwin_Iterator
          * The equals operator, returns true if the rhs Darwin_Iterator
          * points to the same space as this one.
          * @param rhs the Darwin_Iterator to compare to
+         * @return true if rhs points to the same space as this iterator
          */
         bool operator == (const Darwin_Iterator& rhs) const;
 
@@ -114,6 +118,7 @@ class Darwin_Iterator
          * The not equals operator, returns true if the rhs
          * Darwin_Iterator does not point to the same space as this one.
          * @param rhs the Darwin_Iterator to compare to
+         * @return true if rhs does not point to the same space as this iterator
          */
         bool operator != (const Darwin_Iterator& rhs) const;
 
@@ -124,6 +129,7 @@ class Darwin_Iterator
         /**
          * The dereference operator, returns a pointer to the Creature
          * at this iterator's row and column.
+         * @return a pointer to a Creature object
          */
         Creature* operator * () const;
 
@@ -134,6 +140,7 @@ class Darwin_Iterator
         /**
          * The pre-increment operator, moves this iterator to the next
          * space in the grid.
+         * @return this iterator, moved to the next space in the grid
          */
         Darwin_Iterator& operator ++ ();
 
@@ -146,6 +153,7 @@ class Darwin_Iterator
          * different meanings depending on what "direction" is).
          * @param it the Darwin_Iterator to get the space ahead from
          * @param dir a Direction
+         * @return another Darwin_Iterator at the space ahead of this one
          */
         Darwin_Iterator ahead(Darwin_Iterator& it, Direction dir) const;
 };
@@ -160,8 +168,10 @@ class Species
         vector<pair<Instruction, int>>   // this Species' instructions
                          instructions;
 
+        // Friend declaration allows operator << to use Species
         friend ostream& operator << (ostream&, const Species&);
 
+        // Friend test declarations to allow Google Test access to Species
         FRIEND_TEST(AddInstruction, add_instruction_1);
         FRIEND_TEST(AddInstruction, add_instruction_2);
         FRIEND_TEST(AddInstruction, add_instruction_3);
@@ -187,8 +197,9 @@ class Species
         // --------------------
 
         /**
-         * Returns true if the rhs Species is of the same species.
+         * Returns true if the rhs Species is of the same Species.
          * @param rhs the Species to compare to
+         * @return true if rhs is of the same Species
          */
         bool operator == (const Species& rhs) const;
 
@@ -199,6 +210,7 @@ class Species
         /**
          * Returns true if the rhs Species is NOT of the same species.
          * @param rhs the Species to compare to
+         * @return true if rhs is NOT of the same Species
          */
         bool operator != (const Species& rhs) const;
 
@@ -223,7 +235,7 @@ class Species
          * @param this_space a Darwin_Iterator located at THIS Species' Creature
          * @param space_ahead a Darwin_Iterator located at the space ahead
          * @param counter the instruction to execute
-         * @return the number of control instructions this function had to do
+         * @return the instruction that this Species executed
          */
         int execute_instruction(Darwin_Iterator& this_space,
                                 Darwin_Iterator & space_ahead,
@@ -236,7 +248,7 @@ class Species
 class Creature
 {
     private:
-        Species s;      // the Species of this Creature (if any)
+        Species s;      // the Species of this Creature
         Direction dir;  // the direction this Creature is facing
         int counter;    // the program counter
         int flag;       // used to check if this Creature has gone during a turn
@@ -244,6 +256,7 @@ class Creature
         // Overload of the << operator to allow use with Creature
         friend ostream& operator << (ostream&, const Creature&);
 
+        // Friend test declarations to allow Google Test to access Creature
         FRIEND_TEST(TurnLeft, turn_left_1);
         FRIEND_TEST(TurnLeft, turn_left_2);
         FRIEND_TEST(TurnLeft, turn_left_3);
@@ -260,7 +273,9 @@ class Creature
 
         /**
          * Initializes a Creature object. Sets the passed in Species as this
-         * Creature's associated Species (or uses the default Species).
+         * Creature's associated Species (or uses the default Species). The
+         * default Species is an "empty" Species, represented by a "." on the
+         * Darwin grid.
          * @param s a Species object
          * @param dir the direction this Creature will face
          */
@@ -274,6 +289,7 @@ class Creature
          * Returns true if the rhs Creature is not of the same species, AND 
          * either side isn't empty.
          * @param rhs another Creature object
+         * @return true is rhs is an enemy Creature
          */
         bool is_enemy(const Creature& rhs) const;
 
@@ -284,6 +300,7 @@ class Creature
         /**
          * Returns true if this Creature's Species is the default Species,
          * in other words, this Creature is an "empty" space on the grid.
+         * @return true if this Creature is an empty spot on the grid
          */
         bool is_empty() const;
 
@@ -292,7 +309,9 @@ class Creature
         // --------
 
         /**
-         * Executes this Creature's Species' "counterth" instruction.
+         * Executes this Creature's Species' "counterth" instruction. Also
+         * modifies the counter, depending on what instruction the Species
+         * ended up taking.
          * @param d a Darwin object this Creature is on
          * @param it a Darwin_Iterator
          */
@@ -339,7 +358,10 @@ class Darwin
         int width;                     // the number of columns in the grid
         int current_turn;              // the current turn of the Darwin run
 
+        // Declare the iterator a friend so it can access Darwin
         friend class Darwin_Iterator;
+
+        // Friend declaration allows operator << to use Species
         friend ostream& operator << (ostream&, Darwin&);
 
     public:
@@ -361,6 +383,7 @@ class Darwin
 
         /**
          * Returns a Darwin_Iterator first space (left corner) the grid.
+         * @return a Darwin_Iterator
          */
         Darwin_Iterator begin();
 
@@ -371,6 +394,7 @@ class Darwin
         /**
          * Returns a Darwin_Iterator to the last space (one past the right
          * corner) of the grid.
+         * @return a Darwin_Iterator
          */
         Darwin_Iterator end();
 
