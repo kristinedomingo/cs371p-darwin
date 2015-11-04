@@ -13,6 +13,7 @@
 // --------
 
 #include <iostream>  // cin, cout
+#include <map>       // map
 #include "Darwin.h"  // Darwin interfaces
 
 using namespace std;
@@ -98,6 +99,24 @@ int main ()
     trap.add_instruction(GO, 0);
     trap.add_instruction(INFECT);
     trap.add_instruction(GO, 0);
+
+    // ----
+    // best
+    // ----
+
+    Species best('b');
+    best.add_instruction(IF_ENEMY, 10);
+    best.add_instruction(IF_WALL, 8);
+    best.add_instruction(IF_EMPTY, 6);
+    best.add_instruction(IF_RANDOM, 8);
+    best.add_instruction(LEFT);
+    best.add_instruction(GO, 0);
+    best.add_instruction(HOP);
+    best.add_instruction(GO, 0);
+    best.add_instruction(RIGHT);
+    best.add_instruction(GO, 0);
+    best.add_instruction(INFECT);
+    best.add_instruction(GO, 0);
 
     // ----------
     // darwin 8x8
@@ -235,7 +254,7 @@ int main ()
     }
 
     // Print every 100th grid after
-    for(int i = 10; i < 1000; ++i)
+    for(int i = 10; i <= 1000; ++i)
     {
         if(i % 100 == 0)
         {
@@ -244,38 +263,146 @@ int main ()
         d3.do_turn();
     }
 
-    /*
-    Simulate 1000 moves.
-    Print the first 10 grids          (i.e. 0, 1, 2...9).
-    Print every 100th grid after that (i.e. 100, 200, 300...1000).
-    */
-
-    cout << d3;
-
     // ------------
     // darwin 72x72
     // with best
     // ------------
 
-    //cout << "*** Darwin 72x72 with Best ***" << endl;
-    //srand(0);
-    /*
-    Randomly place the following creatures facing randomly.
-    Call rand(), mod it with 5184 (72x72), and use that for the position
-    in a row-major order grid.
-    Call rand() again, mod it with 4 and use that for it's direction with
-    the ordering: 0:west, 1:north, 2:east, 3:south.
-    Do that for each kind of creature.
-    10 Food
-    10 Hopper
-    10 Rover
-    10 Trap
-    10 Best
-    Simulate 1000 moves.
-    Best MUST outnumber ALL other species for the bonus pts.
-    Print the first 10 grids          (i.e. 0, 1, 2...9).
-    Print every 100th grid after that (i.e. 100, 200, 300...1000).
-    */
+    cout << "*** Darwin 72x72 with Best ***" << endl;
+    srand(0);
+
+    Darwin d4(72, 72);
+
+    // Place 10 foods
+    foods.clear();
+    positions.clear();
+    for(int i = 0; i < 10; ++i)
+    {
+        positions.push_back(rand() % 5184);
+        Creature food_creature(food, random_direction());
+        foods.push_back(food_creature);
+    }
+
+    for(int i = 0; i < 10; ++i)
+    {
+        d4.add_creature(foods[i], positions[i] / 72, positions[i] % 72);
+    }
+
+    // Place 10 Hoppers
+    hoppers.clear();
+    positions.clear();
+    for(int i = 0; i < 10; ++i)
+    {
+        positions.push_back(rand() % 5184);
+        Creature hopper_creature(hopper, random_direction());
+        hoppers.push_back(hopper_creature);
+    }
+
+    for(int i = 0; i < 10; ++i)
+    {
+        d4.add_creature(hoppers[i], positions[i] / 72, positions[i] % 72);
+    }
+
+    // Place 10 Rovers
+    rovers.clear();
+    positions.clear();
+    for(int i = 0; i < 10; ++i)
+    {
+        positions.push_back(rand() % 5184);
+        Creature rover_creature(rover, random_direction());
+        rovers.push_back(rover_creature);
+    }
+
+    for(int i = 0; i < 10; ++i)
+    {
+        d4.add_creature(rovers[i], positions[i] / 72, positions[i] % 72);
+    }
+
+    // Place 10 Traps
+    traps.clear();
+    positions.clear();
+    for(int i = 0; i < 10; ++i)
+    {
+        positions.push_back(rand() % 5184);
+        Creature trap_creature(trap, random_direction());
+        traps.push_back(trap_creature);
+    }
+
+    for(int i = 0; i < 10; ++i)
+    {
+        d4.add_creature(traps[i], positions[i] / 72, positions[i] % 72);
+    }
+
+    // Place 10 Bests
+    vector<Creature> bests;
+    positions.clear();
+    for(int i = 0; i < 10; ++i)
+    {
+        positions.push_back(rand() % 5184);
+        Creature best_creature(best, random_direction());
+        bests.push_back(best_creature);
+    }
+
+    for(int i = 0; i < 10; ++i)
+    {
+        d4.add_creature(bests[i], positions[i] / 72, positions[i] % 72);
+    }
+
+    // Print first 10 grids
+    for(int i = 0; i < 10; ++i)
+    {
+        cout << d4;
+        d4.do_turn();
+    }
+
+    // Print every 100th grid after
+    for(int i = 10; i <= 1000; ++i)
+    {
+        if(i % 100 == 0)
+        {
+            cout << d4;
+        }
+        d4.do_turn();
+    }
+
+    // Print number of each Creature
+    Darwin_Iterator begin = d4.begin();
+    Darwin_Iterator end = d4.end();
+    map<string, int> counts;
+    cout << "Creature count:" << endl;
+
+    while(begin != end)
+    {
+        // Get the character of the Creature
+        stringstream ss;
+        ss << *(*begin);
+        string creature_character = ss.str();
+        ss.str("");
+
+        // If it doesn't already exist in the map, add it
+        if(counts.count(creature_character) == 0)
+        {
+            counts.insert(pair<string, int>(creature_character, 0));
+        }
+
+        // Else, increment the Creature's counter
+        else
+        {
+            ++counts.at(creature_character);
+        }
+
+        ++begin;
+    }
+
+    // Now, loop through the map and print counts
+    for(auto const& count : counts)
+    {
+        // Ignore empty Creatures
+        if(count.first != ".")
+        {
+            cout << "Creature " << count.first << " has " << count.second << endl;
+        }
+    }
 
     return 0;
 }
